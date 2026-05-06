@@ -1,1 +1,305 @@
 @import "tailwindcss";
+
+@theme {
+  /* ─── Workshop Cinema × Owner's Manual — Color System ──────────────
+     95% of any screen is ink/steel/graphite. --ignite is the brake
+     light — primary CTA, active nav, the single hero stat, page-progress
+     hairline. Never on hover. Never on body copy. */
+  --color-ink:        #0E0F11;          /* Background. Cold near-black. NOT pure black. */
+  --color-ink-deep:   #0A0B0D;          /* Bottom of the atmospheric gradient. */
+  --color-paper:      #F4F2EE;          /* Light surface for editorial pages. Warm off-white. */
+  --color-steel:      #2A2D32;          /* Elevated surface. Cards, panels. */
+  --color-graphite:   #6E727A;          /* Body text on dark. Mid-tone. */
+  --color-bone:       #C9C4BB;          /* Headline / strong text on dark. Soft, not stark. */
+  --color-ignite:     #C8281D;          /* THE accent. Used like a brake light. */
+  --color-chrome:     #D4D2CD;          /* Highlight metallic. */
+  --color-measure:    rgba(110, 114, 122, 0.40); /* Ruled lines, grids, schematic markings. */
+
+  /* Backwards-compat aliases — components not yet rebuilt (Process,
+     forms, Footer, Nav, brand pages, editorial primitives) reference
+     these older token names. Map them onto the new system so the
+     existing markup keeps rendering correctly while re-skinning happens
+     page by page.
+
+     Crucially: --color-accent maps to BONE (highlight), not IGNITE.
+     The old design used accent as "near-white emphasis." Mapping accent
+     to ignite would turn dozens of headlines, dividers, and link hovers
+     red, breaking the brake-light discipline (only ONE ignite per screen).
+     Use `text-ignite` / `bg-ignite` directly when you want the accent. */
+  --color-bg:         var(--color-ink);
+  --color-surface:    var(--color-steel);
+  --color-text:       var(--color-bone);
+  --color-muted:      var(--color-graphite);
+  --color-divider:    #1A1B1E;
+  --color-hairline:   rgba(201, 196, 187, 0.10);
+  --color-accent:     var(--color-bone);
+
+  /* ─── Type Families ──────────────────────────────────────────────
+     Two-family system after Path B audit (2026-05-06):
+       Display → Anton (free Druk-alike — condensed, single weight, used
+                        by .display-* and .display-bleed classes)
+       Body / editorial / labels → Hanken Grotesk (humanist sans, 7
+                        weights — used by .lead, .editorial, default <p>,
+                        .eyebrow, .annotation, .spec)
+     Anton stays for headlines so the cinematic Druk identity holds; body
+     copy moves to Hanken so paragraph copy reads at the proper density.
+     If you want true mono for .spec callouts later (process narrative
+     torque specs / paint depths), add JetBrains Mono and point
+     --font-mono at it — leave --font-body and --font-editorial on Hanken. */
+  --font-display:   var(--font-anton),  "Anton", "Arial Narrow", "Helvetica Condensed", sans-serif;
+  --font-editorial: var(--font-hanken), "Hanken Grotesk", "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-body:      var(--font-hanken), "Hanken Grotesk", "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono:      var(--font-hanken), "Hanken Grotesk", "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-spec: var(--font-mono);
+
+  /* ─── Type Scale (fluid) ─────────────────────────────────────────── */
+  --text-eyebrow:  0.6875rem;     /* 11px — small-caps annotations, leader-line labels */
+  --text-caption:  0.8125rem;     /* 13px */
+  --text-body:     1.0625rem;     /* 17px — slightly above the 16px floor for premium feel */
+  --text-lead:     1.25rem;       /* 20px — owner-letter intro paragraphs */
+
+  /* Display ramp — Fraunces has an opsz axis we exploit at the larger sizes. */
+  --text-display-sm: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  --text-display-md: clamp(2.5rem, 6vw + 0.5rem, 5rem);
+  --text-display-lg: clamp(3.25rem, 9vw, 7.5rem);
+  --text-display-xl: clamp(4rem, 13vw, 10rem);
+  /* Bleed — for hero compositions where the word physically exceeds the
+     viewport. Sized larger than display-xl with no upper rem cap below
+     ultra-wide screens. */
+  --text-display-bleed: clamp(3.5rem, 14vw, 14rem);
+
+  /* ─── Tracking + Leading ─────────────────────────────────────────── */
+  --tracking-eyebrow: 0.18em;      /* tight enough to feel like an editorial label */
+  --tracking-display: -0.025em;    /* high-contrast serifs want negative tracking */
+  --tracking-mono:    0.04em;      /* mono callouts breathe better with positive tracking */
+  --leading-display:  0.95;
+  --leading-body:     1.55;
+  --leading-editorial: 1.65;
+
+  /* ─── Motion ─────────────────────────────────────────────────────── */
+  --motion-cinema:    1200ms cubic-bezier(0.22, 1, 0.36, 1);   /* slow, atmospheric — hero fades */
+  --motion-shutter:   600ms cubic-bezier(0.83, 0, 0.17, 1);    /* mechanical — clip-path reveals */
+  --motion-manual:    420ms cubic-bezier(0.83, 0, 0.17, 1);    /* precise — leader lines, annotations */
+  --motion-quick:     200ms cubic-bezier(0.4, 0, 0.2, 1);      /* micro — hover, focus */
+
+  /* ─── Atmosphere ─────────────────────────────────────────────────── */
+  --grain-opacity: 0.04;
+
+  /* ─── Z-Index Scale ──────────────────────────────────────────────── */
+  --z-base:    0;
+  --z-overlay: 10;
+  --z-section: 30;
+  --z-nav:     50;
+  --z-cursor:  70;
+  --z-modal:   80;
+  --z-toast:   90;
+  --z-skip:    100;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Base — atmospheric vertical gradient on the ink background carries
+   the Cinema register; no flat color.
+   ─────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+html, body {
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-variant-numeric: tabular-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Atmospheric vertical gradient lives on the html canvas so the body can
+   stay transparent. The home page mounts a fixed-position PageScrubVideo as
+   a child of body that paints over this canvas — other routes show the
+   gradient as their backdrop. */
+html {
+  background:
+    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.02), transparent 60%),
+    linear-gradient(to bottom, var(--color-ink) 0%, var(--color-ink-deep) 100%);
+  background-attachment: fixed;
+}
+
+body {
+  background: transparent;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Semantic Type — use these classes instead of stacked utilities so
+   the role looks identical everywhere.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Eyebrow — a small-caps label. Owner's Manual register. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 400;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-graphite);
+}
+
+/* Annotation — leader-line labels and callout pins. Mono small-caps. */
+.annotation {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-graphite);
+}
+
+/* Display — Anton condensed display sans. */
+.display-xl,
+.display-lg,
+.display-md,
+.display-sm {
+  font-family: var(--font-display);
+  color: var(--color-bone);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+  font-weight: 400;
+}
+.display-xl { font-size: var(--text-display-xl); }
+.display-lg { font-size: var(--text-display-lg); }
+.display-md { font-size: var(--text-display-md); }
+.display-sm { font-size: var(--text-display-sm); }
+
+/* Display upright — kept for backwards compat; Anton is upright by default. */
+.display-upright {
+  font-family: var(--font-display);
+}
+
+/* Display bleed — hero edge-bleed compositions. nowrap so the word
+   renders as a single horizontal stroke that can be clipped by the viewport. */
+.display-bleed {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-display-bleed);
+  color: var(--color-bone);
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  white-space: nowrap;
+}
+
+/* Lead — opening paragraph after a display headline */
+.lead {
+  font-family: var(--font-editorial);
+  font-size: var(--text-lead);
+  line-height: var(--leading-editorial);
+  color: var(--color-bone);
+}
+
+/* Spec — monospaced technical numbers (torques, gaps, paint depths, ΔE) */
+.spec {
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-feature-settings: "tnum", "ss01";
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-graphite);
+}
+
+/* Editorial — long-form serif body. Owner letter, claims content, shop story. */
+.editorial {
+  font-family: var(--font-editorial);
+  font-size: 1.125rem;
+  line-height: var(--leading-editorial);
+  color: var(--color-bone);
+  font-feature-settings: "kern", "liga";
+}
+.editorial p + p {
+  margin-top: 1.25em;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Components — link underline, film grain, schematic blueprint art
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Animated underline — left-to-right wipe on hover. Apply to text links. */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-shutter);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .link-underline::after { transition: none; }
+}
+
+/* Film-grain overlay — subtle organic texture. SVG turbulence inlined. */
+.film-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .film-grain::before { opacity: 0.025; }
+}
+
+/* Hairline — single-pixel ruled line. The Owner's Manual ruling. */
+.hairline {
+  height: 1px;
+  background: var(--color-measure);
+  border: none;
+}
+.hairline-vertical {
+  width: 1px;
+  background: var(--color-measure);
+  border: none;
+}
+
+/* Selection — brake-light red picks. */
+::selection {
+  background: var(--color-ignite);
+  color: var(--color-ink);
+}
+
+/* Focus baseline — ignite outline keeps accessibility loud. */
+:focus-visible {
+  outline: 2px solid var(--color-ignite);
+  outline-offset: 3px;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Reduced-motion path — orchestrated effects collapse to instant.
+   Components opt in via `motion-safe:` / `motion-reduce:` Tailwind
+   utilities; this is the global baseline.
+   ─────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
