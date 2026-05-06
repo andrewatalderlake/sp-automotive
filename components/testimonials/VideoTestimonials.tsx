@@ -5,6 +5,7 @@ import {
   PUBLISHED_VIDEO_TESTIMONIALS,
   type VideoTestimonial,
 } from "./video-testimonials-data";
+import Surface from "@/components/ui/Surface";
 
 // Video testimonials surface. Mirrors the gating pattern of
 // TestimonialsSection — empty published list ⇒ section renders nothing,
@@ -19,9 +20,9 @@ export default function VideoTestimonials() {
   return (
     <section
       id="video-testimonials"
-      className="bg-bg px-6 md:px-10 py-32 border-t border-divider"
+      className="relative px-6 md:px-10 py-32 border-t border-divider"
     >
-      <div className="max-w-6xl mx-auto">
+      <Surface variant="solid" className="max-w-6xl mx-auto rounded-md py-20 px-6 md:px-10">
         <p className="eyebrow">From the owners</p>
         <h2 className="mt-4 display-md">Watch them tell it.</h2>
 
@@ -32,7 +33,7 @@ export default function VideoTestimonials() {
             </li>
           ))}
         </ul>
-      </div>
+      </Surface>
     </section>
   );
 }

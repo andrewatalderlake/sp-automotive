@@ -2,12 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
+import Surface from "@/components/ui/Surface";
 import { CITY, REGION, HOURS_LABEL, BY_APPOINTMENT } from "@/lib/site";
 
 export default function Footer() {
+  // Surface scrim keeps footer copy legible on the home route where the
+  // page-wide PageScrubVideo can be playing a bright frame behind the
+  // viewport. On other routes the html gradient already provides a dark
+  // backdrop; the scrim is a near-imperceptible extra darken there.
   return (
-    <footer className="bg-bg border-t border-divider px-6 md:px-10 py-16">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+    <footer className="relative border-t border-divider px-6 md:px-10 py-16">
+      <Surface variant="solid" className="max-w-7xl mx-auto rounded-md py-12 px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
           <Image
             src="/logos/sp-mark.png"
@@ -44,7 +49,7 @@ export default function Footer() {
           <Link href="/explainers/paint-match" className="link-underline hover:text-accent transition-colors">Paint match</Link>
           <Link href="/explainers/oem-parts" className="link-underline hover:text-accent transition-colors">OEM parts</Link>
         </nav>
-      </div>
+      </Surface>
     </footer>
   );
 }
