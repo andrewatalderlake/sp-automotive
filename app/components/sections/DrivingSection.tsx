@@ -1,36 +1,34 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 
 /**
- * DrivingSection — three-column section that will eventually have the
- * bird's-eye Porsche driving down the center column on scroll. This pass:
- * compact layout (~110vh tall on desktop), real bird's-eye image as the
- * sticky placeholder, simplified flat-dark road awaiting the user's own
- * road artwork.
+ * DrivingSection — three-column section: insurance card on the left,
+ * services card on the right, and an empty middle column where the
+ * page-wide scroll video shows through.
  *
  * Desktop layout (lg+):
  *   ┌─────────┬─────────────┬─────────┐
- *   │ insur-  │   road      │ services│
- *   │ ance    │   (sticky   │  card   │
- *   │ card    │    bird's-  │         │
- *   │         │    eye      │         │
- *   │         │    porsche) │         │
+ *   │ insur-  │   (empty    │ services│
+ *   │ ance    │    middle,  │  card   │
+ *   │ card    │    video    │         │
+ *   │         │    showing  │         │
+ *   │         │    through) │         │
  *   │ ~28%    │   ~36%      │  ~28%   │
  *   └─────────┴─────────────┴─────────┘
- *   total height: ~110vh — just over a fullscreen so there's a touch of
- *   scroll runway for the future GSAP-driven car movement, but nowhere
- *   near the previous 250vh.
  *
- * Mobile (<lg): stacks insurance card → bird's-eye + road snippet → services
- * card.
+ * Earlier passes had a sticky bird's-eye Porsche image and a flat dark road
+ * strip in the center column. Both have been removed: the page-wide scroll
+ * video provides the visual now, and the empty middle gives it room to
+ * breathe between the two cards.
  *
- * Stacking: the section is `relative z-0` (low z) so the SmokyTransition
- * above it (`z-20`) can use a negative bottom-margin to overlap the top
- * of this section. The sticky bird's-eye car renders BEHIND the smoke in
- * that overlap zone — it appears to drive out of the cloud as the user
- * scrolls past the transition.
+ * Mobile (<lg): cards stack directly with no center column.
+ *
+ * `data-scroll-anchor-seconds="7"` registers this section with
+ * `ScrollVideoBackground` to hold at the 7-second mark of the video while
+ * the viewport is centered on this section. The transition from Hero
+ * (frame 0) to here animates the first 7 seconds of footage as the user
+ * crosses the section boundary.
  */
 
 const insuranceContent = [
@@ -54,7 +52,14 @@ export function DrivingSection() {
     <section
       id="services"
       aria-label="Insurance and services"
-      className="relative z-0 w-full bg-gradient-to-b from-white via-[#FAFBFC] to-[#F4F5F7] lg:min-h-[110vh]"
+      // Background removed — the page-wide scroll video shows through. Cards
+      // below convert from solid off-white to translucent dark glass so they
+      // still frame their content without hiding the video.
+      // data-scroll-anchor-seconds="7" → ScrollVideoBackground holds at
+      // the 7-second mark of the video while the viewport is centered on
+      // this section. See app/components/ScrollVideoBackground.tsx.
+      data-scroll-anchor-seconds="7"
+      className="relative z-0 w-full lg:min-h-[110vh]"
     >
       <div
         className="
@@ -66,7 +71,9 @@ export function DrivingSection() {
       >
         <ContentCard heading="Insurance Done Right" blocks={insuranceContent} />
 
-        <CenterColumn />
+        {/* Empty grid cell on desktop — the scroll video shows through here.
+            Hidden on mobile so the two cards stack with no awkward gap. */}
+        <div aria-hidden className="hidden lg:block" />
 
         <ContentCard
           heading="Body Work & Mobile Estimates"
@@ -100,11 +107,11 @@ function ContentCard({
     <aside
       className="
         flex flex-col
-        rounded-2xl border border-charcoal/10 bg-off-white p-8 shadow-sm
+        rounded-2xl border border-white/10 bg-black/40 p-8 shadow-2xl shadow-black/40 backdrop-blur-md
         lg:my-[5vh] lg:p-10
       "
     >
-      <h3 className="text-3xl font-bold tracking-tight text-black lg:text-4xl">
+      <h3 className="text-3xl font-bold tracking-tight text-white lg:text-4xl">
         {heading}
       </h3>
 
@@ -133,76 +140,11 @@ function RevealBlock({ text, delay }: { text: string; delay: number }) {
       transition={{ duration: 0.6, ease: "easeOut", delay }}
       className="flex flex-col gap-4"
     >
-      <span aria-hidden className="block h-px w-12 bg-black/30" />
-      <p className="text-base leading-relaxed text-charcoal lg:text-lg">
+      <span aria-hidden className="block h-px w-12 bg-white/30" />
+      <p className="text-base leading-relaxed text-white/80 lg:text-lg">
         {text}
       </p>
     </motion.div>
   );
 }
 
-/**
- * Center column — flat dark road backdrop with the bird's-eye Porsche image
- * as a sticky placeholder. The road is intentionally minimal (no lane
- * markings) until the user provides their own road artwork; we'll swap the
- * `<Road>` body for an `<Image>` of that asset when it arrives.
- *
- * Sticky pattern: `top: 50%; transform: translateY(-50%)` keeps the car
- * vertically centered in the viewport once the column's natural top crosses
- * 50vh, until the column's bottom passes that line.
- */
-function CenterColumn() {
-  return (
-    <>
-      {/* Desktop: full-height road backdrop with sticky bird's-eye car */}
-      <div className="relative hidden lg:block">
-        <Road />
-        <div className="sticky top-1/2 z-10 mx-auto h-[460px] w-[260px] -translate-y-1/2 overflow-hidden rounded-[2rem] shadow-2xl shadow-black/40">
-          <Image
-            src="/images/birds-eye.jpeg"
-            alt="Bird's-eye view of the Porsche"
-            fill
-            sizes="260px"
-            className="object-cover"
-          />
-        </div>
-      </div>
-
-      {/* Mobile: short static placeholder so the visual concept reads */}
-      <div className="relative flex h-[60vh] items-center justify-center lg:hidden">
-        <Road />
-        <div className="relative z-10 h-[340px] w-[190px] overflow-hidden rounded-[1.5rem] shadow-2xl shadow-black/40">
-          <Image
-            src="/images/birds-eye.jpeg"
-            alt="Bird's-eye view of the Porsche"
-            fill
-            sizes="190px"
-            className="object-cover"
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-/**
- * Road backdrop — flat dark asphalt strip behind the sticky car. Lane
- * markings have been removed pending the user's own road image; this is a
- * neutral placeholder. Top/bottom mask gradients fade the strip into the
- * surrounding section so it doesn't terminate with a hard edge.
- */
-function Road() {
-  return (
-    <div
-      className="absolute inset-0 overflow-hidden"
-      style={{
-        WebkitMaskImage:
-          "linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)",
-        maskImage:
-          "linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)",
-      }}
-    >
-      <div className="absolute inset-0 bg-[#1F2024]" />
-    </div>
-  );
-}

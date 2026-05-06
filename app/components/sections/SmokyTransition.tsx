@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { useReducedMotion } from "motion/react";
 
 /**
@@ -29,6 +30,9 @@ import { useReducedMotion } from "motion/react";
  */
 export function SmokyTransition({ className = "" }: { className?: string }) {
   const reduce = useReducedMotion();
+  // Per-instance ID so multiple SmokyTransitions on a page don't collide on
+  // the SVG filter's global document id namespace.
+  const filterId = useId();
 
   // Background-image sequence — the smoke texture, then a cool-gray base color
   // beneath it. Each layer is positioned independently so it can be scaled
@@ -86,7 +90,7 @@ export function SmokyTransition({ className = "" }: { className?: string }) {
         preserveAspectRatio="none"
         viewBox="0 0 1200 400"
       >
-        <filter id="smoke-grain" x="0" y="0" width="100%" height="100%">
+        <filter id={filterId} x="0" y="0" width="100%" height="100%">
           <feTurbulence
             type="fractalNoise"
             baseFrequency="0.9"
@@ -101,7 +105,7 @@ export function SmokyTransition({ className = "" }: { className?: string }) {
                     0 0 0 0.6 0"
           />
         </filter>
-        <rect width="100%" height="100%" filter="url(#smoke-grain)" />
+        <rect width="100%" height="100%" filter={`url(#${filterId})`} />
       </svg>
     </section>
   );

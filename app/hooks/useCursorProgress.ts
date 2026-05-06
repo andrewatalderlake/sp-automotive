@@ -131,11 +131,13 @@ export function useCursorProgress(opts: {
       // rectangle on either side, and reaches 1 only at the dead center.
       const distNormalized = Math.max(dxr, dyr);
       target = 1 - Math.min(1, Math.max(0, distNormalized));
+      ensureTicking();
     };
 
     const onPointerLeave = () => {
       // Cursor left the viewport entirely — smoothly retreat.
       target = 0;
+      ensureTicking();
     };
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -145,23 +147,38 @@ export function useCursorProgress(opts: {
     let current = 0;
     let raf = 0;
 
-    const applyProgress = (p: number) => {
+    const applyProgress = (p: number): boolean => {
       const v = videoRef.current;
-      if (!v) return;
+      if (!v) return false;
       const d = v.duration;
-      // duration is NaN until `loadedmetadata`. Skip silently until it's ready.
-      if (!Number.isFinite(d) || d <= 0) return;
+      // duration is NaN until `loadedmetadata`. Signal "not yet" to the loop.
+      if (!Number.isFinite(d) || d <= 0) return false;
       // Clamp defensively even though `target` is already clamped — `current`
       // can briefly overshoot due to lerp arithmetic.
       v.currentTime = Math.min(d, Math.max(0, p * d));
+      return true;
     };
 
     const tick = () => {
       current += (target - current) * lerp;
       // Snap to target once we're effectively there to avoid endless tiny work.
-      if (Math.abs(current - target) < 0.0005) current = target;
-      applyProgress(current);
+      const settled = Math.abs(current - target) < 0.0005;
+      if (settled) current = target;
+      const applied = applyProgress(current);
+      // Park the loop only when we've reached target *and* the video accepted
+      // the seek. If duration isn't ready yet, keep spinning so we catch up
+      // once `loadedmetadata` fires. Otherwise pointer events will re-kick us.
+      if (settled && applied) {
+        raf = 0;
+        return;
+      }
       raf = requestAnimationFrame(tick);
+    };
+
+    // Idempotent loop start. `cancelAnimationFrame(0)` is a documented no-op,
+    // so using 0 as the "not running" sentinel keeps cleanup simple.
+    const ensureTicking = () => {
+      if (raf === 0) raf = requestAnimationFrame(tick);
     };
 
     // Make sure the video doesn't try to play natively — we own currentTime.
