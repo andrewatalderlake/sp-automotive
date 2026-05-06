@@ -1,91 +1,45 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
-import RevealWords from "@/components/effects/RevealWords";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
-// Autoplay studio-video hero. Replaces the prior scroll-scrub HeroScrollSequence.
-// Pattern (UX skill — Video-First Hero): 60% dark overlay on video, white text,
-// brand-accent CTA, autoplay muted, compress for perf.
-// Reduced-motion users get a static poster instead of the autoplaying video.
-
+// The atmospheric video lives on PageScrubVideo at the page root; this
+// component only paints the foreground composition. The placeholder div
+// stands in for /hero-clips/hero-car.png and is grep-able via its
+// data-placeholder attribute so the swap is a one-line change.
 export default function HeroVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [revealed, setRevealed] = useState(false);
-  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   useEffect(() => {
-    const v = videoRef.current;
-    if (v && !reduced) {
-      v.play().catch(() => {/* swallow autoplay rejection */});
-    }
     const t = setTimeout(() => setRevealed(true), 250);
-    return () => {
-      clearTimeout(t);
-      v?.pause();
-    };
-  }, [reduced]);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section
-      className="relative h-screen w-full overflow-hidden bg-bg"
-      aria-label="Cars we restore"
+      className="relative min-h-[100svh] w-full overflow-hidden"
+      aria-label="Exotic collision — totaled, paid in full."
     >
-      {reduced ? (
-        <Image
-          src="/hero-clips/cinematic-poster.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      ) : (
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          poster="/hero-clips/cinematic-poster.webp"
-          className="absolute inset-0 w-full h-full object-cover"
-          aria-hidden
-        >
-          <source src="/hero-clips/cinematic.mp4" type="video/mp4" />
-        </video>
-      )}
+      <h1 className="sr-only">
+        Totaled. Paid in Full. — SP Automotive exotic collision repair in Sarasota, FL.
+      </h1>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/85" />
-      {/* Left-side dark plate so the text column stays legible on bright frames
-          without dimming the right half of the video. */}
+      {/* Mobile: vertical flow, no edge bleed */}
       <div
-        aria-hidden
-        className="absolute inset-y-0 left-0 w-full md:w-3/5 bg-gradient-to-r from-black/75 via-black/30 to-transparent"
-      />
-
-      <div
-        className="relative z-10 h-full flex flex-col justify-end items-start px-6 md:px-10 pb-24 md:pb-32 transition-opacity duration-700"
+        className="md:hidden relative pt-24 pb-12 px-6 flex flex-col items-center gap-8 text-center transition-opacity duration-700"
         style={{ opacity: revealed ? 1 : 0 }}
       >
-        <p className="eyebrow inline-block bg-black/80 rounded px-2 -mx-2">
-          01 / Sarasota, FL · Exotic Collision
+        <span className="display-bleed">Totaled.</span>
+        <span className="display-bleed">Paid in Full.</span>
+        <p className="lead text-bone/85 max-w-md mt-4">
+          We deal with the insurance. You walk away whole — sometimes ahead.
         </p>
-        <h2 className="mt-5 display-xl max-w-[12ch] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-          <RevealWords>Where exotics come home.</RevealWords>
-        </h2>
-        <p className="mt-7 max-w-xl lead">
-          Factory-correct collision repair for Lamborghini, McLaren, Audi R8, and BMW M.
-          Forensic intake. Torque-spec rebuild. One signature on the work.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <PhoneCTA size="lg" location="hero" />
           <SmsCTA location="hero" />
         </div>
-        <p className="mt-5 text-xs uppercase tracking-[0.22em] text-muted">
+        <p className="eyebrow">
           Or{" "}
           <Link
             href="/estimate"
@@ -96,11 +50,42 @@ export default function HeroVideo() {
         </p>
       </div>
 
-      <div
-        aria-hidden
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-muted text-[10px] uppercase tracking-[0.3em] animate-pulse"
-      >
-        scroll
+      {/* Desktop: layered edge-bleed text behind placeholder car */}
+      <div className="hidden md:block">
+        <span
+          className="display-bleed absolute top-[14%] left-[-2vw] z-[5] transition-opacity duration-700"
+          style={{ opacity: revealed ? 1 : 0 }}
+        >
+          Totaled.
+        </span>
+        <span
+          className="display-bleed absolute bottom-[22%] right-[-1vw] z-[5] text-right transition-opacity duration-700"
+          style={{ opacity: revealed ? 1 : 0 }}
+        >
+          Paid in Full.
+        </span>
+
+        <div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 w-full max-w-xl text-center px-6 transition-opacity duration-700"
+          style={{ opacity: revealed ? 1 : 0 }}
+        >
+          <p className="lead text-bone/85">
+            We deal with the insurance. You walk away whole — sometimes ahead.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-4 justify-center">
+            <PhoneCTA size="lg" location="hero" />
+            <SmsCTA location="hero" />
+          </div>
+          <p className="eyebrow mt-4">
+            Or{" "}
+            <Link
+              href="/estimate"
+              className="link-underline text-text hover:text-accent transition-colors"
+            >
+              send 3 photos for a callback
+            </Link>
+          </p>
+        </div>
       </div>
     </section>
   );

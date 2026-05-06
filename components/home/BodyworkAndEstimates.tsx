@@ -17,7 +17,7 @@ export default function BodyworkAndEstimates() {
             car is. One to two days from the call to the written number.
           </p>
           <p className="mt-6 text-muted">
-            Six days a week. Monday through Saturday.
+            Monday through Saturday.
           </p>
         </>
       }

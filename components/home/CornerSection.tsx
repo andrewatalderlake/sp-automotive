@@ -105,7 +105,7 @@ export default function CornerSection({
         >
           {chapterNumber}
         </div>
-        <p className="mt-2 text-[10px] uppercase tracking-[0.3em] text-accent/85">
+        <p className="eyebrow mt-2">
           / {eyebrow}
         </p>
       </motion.div>
@@ -116,7 +116,7 @@ export default function CornerSection({
         {...motionProps}
         className={
           isDesktop
-            ? "absolute right-10 bottom-20 z-10 max-w-md text-right"
+            ? "absolute right-10 bottom-20 z-10 max-w-lg text-right"
             : "relative z-10 mt-12 max-w-none text-left"
         }
       >

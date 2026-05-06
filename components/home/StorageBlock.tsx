@@ -11,8 +11,8 @@ export default function StorageBlock() {
         <>
           <p>
             Every car lives behind a locked roll-up — totaled, mid-job,
-            awaiting parts, ready for pickup. Climate controlled. Monitored.
-            Keys with Serge, not on a board.
+            awaiting parts, ready for pickup. Climate-controlled. Monitored.
+            Keys with Serge — not on a board.
           </p>
           <p className="mt-6 text-muted">
             If overflow ever forces a different arrangement, you&apos;ll know

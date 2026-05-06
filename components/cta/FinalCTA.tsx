@@ -12,7 +12,7 @@ export default function FinalCTA() {
           <PhoneCTA size="lg" location="final-cta" />
           <SmsCTA location="final-cta" />
         </div>
-        <p className="mt-8 text-xs uppercase tracking-[0.22em] text-muted">
+        <p className="eyebrow mt-8">
           Photos by text. Estimate by phone. Insurance by us.
         </p>
       </Surface>

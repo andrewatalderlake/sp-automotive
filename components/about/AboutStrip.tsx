@@ -9,7 +9,7 @@ export default function AboutStrip() {
   return (
     <section className="relative px-6 md:px-10 py-32">
       <Surface variant="solid" className="max-w-4xl mx-auto rounded-md py-20 px-6 md:px-10">
-        <p className="eyebrow">06 / No subcontractors. No shortcuts.</p>
+        <p className="eyebrow">No subcontractors. No shortcuts.</p>
         <h2 className="mt-4 display-md">
           <RevealWords>One shop. One signature. Every weld.</RevealWords>
         </h2>
