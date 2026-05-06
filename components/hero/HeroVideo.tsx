@@ -43,7 +43,7 @@ export default function HeroVideo() {
           Or{" "}
           <Link
             href="/estimate"
-            className="link-underline text-text hover:text-ignite transition-colors"
+            className="link-underline text-text hover:text-accent transition-colors"
           >
             send 3 photos for a callback
           </Link>
@@ -94,7 +94,7 @@ export default function HeroVideo() {
               Or{" "}
               <Link
                 href="/estimate"
-                className="link-underline text-text hover:text-ignite transition-colors"
+                className="link-underline text-text hover:text-accent transition-colors"
               >
                 send 3 photos for a callback
               </Link>

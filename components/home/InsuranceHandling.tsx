@@ -6,6 +6,8 @@ export default function InsuranceHandling() {
       chapterNumber="02"
       eyebrow="We handle the carrier"
       headingId="insurance-handling-heading"
+      scrubTime={11}
+      animation="slide"
       headline={<>We fight the file. You stay out of it.</>}
       body={
         <>

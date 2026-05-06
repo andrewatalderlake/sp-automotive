@@ -266,6 +266,18 @@ body {
   .film-grain::before { opacity: 0.025; }
 }
 
+/* Scroll-revealed chapter sections (CornerSection) animate via opacity,
+   transform, and/or clip-path between dwells, which can make focused
+   interactive elements invisible to keyboard users. Force the whole chapter
+   (mark, body, vignettes) back to its resting state while focus is inside
+   it. !important overrides the inline values the scroll listener writes
+   each frame. */
+section[data-scrub-time]:focus-within > div {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+
 /* Hairline — single-pixel ruled line. The Owner's Manual ruling. */
 .hairline {
   height: 1px;
