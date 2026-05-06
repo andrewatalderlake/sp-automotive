@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.4",
@@ -37,6 +39,7 @@
     "@types/three": "^0.184.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "oxfmt": "^0.48.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
