@@ -23,7 +23,7 @@ export default function AboutHero() {
   const portrait = hasPortrait();
 
   return (
-    <section className="relative bg-bg pt-32 md:pt-40 pb-20 px-6 md:px-10">
+    <section className="relative bg-ink pt-32 md:pt-40 pb-20 px-6 md:px-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-7 flex flex-col justify-center">
           <p className="eyebrow">Founder · Sarasota, FL</p>
@@ -49,8 +49,8 @@ export default function AboutHero() {
               className="object-cover"
             />
           ) : (
-            <div className="absolute inset-0 flex items-end justify-center bg-surface">
-              <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-muted/60">
+            <div className="absolute inset-0 flex items-end justify-center bg-steel">
+              <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
                 Portrait — pending
               </p>
             </div>

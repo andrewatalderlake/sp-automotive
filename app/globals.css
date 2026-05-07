@@ -15,24 +15,12 @@
   --color-chrome:     #D4D2CD;          /* Highlight metallic. */
   --color-measure:    rgba(110, 114, 122, 0.40); /* Ruled lines, grids, schematic markings. */
 
-  /* Backwards-compat aliases — components not yet rebuilt (Process,
-     forms, Footer, Nav, brand pages, editorial primitives) reference
-     these older token names. Map them onto the new system so the
-     existing markup keeps rendering correctly while re-skinning happens
-     page by page.
-
-     Crucially: --color-accent maps to BONE (highlight), not IGNITE.
-     The old design used accent as "near-white emphasis." Mapping accent
-     to ignite would turn dozens of headlines, dividers, and link hovers
-     red, breaking the brake-light discipline (only ONE ignite per screen).
-     Use `text-ignite` / `bg-ignite` directly when you want the accent. */
-  --color-bg:         var(--color-ink);
-  --color-surface:    var(--color-steel);
-  --color-text:       var(--color-bone);
-  --color-muted:      var(--color-graphite);
+  /* Auxiliary tokens — own values, not aliases for the palette above.
+     `divider` is the soft horizontal rule between sections.
+     `hairline` is the very faint 10%-opacity bone tint used for
+     schematic blueprint art and edge accents. */
   --color-divider:    #1A1B1E;
   --color-hairline:   rgba(201, 196, 187, 0.10);
-  --color-accent:     var(--color-bone);
 
   /* ─── Type Families ──────────────────────────────────────────────
      Two-family system after Path B audit (2026-05-06):
@@ -221,6 +209,14 @@ body {
   margin-top: 1.25em;
 }
 
+/* Section break for `<h2>` thesis lines inside long-form `.editorial`
+   prose (e.g. /explainers pages). Overrides the parent's `space-y-*`
+   rhythm with a wider gap above and a measured gap below. */
+.editorial > h2 {
+  margin-top: 3.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
 /* ───────────────────────────────────────────────────────────────────
    Components — link underline, film grain, schematic blueprint art
    ─────────────────────────────────────────────────────────────────── */
@@ -243,7 +239,8 @@ body {
   transition: transform var(--motion-shutter);
 }
 .link-underline:hover::after,
-.link-underline:focus-visible::after {
+.link-underline:focus-visible::after,
+.link-underline[aria-current="page"]::after {
   transform: scaleX(1);
 }
 @media (prefers-reduced-motion: reduce) {

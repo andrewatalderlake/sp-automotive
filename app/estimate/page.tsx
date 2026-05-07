@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function EstimatePage() {
   return (
-    <section className="bg-bg px-6 md:px-10 py-32 pt-40">
+    <section className="bg-ink px-6 md:px-10 py-32 pt-40">
       <div className="max-w-3xl mx-auto">
         <p className="eyebrow">Estimate</p>
         <h1 className="mt-4 display-lg">Send 3 photos. Get a callback.</h1>

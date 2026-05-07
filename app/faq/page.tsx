@@ -38,7 +38,7 @@ export default function FAQPage() {
     // Same gating as testimonials — if every entry is unpublished, the page
     // still exists for routing but reads as a stub.
     return (
-      <section className="bg-bg px-6 md:px-10 py-32 pt-40 min-h-[60vh]">
+      <section className="bg-ink px-6 md:px-10 py-32 pt-40 min-h-[60vh]">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow">Questions</p>
           <h1 className="mt-4 display-lg">In review.</h1>
@@ -57,7 +57,7 @@ export default function FAQPage() {
   return (
     <>
       <FAQJsonLd />
-      <section className="bg-bg px-6 md:px-10 pt-40 pb-24 border-b border-divider">
+      <section className="bg-ink px-6 md:px-10 pt-40 pb-24 border-b border-divider">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow">Questions owners ask</p>
           <h1 className="mt-4 display-lg">Straight answers.</h1>
@@ -72,15 +72,15 @@ export default function FAQPage() {
         </div>
       </section>
 
-      <section className="bg-bg px-6 md:px-10 py-24 md:py-32">
+      <section className="bg-ink px-6 md:px-10 py-24 md:py-32">
         <div className="max-w-3xl mx-auto">
           <ol className="space-y-16">
             {PUBLISHED_FAQS.map((f, idx) => (
               <li key={f.id} id={f.id} className="scroll-mt-32">
-                <p className="spec text-xs text-muted">
+                <p className="spec text-xs text-graphite">
                   {String(idx + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-3 font-display text-3xl md:text-4xl text-accent leading-[1.05]">
+                <h2 className="mt-3 font-display text-3xl md:text-4xl text-bone leading-[1.05]">
                   {f.question}
                 </h2>
                 <p className="editorial mt-5 max-w-[65ch]">{f.answer}</p>

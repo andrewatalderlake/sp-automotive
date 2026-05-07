@@ -1,5 +1,5 @@
 "use client";
-import { useState, MouseEvent } from "react";
+import { useEffect, useRef, useState, MouseEvent } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,6 +19,71 @@ export default function Navigation() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const openButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Anchor hrefs (e.g. /#work) are not "active" destinations — they scroll
+  // within the home page. For path hrefs, mark active when the pathname
+  // matches exactly or is a sub-route (e.g. /explainers/adas could mark
+  // /process active in future, but for now the link list is flat).
+  function isActive(href: string): boolean {
+    if (href.includes("#")) return false;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  }
+
+  // Mobile dialog a11y: when open, lock body scroll, trap Tab/Shift+Tab
+  // inside the dialog, close on Escape, and restore focus to whatever
+  // had focus before the dialog opened (typically the hamburger button).
+  useEffect(() => {
+    if (!open) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    // Capture the trigger inside the effect so the cleanup uses the value
+    // observed at open-time, not at unmount-time.
+    const openButton = openButtonRef.current;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusables = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'a, button, [tabindex]:not([tabindex="-1"]), input, select, textarea',
+      ),
+    );
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    first?.focus();
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || focusables.length === 0) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus();
+      } else {
+        openButton?.focus();
+      }
+    };
+  }, [open]);
 
   // Anchor links: native scrollIntoView (smooth via CSS scroll-behavior).
   // Off-home anchor: navigate to /#id; Next.js handles the hash scroll.
@@ -41,7 +106,7 @@ export default function Navigation() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-bg border-b border-divider">
+    <header className="fixed inset-x-0 top-0 z-50 bg-ink border-b border-divider">
       <nav className="flex items-center px-6 md:px-10 h-20">
         <div className="flex-1 flex justify-start">
           <Link href="/" aria-label="SP Automotive home" className="flex items-center">
@@ -61,7 +126,8 @@ export default function Navigation() {
               <Link
                 href={l.href}
                 onClick={handleClick(l.href)}
-                className="link-underline text-sm uppercase tracking-[0.18em] text-text hover:text-accent transition-colors"
+                aria-current={isActive(l.href) ? "page" : undefined}
+                className="link-underline text-sm uppercase tracking-[0.18em] text-bone hover:text-bone transition-colors"
               >
                 {l.label}
               </Link>
@@ -71,8 +137,9 @@ export default function Navigation() {
         <div className="flex-1 flex justify-end items-center">
           <div className="hidden md:block"><PhoneCTA location="nav" /></div>
           <button
+            ref={openButtonRef}
             type="button"
-            className="md:hidden text-accent p-3 -mr-3 inline-flex items-center justify-center"
+            className="md:hidden text-bone p-3 -mr-3 inline-flex items-center justify-center"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
             aria-expanded={open}
@@ -83,13 +150,13 @@ export default function Navigation() {
       </nav>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-bg flex flex-col" role="dialog" aria-modal="true" aria-label="Menu">
+        <div ref={dialogRef} className="fixed inset-0 z-50 bg-ink flex flex-col" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="flex justify-end p-3">
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="text-accent p-3 inline-flex items-center justify-center"
+              className="text-bone p-3 inline-flex items-center justify-center"
             >
               <X className="h-7 w-7" aria-hidden />
             </button>
@@ -100,7 +167,8 @@ export default function Navigation() {
                 <Link
                   href={l.href}
                   onClick={handleClick(l.href)}
-                  className="font-display text-3xl text-text inline-block py-2"
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  className="link-underline font-display text-3xl text-bone inline-block py-2"
                 >
                   {l.label}
                 </Link>

@@ -9,7 +9,7 @@ import PullQuote from "@/components/editorial/PullQuote";
 
 export default function AboutStory() {
   return (
-    <section className="bg-bg px-6 md:px-10 py-24 md:py-32 border-t border-divider">
+    <section className="bg-ink px-6 md:px-10 py-24 md:py-32 border-t border-divider">
       <div className="max-w-7xl mx-auto">
         <EditorialGrid rhythm="loose">
           {/* Header — single column, anchored left of the 12-col grid. */}
@@ -116,7 +116,7 @@ export default function AboutStory() {
                 car, you get a complete restoration record and a written warranty backed by the
                 person who did the work.
               </p>
-              <p className="text-text">
+              <p className="text-bone">
                 Your car is more than transportation. It&apos;s a build. I treat it that way.
               </p>
             </div>
@@ -126,12 +126,12 @@ export default function AboutStory() {
           <EditorialItem start={1} span={9}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
               {["Lamborghini", "McLaren", "Audi R8", "BMW M", "Ferrari", "Porsche"].map((m) => (
-                <div key={m} className="border border-white/10 px-4 py-3 text-sm text-text/85">
+                <div key={m} className="border border-white/10 px-4 py-3 text-sm text-bone/85">
                   {m}
                 </div>
               ))}
             </div>
-            <p className="mt-4 text-xs text-muted">
+            <p className="mt-4 text-xs text-graphite">
               If you don&apos;t see your model — call. We&apos;ve worked on cars older than this list.
             </p>
           </EditorialItem>

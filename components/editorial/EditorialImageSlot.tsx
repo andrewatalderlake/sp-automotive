@@ -42,13 +42,13 @@ export default function EditorialImageSlot({
   const present = hasImage(src);
   return (
     <div
-      className={`relative ${aspectClass} border border-white/10 overflow-hidden bg-surface ${className}`}
+      className={`relative ${aspectClass} border border-white/10 overflow-hidden bg-steel ${className}`}
     >
       {present ? (
         <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
       ) : (
         <div className="absolute inset-0 flex items-end justify-center">
-          <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-muted/60">
+          <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
             {placeholderLabel}
           </p>
         </div>

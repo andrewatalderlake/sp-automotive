@@ -88,7 +88,7 @@ export default function CraftCanvas() {
     <section
       ref={containerRef}
       aria-label="Disassembled exotic reassembling"
-      className="relative h-screen w-full overflow-hidden bg-bg border-t border-divider"
+      className="relative h-screen w-full overflow-hidden bg-ink border-t border-divider"
     >
       <div className="absolute inset-0 z-0">
         {mounted ? <CraftScene progressRef={progressRef} /> : null}
@@ -107,7 +107,7 @@ export default function CraftCanvas() {
         </div>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-muted text-[10px] uppercase tracking-[0.3em] pointer-events-none">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-graphite text-[10px] uppercase tracking-[0.3em] pointer-events-none">
         scroll to assemble
       </div>
     </section>
@@ -121,7 +121,7 @@ function CraftCanvasFallback() {
   return (
     <section
       aria-label="From parts, to whole"
-      className="relative w-full bg-bg border-t border-b border-divider px-6 md:px-10 py-20"
+      className="relative w-full bg-ink border-t border-b border-divider px-6 md:px-10 py-20"
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="md:col-span-5 flex flex-col justify-center">
@@ -131,8 +131,8 @@ function CraftCanvasFallback() {
             Every panel comes off. Every panel goes back on. Torque-spec, gap-measured, signed.
           </p>
         </div>
-        <div className="md:col-span-7 relative aspect-[16/10] border border-white/10 bg-surface flex items-end justify-center">
-          <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-muted/60">
+        <div className="md:col-span-7 relative aspect-[16/10] border border-white/10 bg-steel flex items-end justify-center">
+          <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
             Assembled — pending
           </p>
         </div>

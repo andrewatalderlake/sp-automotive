@@ -39,7 +39,7 @@ export default function AdasExplainerPage() {
   return (
     <>
       <TechArticleJsonLd />
-      <article className="bg-bg px-6 md:px-10 pt-40 pb-24 border-b border-divider">
+      <article className="bg-ink px-6 md:px-10 pt-40 pb-24 border-b border-divider">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow">Explainer · 01</p>
           <h1 className="mt-4 display-lg">{TITLE}</h1>
@@ -47,7 +47,7 @@ export default function AdasExplainerPage() {
         </div>
       </article>
 
-      <section className="bg-bg px-6 md:px-10 py-24 md:py-32">
+      <section className="bg-ink px-6 md:px-10 py-24 md:py-32">
         <div className="max-w-3xl mx-auto">
           <div className="editorial max-w-[65ch] space-y-7">
             <p>
@@ -78,7 +78,7 @@ export default function AdasExplainerPage() {
               dash while reading the world wrong.
             </p>
 
-            <h2 className="font-display text-2xl md:text-3xl text-accent leading-[1.1] !mt-14 mb-3">
+            <h2 className="font-display text-2xl md:text-3xl text-bone leading-[1.1]">
               Why this is harder on an exotic
             </h2>
             <p>
@@ -99,7 +99,7 @@ export default function AdasExplainerPage() {
               the result because they do not own the software.
             </p>
 
-            <h2 className="font-display text-2xl md:text-3xl text-accent leading-[1.1] !mt-14 mb-3">
+            <h2 className="font-display text-2xl md:text-3xl text-bone leading-[1.1]">
               How we handle it
             </h2>
             <p>
@@ -123,7 +123,7 @@ export default function AdasExplainerPage() {
             <SmsCTA location="explainer-adas" />
             <Link
               href="/faq#adas"
-              className="link-underline text-sm uppercase tracking-[0.18em] text-muted hover:text-accent transition-colors ml-auto"
+              className="link-underline text-sm uppercase tracking-[0.18em] text-graphite hover:text-bone transition-colors ml-auto"
             >
               FAQ on ADAS &rarr;
             </Link>

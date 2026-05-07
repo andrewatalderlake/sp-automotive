@@ -27,10 +27,17 @@ export default function Magnetic({ children, radius = 100, strength = 0.35, disp
     if (isCoarse || isReduced) return;
 
     let frame = 0;
+    let running = false;
     let targetX = 0;
     let targetY = 0;
     let curX = 0;
     let curY = 0;
+
+    function ensureRunning() {
+      if (running) return;
+      running = true;
+      frame = requestAnimationFrame(tick);
+    }
 
     function onMove(e: MouseEvent) {
       const rect = el!.getBoundingClientRect();
@@ -46,20 +53,30 @@ export default function Magnetic({ children, radius = 100, strength = 0.35, disp
         targetX = 0;
         targetY = 0;
       }
+      ensureRunning();
     }
 
     function tick() {
       curX += (targetX - curX) * 0.18;
       curY += (targetY - curY) * 0.18;
       el!.style.transform = `translate3d(${curX}px, ${curY}px, 0)`;
+      // Stop the rAF loop once the element has settled back to rest. Restarts
+      // on the next mousemove via ensureRunning().
+      const settledAtRest =
+        targetX === 0 && targetY === 0 &&
+        Math.abs(curX) < 0.05 && Math.abs(curY) < 0.05;
+      if (settledAtRest) {
+        el!.style.transform = "translate3d(0, 0, 0)";
+        running = false;
+        return;
+      }
       frame = requestAnimationFrame(tick);
     }
 
-    frame = requestAnimationFrame(tick);
     window.addEventListener("mousemove", onMove);
 
     return () => {
-      cancelAnimationFrame(frame);
+      if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("mousemove", onMove);
     };
   }, [radius, strength]);

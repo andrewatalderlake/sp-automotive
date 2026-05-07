@@ -15,7 +15,7 @@ export default function InsuranceHandling() {
             to estimator, line item to line item — until the carrier pays for
             the car you actually own.
           </p>
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-graphite">
             You don&apos;t see the friction. You see the result.
           </p>
         </>

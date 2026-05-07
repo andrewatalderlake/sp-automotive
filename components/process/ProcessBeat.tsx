@@ -83,7 +83,7 @@ export default function ProcessBeat({ beat }: { beat: Beat }) {
   }, [hasPin, beat.id]);
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full overflow-hidden bg-bg">
+    <section ref={containerRef} className="relative h-screen w-full overflow-hidden bg-ink">
       <div className="relative z-10 h-full grid grid-cols-1 md:grid-cols-12 gap-6 px-6 md:px-10 py-16">
         <div className="md:col-span-4 flex flex-col justify-center">
           <p className="eyebrow">{beat.eyebrow}</p>
@@ -104,7 +104,7 @@ export default function ProcessBeat({ beat }: { beat: Beat }) {
       {hasPin && (
         <div
           data-scroll-indicator
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-muted text-[10px] uppercase tracking-[0.3em]"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-graphite text-[10px] uppercase tracking-[0.3em]"
           style={{ opacity: 1 }}
         >
           scroll
@@ -129,8 +129,8 @@ function OverlayLayer({ beat }: { beat: Beat }) {
               className="flex items-baseline gap-4 will-change-transform"
               style={{ opacity: 0, transform: "translateY(12px)" }}
             >
-              <span className="font-display text-3xl md:text-4xl text-accent tracking-wide">{ov.label}</span>
-              <span className="spec text-sm uppercase tracking-[0.18em] text-muted">{ov.thickness}</span>
+              <span className="font-display text-3xl md:text-4xl text-bone tracking-wide">{ov.label}</span>
+              <span className="spec text-sm uppercase tracking-[0.18em] text-graphite">{ov.thickness}</span>
             </div>
           );
         })}
@@ -163,11 +163,11 @@ function OverlayItem({ overlay }: { overlay: Overlay }) {
       >
         <Marker />
         <div className="ml-8 -mt-3">
-          <div className="spec text-2xl md:text-3xl text-accent leading-none">
+          <div className="spec text-2xl md:text-3xl text-bone leading-none">
             {overlay.text}
           </div>
           {overlay.sub && (
-            <div className="mt-1 text-[11px] uppercase tracking-[0.22em] text-muted whitespace-nowrap">
+            <div className="mt-1 text-[11px] uppercase tracking-[0.22em] text-graphite whitespace-nowrap">
               {overlay.sub}
             </div>
           )}
@@ -190,7 +190,7 @@ function OverlayItem({ overlay }: { overlay: Overlay }) {
         }}
       >
         <Marker />
-        <div className="ml-8 -mt-3 text-base md:text-lg uppercase tracking-[0.22em] text-accent whitespace-nowrap">
+        <div className="ml-8 -mt-3 text-base md:text-lg uppercase tracking-[0.22em] text-bone whitespace-nowrap">
           {overlay.label}
         </div>
       </div>
@@ -212,10 +212,10 @@ function OverlayItem({ overlay }: { overlay: Overlay }) {
       >
         <Marker />
         <div className="ml-8 -mt-3">
-          <div className="spec text-xl md:text-2xl text-accent leading-none">
+          <div className="spec text-xl md:text-2xl text-bone leading-none">
             {overlay.spec}
           </div>
-          <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-muted">torque-spec</div>
+          <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-graphite">torque-spec</div>
         </div>
       </div>
     );
@@ -235,13 +235,13 @@ function OverlayItem({ overlay }: { overlay: Overlay }) {
         }}
       >
         <div className="flex items-center gap-2">
-          <div className="h-px w-12 bg-accent" />
-          <div className="spec text-base md:text-lg text-accent whitespace-nowrap">
+          <div className="h-px w-12 bg-bone" />
+          <div className="spec text-base md:text-lg text-bone whitespace-nowrap">
             {overlay.measurement}
           </div>
-          <div className="h-px w-12 bg-accent" />
+          <div className="h-px w-12 bg-bone" />
         </div>
-        <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-muted text-center">gap</div>
+        <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-graphite text-center">gap</div>
       </div>
     );
   }
@@ -251,6 +251,6 @@ function OverlayItem({ overlay }: { overlay: Overlay }) {
 
 function Marker() {
   return (
-    <span className="block w-3 h-3 rounded-full bg-accent ring-4 ring-accent/15" />
+    <span className="block w-3 h-3 rounded-full bg-bone ring-4 ring-bone/15" />
   );
 }

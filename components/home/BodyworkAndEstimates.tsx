@@ -16,7 +16,7 @@ export default function BodyworkAndEstimates() {
             to your driveway, your garage, your storage unit — wherever the
             car is. One to two days from the call to the written number.
           </p>
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-graphite">
             Monday through Saturday.
           </p>
         </>

@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <section className="min-h-screen bg-bg flex items-center justify-center px-6 md:px-10">
+    <section className="min-h-screen bg-ink flex items-center justify-center px-6 md:px-10">
       <div className="max-w-2xl text-center">
         <p className="eyebrow">404 · Page not found</p>
         <h1 className="mt-5 display-lg">This page came home before it was finished.</h1>
@@ -18,7 +18,7 @@ export default function NotFound() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-accent text-accent text-sm uppercase tracking-[0.18em] hover:bg-accent hover:text-bg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-bone text-bone text-sm uppercase tracking-[0.18em] hover:bg-bone hover:text-ink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
           >
             Home
           </Link>

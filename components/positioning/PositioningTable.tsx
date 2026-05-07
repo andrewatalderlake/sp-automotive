@@ -26,9 +26,9 @@ function Cell({ value }: { value: boolean }) {
   return (
     <td className="spec text-center text-lg py-5 border-b border-divider">
       {value ? (
-        <span className="text-accent" aria-label="Yes">✓</span>
+        <span className="text-bone" aria-label="Yes">✓</span>
       ) : (
-        <span className="text-muted" aria-label="—">—</span>
+        <span className="text-graphite" aria-label="—">—</span>
       )}
     </td>
   );
@@ -36,7 +36,7 @@ function Cell({ value }: { value: boolean }) {
 
 export default function PositioningTable() {
   return (
-    <section className="bg-bg px-6 md:px-10 py-24 md:py-32 border-t border-divider">
+    <section className="bg-ink px-6 md:px-10 py-24 md:py-32 border-t border-divider">
       <div className="max-w-5xl mx-auto">
         <p className="eyebrow">What makes us different</p>
         <h2 className="mt-4 display-md">A factual comparison.</h2>
@@ -49,11 +49,11 @@ export default function PositioningTable() {
           <table className="w-full min-w-[640px] border-collapse">
             <thead>
               <tr>
-                <th className="text-left py-5 border-b border-accent w-[40%]">
+                <th className="text-left py-5 border-b border-bone w-[40%]">
                   <span className="eyebrow">Capability</span>
                 </th>
-                <th className="text-center py-5 border-b border-accent w-[20%]">
-                  <span className="eyebrow text-accent">SP Automotive</span>
+                <th className="text-center py-5 border-b border-bone w-[20%]">
+                  <span className="eyebrow text-bone">SP Automotive</span>
                 </th>
                 <th className="text-center py-5 border-b border-divider w-[20%]">
                   <span className="eyebrow">Network shop</span>
@@ -78,7 +78,7 @@ export default function PositioningTable() {
           </table>
         </div>
 
-        <p className="mt-10 text-sm text-muted max-w-2xl">
+        <p className="mt-10 text-sm text-graphite max-w-2xl">
           &ldquo;Network shop&rdquo; means an insurance-direct-repair facility. &ldquo;Dealer body shop&rdquo; means
           a manufacturer-affiliated collision center. Both can do good work. We take a different approach.
         </p>
