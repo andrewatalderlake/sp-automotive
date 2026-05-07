@@ -24,6 +24,9 @@ export default function Analytics() {
 }
 
 function ClarityScript({ projectId }: { projectId: string }) {
+  // Clarity project IDs are alphanumeric; reject anything else before
+  // interpolating into the inline script to prevent accidental injection.
+  if (!/^[a-z0-9]+$/i.test(projectId)) return null;
   return (
     <Script
       id="ms-clarity"

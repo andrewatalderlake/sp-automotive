@@ -44,6 +44,7 @@ async function postWebhook(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) {
       return { ok: false, error: `sheet webhook ${res.status}` };

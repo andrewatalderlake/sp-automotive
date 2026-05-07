@@ -6,6 +6,8 @@ export default function StorageBlock() {
       chapterNumber="03"
       eyebrow="Indoor storage"
       headingId="storage-heading"
+      scrubTime={18}
+      animation="sweep"
       headline={<>Inside. Always.</>}
       body={
         <>
