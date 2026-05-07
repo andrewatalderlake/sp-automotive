@@ -98,7 +98,11 @@ export default function Navigation() {
       body.style.left = prev.left;
       body.style.right = prev.right;
       body.style.width = prev.width;
-      window.scrollTo(0, scrollY);
+      // `behavior: "instant"` is required because globals.css sets
+      // `html { scroll-behavior: smooth }`. Without it the page would
+      // snap to top (as `position: fixed` clears) and then animate back
+      // down on every dialog close.
+      window.scrollTo({ top: scrollY, behavior: "instant" });
       document.removeEventListener("keydown", onKey);
       if (previouslyFocused && document.contains(previouslyFocused)) {
         previouslyFocused.focus();
