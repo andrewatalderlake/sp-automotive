@@ -2,7 +2,7 @@ import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import Surface from "@/components/ui/Surface";
 
-// Closing chapter ("06 / Next move"). Glass tab contains the action
+// Closing chapter ("07 / Next move"). Glass tab contains the action
 // triangle (phone, SMS, supporting copy) so the CTAs sit on a clearly
 // defined surface instead of floating on the road footage behind them.
 export default function FinalCTA() {
