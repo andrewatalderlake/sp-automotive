@@ -10,7 +10,7 @@ export default function FinalCTA() {
     <section className="relative w-full overflow-hidden px-6 md:px-10 pt-32 pb-32">
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          06
+          07
         </div>
         <p className="eyebrow mt-2">/ Next move</p>
       </div>

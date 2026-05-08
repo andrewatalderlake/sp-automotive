@@ -15,7 +15,7 @@ export default function AboutStrip() {
     <section className="relative px-6 md:px-10 py-32">
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          05
+          06
         </div>
         <p className="eyebrow mt-2">/ The signature</p>
       </div>

@@ -10,12 +10,23 @@ const pairs = [
   { id: 4, caption: "BMW M4 — frame correction" },
 ];
 
+// Free-floating chapter mark + glass-tab gallery, matching the homepage
+// chapter pattern (AboutStrip / FinalCTA). The id="work" stays on the
+// outer <section> so the navbar's /#work anchor lands here.
 export default function BeforeAfterGallery() {
   return (
-    <section id="work" className="relative px-6 md:px-10 py-32">
-      <Surface variant="solid" className="max-w-7xl mx-auto rounded-md py-20 px-6 md:px-10">
-        <p className="eyebrow">04 / The Work</p>
-        <h2 className="mt-4 display-lg mb-16">
+    <section id="work" className="relative px-6 md:px-10 py-32 scroll-mt-32">
+      <div className="relative z-10 mb-16">
+        <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
+          05
+        </div>
+        <p className="eyebrow mt-2">/ Selected work</p>
+      </div>
+      <Surface
+        variant="glass"
+        className="relative z-10 max-w-7xl mx-auto rounded-2xl py-12 px-6 md:py-16 md:px-10"
+      >
+        <h2 className="display-lg mb-12 md:mb-16">
           <RevealWords>What came back better than new.</RevealWords>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

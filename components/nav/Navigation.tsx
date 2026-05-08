@@ -6,13 +6,11 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 
-// "Work" intentionally omitted: the /#work anchor target lives on
-// BeforeAfterGallery, which isn't currently on the homepage. Restore this
-// link in the next pass once a real /work page (or the gallery on home) is
-// shipped.
+// /#work scrolls to the BeforeAfterGallery (id="work") on the homepage.
 const links = [
   { href: "/", label: "Home" },
   { href: "/process", label: "Process" },
+  { href: "/#work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
