@@ -8,7 +8,9 @@ export default function BodyworkAndEstimates() {
       chapterNumber="04"
       eyebrow="Estimate without the haul"
       headingId="bodywork-estimates-heading"
-      headline={<>We come to you.</>}
+      scrubTime={24}
+      animation="tilt"
+      headline={"We come to you."}
       body={
         <>
           <p>
@@ -16,7 +18,7 @@ export default function BodyworkAndEstimates() {
             to your driveway, your garage, your storage unit — wherever the
             car is. One to two days from the call to the written number.
           </p>
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-graphite">
             Monday through Saturday.
           </p>
         </>

@@ -84,6 +84,30 @@ export default function CustomCursor() {
       setHover(!!interactive);
     }
 
+    // Keyboard navigation: when focus moves via Tab, snap the cursor to the
+    // focused element's center so the spotlight tracks tab order. Mirrors the
+    // hover/label logic above so the ring grows for focused interactive
+    // elements just like it does on hover.
+    function onFocus(e: FocusEvent) {
+      const t = e.target as HTMLElement | null;
+      if (!t || !(t instanceof HTMLElement)) return;
+      const rect = t.getBoundingClientRect();
+      targetX = rect.left + rect.width / 2;
+      targetY = rect.top + rect.height / 2;
+      dot!.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+      spotlight!.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+      setVisible(true);
+      const labelled = t.closest<HTMLElement>("[data-cursor]");
+      if (labelled) {
+        setLabel(labelled.dataset.cursor || null);
+        setHover(true);
+        return;
+      }
+      setLabel(null);
+      const interactive = t.closest("a, button, [role='button'], input, textarea, label");
+      setHover(!!interactive);
+    }
+
     // Hide while the page is hidden so the cursor doesn't flash at a stale
     // position when the user switches back. The next pointermove/pointerenter
     // re-snaps it to the real cursor position.
@@ -95,6 +119,7 @@ export default function CustomCursor() {
     document.addEventListener("pointermove", onMove);
     document.addEventListener("pointerover", onOver);
     document.addEventListener("pointerenter", onMove);
+    document.addEventListener("focusin", onFocus);
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
@@ -102,6 +127,7 @@ export default function CustomCursor() {
       document.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerover", onOver);
       document.removeEventListener("pointerenter", onMove);
+      document.removeEventListener("focusin", onFocus);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [enabled]);
@@ -130,7 +156,7 @@ export default function CustomCursor() {
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[70] rounded-full border-2 border-accent flex items-center justify-center text-bg uppercase"
+        className="pointer-events-none fixed top-0 left-0 z-[70] rounded-full border-2 border-bone flex items-center justify-center text-ink uppercase"
         style={{
           width: ringW,
           height: ringH,
@@ -142,7 +168,7 @@ export default function CustomCursor() {
           fontSize: label ? "11px" : 0,
           letterSpacing: label ? "0.2em" : 0,
           fontWeight: 600,
-          backgroundColor: label ? "var(--color-accent)" : hover ? "rgba(255,255,255,0.10)" : "transparent",
+          backgroundColor: label ? "var(--color-bone)" : hover ? "rgba(255,255,255,0.10)" : "transparent",
           boxShadow: "0 0 12px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(0,0,0,0.25)",
           transition: "width 220ms cubic-bezier(.65,0,.35,1), height 220ms cubic-bezier(.65,0,.35,1), background-color 200ms, padding 220ms, font-size 200ms, margin 220ms",
           whiteSpace: "nowrap",
@@ -153,7 +179,7 @@ export default function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[71] rounded-full bg-accent"
+        className="pointer-events-none fixed top-0 left-0 z-[71] rounded-full bg-bone"
         style={{
           width: label ? 0 : hover ? "4px" : "6px",
           height: label ? 0 : hover ? "4px" : "6px",
@@ -168,7 +194,7 @@ export default function CustomCursor() {
         @media (pointer: fine) {
           html, body { cursor: none; }
           html, body *:not(input):not(textarea):not(select):not([contenteditable="true"]) {
-            cursor: none !important;
+            cursor: none;
           }
         }
       `}</style>

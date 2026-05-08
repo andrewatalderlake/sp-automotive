@@ -33,7 +33,7 @@ export default function SceneDivider({
   priority = false,
 }: Props) {
   return (
-    <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden bg-bg border-t border-divider">
+    <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden bg-ink border-t border-divider">
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -47,11 +47,11 @@ export default function SceneDivider({
         className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/15 to-black/85"
       />
       <div className="relative z-10 h-full flex flex-col justify-end items-start px-6 md:px-10 pb-14 md:pb-20 max-w-7xl mx-auto w-full">
-        <p className="spec text-xs text-accent">{index}</p>
-        <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-accent/85">
+        <p className="spec text-xs text-bone">{index}</p>
+        <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-bone/85">
           {eyebrow}
         </p>
-        <h3 className="mt-4 font-display text-3xl md:text-5xl text-accent leading-[1.05] max-w-3xl">
+        <h3 className="mt-4 font-display text-3xl md:text-5xl text-bone leading-[1.05] max-w-3xl">
           {caption}
         </h3>
       </div>

@@ -15,24 +15,12 @@
   --color-chrome:     #D4D2CD;          /* Highlight metallic. */
   --color-measure:    rgba(110, 114, 122, 0.40); /* Ruled lines, grids, schematic markings. */
 
-  /* Backwards-compat aliases — components not yet rebuilt (Process,
-     forms, Footer, Nav, brand pages, editorial primitives) reference
-     these older token names. Map them onto the new system so the
-     existing markup keeps rendering correctly while re-skinning happens
-     page by page.
-
-     Crucially: --color-accent maps to BONE (highlight), not IGNITE.
-     The old design used accent as "near-white emphasis." Mapping accent
-     to ignite would turn dozens of headlines, dividers, and link hovers
-     red, breaking the brake-light discipline (only ONE ignite per screen).
-     Use `text-ignite` / `bg-ignite` directly when you want the accent. */
-  --color-bg:         var(--color-ink);
-  --color-surface:    var(--color-steel);
-  --color-text:       var(--color-bone);
-  --color-muted:      var(--color-graphite);
+  /* Auxiliary tokens — own values, not aliases for the palette above.
+     `divider` is the soft horizontal rule between sections.
+     `hairline` is the very faint 10%-opacity bone tint used for
+     schematic blueprint art and edge accents. */
   --color-divider:    #1A1B1E;
   --color-hairline:   rgba(201, 196, 187, 0.10);
-  --color-accent:     var(--color-bone);
 
   /* ─── Type Families ──────────────────────────────────────────────
      Two-family system after Path B audit (2026-05-06):
@@ -221,11 +209,21 @@ body {
   margin-top: 1.25em;
 }
 
+/* Section break for `<h2>` thesis lines inside long-form `.editorial`
+   prose (e.g. /explainers pages). Overrides the parent's `space-y-*`
+   rhythm with a wider gap above and a measured gap below. */
+.editorial > h2 {
+  margin-top: 3.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
 /* ───────────────────────────────────────────────────────────────────
    Components — link underline, film grain, schematic blueprint art
    ─────────────────────────────────────────────────────────────────── */
 
-/* Animated underline — left-to-right wipe on hover. Apply to text links. */
+/* Animated underline — draws in from the left on hover, retracts to the
+   right on hover-out (origin flips so the motion reads continuous, not
+   "rewind"). Pure CSS, no JS. */
 .link-underline {
   position: relative;
   display: inline-block;
@@ -239,15 +237,70 @@ body {
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--motion-shutter);
+  transform-origin: right center;
+  transition: transform 220ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 .link-underline:hover::after,
-.link-underline:focus-visible::after {
+.link-underline:focus-visible::after,
+.link-underline[aria-current="page"]::after {
   transform: scaleX(1);
+  transform-origin: left center;
 }
 @media (prefers-reduced-motion: reduce) {
   .link-underline::after { transition: none; }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   SplitText — character stagger reveal driven by a single --st (0→1).
+   See components/effects/SplitText.tsx for the JS side.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Register --st as a number so the browser can interpolate it in a
+   transition. Without @property, --st is treated as a string token and
+   transitioning between values is instant rather than smooth. */
+@property --st {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.st-wrap {
+  display: inline-block;
+}
+/* Word-grouping wrapper: keeps a word as a single inline-block unit so the
+   browser can only break between words, never inside one. */
+.st-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.st-wrap[data-reveal="mount"] {
+  /* Mount reveal: a single --st transition carries the whole word. The
+     transition timing is the per-char stagger × char count + duration,
+     wrapped in a fast-out-slow-in curve for a "settling" finish. */
+  transition: --st var(--st-transition, 800ms) cubic-bezier(0.16, 1, 0.3, 1);
+}
+.st-char {
+  /* Each char's local progress = (--st * (total + overlap)) - index.
+     Clamped to [0,1]: 0 = fully hidden, 1 = fully revealed, in-between
+     = mid-fade. Larger --st-overlap = more parallel reveal between
+     adjacent chars; smaller = more sequential. */
+  display: inline-block;
+  --st-progress: clamp(
+    0,
+    calc(var(--st, 1) * (var(--st-total) + var(--st-overlap)) - var(--st-i)),
+    1
+  );
+  opacity: var(--st-progress);
+  transform: translate3d(0, calc((1 - var(--st-progress)) * 10px), 0);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-wrap { transition: none; }
+  .st-char {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Film-grain overlay — subtle organic texture. SVG turbulence inlined. */
@@ -264,6 +317,18 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .film-grain::before { opacity: 0.025; }
+}
+
+/* Scroll-revealed chapter sections (CornerSection) animate via opacity,
+   transform, and/or clip-path between dwells, which can make focused
+   interactive elements invisible to keyboard users. Force the whole chapter
+   (mark, body, vignettes) back to its resting state while focus is inside
+   it. !important overrides the inline values the scroll listener writes
+   each frame. */
+section[data-scrub-time]:focus-within > div {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
 }
 
 /* Hairline — single-pixel ruled line. The Owner's Manual ruling. */

@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { PUBLISHED_TESTIMONIALS, type Testimonial } from "./testimonials-data";
 import RevealWords from "@/components/effects/RevealWords";
 import Surface from "@/components/ui/Surface";
@@ -13,6 +13,7 @@ export default function TestimonialsSection({ brand, heading = "From the owners.
   const items: Testimonial[] = brand
     ? PUBLISHED_TESTIMONIALS.filter((t) => t.brand === brand)
     : PUBLISHED_TESTIMONIALS;
+  const reduced = useReducedMotion();
 
   if (items.length === 0) return null;
 
@@ -26,18 +27,22 @@ export default function TestimonialsSection({ brand, heading = "From the owners.
           {items.map((t, i) => (
             <motion.li
               key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: "easeOut" }}
+              {...(reduced
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 24 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true, amount: 0.4 },
+                    transition: { duration: 0.6, delay: i * 0.08, ease: "easeOut" },
+                  })}
             >
-              <blockquote className="font-display text-3xl md:text-5xl text-text/95 tracking-wide leading-tight">
+              <blockquote className="font-display text-3xl md:text-5xl text-bone/95 tracking-wide leading-tight">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <div className="mt-6 flex items-center gap-4">
-                <div className="h-px w-10 bg-accent" />
-                <div className="text-xs uppercase tracking-[0.22em] text-muted">
-                  {t.author} <span className="text-accent">·</span> {t.car}
+                <div className="h-px w-10 bg-bone" />
+                <div className="text-xs uppercase tracking-[0.22em] text-graphite">
+                  {t.author} <span className="text-bone">·</span> {t.car}
                 </div>
               </div>
             </motion.li>

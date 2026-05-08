@@ -74,7 +74,7 @@ function VideoCard({ testimonial }: { testimonial: VideoTestimonial }) {
     <Magnetic display="block" radius={140} strength={0.18}>
       <figure
         data-cursor="Watch"
-        className="relative border border-white/10 overflow-hidden bg-surface"
+        className="relative border border-white/10 overflow-hidden bg-steel"
       >
         <video
           ref={videoRef}
@@ -90,11 +90,11 @@ function VideoCard({ testimonial }: { testimonial: VideoTestimonial }) {
           <source src={testimonial.mp4Src} type="video/mp4" />
         </video>
         <figcaption className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
-          <p className="font-display text-xl text-accent leading-tight">
+          <p className="font-display text-xl text-bone leading-tight">
             {testimonial.captionText}
           </p>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-muted">
-            {testimonial.name} <span className="text-accent">·</span>{" "}
+          <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-graphite">
+            {testimonial.name} <span className="text-bone">·</span>{" "}
             {testimonial.vehicle}
           </p>
         </figcaption>

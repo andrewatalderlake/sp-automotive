@@ -23,7 +23,7 @@ export default function BeforeAfterGallery() {
             <Magnetic key={p.id} radius={120} strength={0.12} display="block" className="w-full">
               <figure data-cursor="View">
                 <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
-                  <div className="relative aspect-[4/3] border border-white/10 hover:border-accent transition-colors">
+                  <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
                     <Image
                       src={`/before-after/0${p.id}-before.jpg`}
                       alt={`${p.caption} — before repair`}
@@ -32,8 +32,8 @@ export default function BeforeAfterGallery() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
-                  <div aria-hidden className="flex items-center justify-center text-accent font-display text-lg">VS</div>
-                  <div className="relative aspect-[4/3] border border-white/10 hover:border-accent transition-colors">
+                  <div aria-hidden className="flex items-center justify-center text-bone font-display text-lg">VS</div>
+                  <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
                     <Image
                       src={`/before-after/0${p.id}-after.jpg`}
                       alt={`${p.caption} — after repair`}
@@ -43,7 +43,7 @@ export default function BeforeAfterGallery() {
                     />
                   </div>
                 </div>
-                <figcaption className="mt-4 text-sm text-muted">{p.caption}</figcaption>
+                <figcaption className="mt-4 text-sm text-graphite">{p.caption}</figcaption>
               </figure>
             </Magnetic>
           ))}

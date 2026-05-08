@@ -40,10 +40,10 @@ export default function ShowroomSection() {
           {items.map((b, i) => (
             <div
               key={i}
-              className="flex items-center px-8 md:px-12 text-3xl md:text-6xl font-display tracking-wide text-accent uppercase"
+              className="flex items-center px-8 md:px-12 text-3xl md:text-6xl font-display tracking-wide text-bone uppercase"
             >
               <span>{b}</span>
-              <span className="ml-8 md:ml-12 text-muted/60">·</span>
+              <span className="ml-8 md:ml-12 text-graphite/60">·</span>
             </div>
           ))}
         </div>

@@ -68,10 +68,10 @@ export default function ProcessNarrative({ as: Heading = "h1" }: { as?: "h1" | "
   }
 
   return (
-    <section id="process" className="bg-bg">
+    <section id="process" className="bg-ink">
       <div className="px-6 md:px-10 pt-32 pb-0 text-center max-w-5xl mx-auto">
         <Heading className="display-lg uppercase">The Process</Heading>
-        <p className="mt-3 lead text-muted">Six steps. One signature.</p>
+        <p className="mt-3 lead text-graphite">Six steps. One signature.</p>
       </div>
       {BEATS.flatMap((b, i) => {
         const items: React.ReactNode[] = [<ProcessBeat key={b.id} beat={b} />];

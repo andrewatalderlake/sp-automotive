@@ -1,14 +1,14 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { BEATS, type Beat, type Overlay } from "@/lib/process-narrative";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 
 export default function ProcessNarrativeMobile({ as: Heading = "h1" }: { as?: "h1" | "h2" } = {}) {
   return (
-    <section id="process" className="bg-bg">
+    <section id="process" className="bg-ink">
       <div className="px-6 pt-28 pb-0 text-center">
         <Heading className="display-md uppercase">The Process</Heading>
-        <p className="mt-2 lead text-muted">Six steps. One signature.</p>
+        <p className="mt-2 lead text-graphite">Six steps. One signature.</p>
       </div>
       {BEATS.map((b) => (
         <BeatBlock key={b.id} beat={b} />
@@ -18,13 +18,18 @@ export default function ProcessNarrativeMobile({ as: Heading = "h1" }: { as?: "h
 }
 
 function BeatBlock({ beat }: { beat: Beat }) {
+  const reduced = useReducedMotion();
   return (
     <motion.article
       className="relative w-full py-16 border-t border-divider first:border-t-0"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6 }}
+      {...(reduced
+        ? {}
+        : {
+            initial: { opacity: 0, y: 24 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true, amount: 0.2 },
+            transition: { duration: 0.6 },
+          })}
     >
       <div className="px-6">
         <p className="eyebrow">{beat.eyebrow}</p>
@@ -50,29 +55,29 @@ function CalloutList({ overlays }: { overlays: Overlay[] }) {
         <li key={i} className="border border-white/10 px-4 py-3">
           {ov.kind === "callout" && (
             <>
-              <div className="font-display text-2xl text-accent leading-none">{ov.text}</div>
-              {ov.sub && <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">{ov.sub}</div>}
+              <div className="font-display text-2xl text-bone leading-none">{ov.text}</div>
+              {ov.sub && <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-graphite">{ov.sub}</div>}
             </>
           )}
           {ov.kind === "panel" && (
-            <div className="text-sm uppercase tracking-[0.18em] text-accent">{ov.label}</div>
+            <div className="text-sm uppercase tracking-[0.18em] text-bone">{ov.label}</div>
           )}
           {ov.kind === "torque" && (
             <>
-              <div className="font-display text-2xl text-accent leading-none">{ov.spec}</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">torque-spec</div>
+              <div className="font-display text-2xl text-bone leading-none">{ov.spec}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-graphite">torque-spec</div>
             </>
           )}
           {ov.kind === "gap" && (
             <>
-              <div className="font-display text-xl text-accent leading-none">{ov.measurement}</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">gap</div>
+              <div className="font-display text-xl text-bone leading-none">{ov.measurement}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-graphite">gap</div>
             </>
           )}
           {ov.kind === "layer" && (
             <>
-              <div className="font-display text-xl text-accent leading-none">{ov.label}</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">{ov.thickness}</div>
+              <div className="font-display text-xl text-bone leading-none">{ov.label}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-graphite">{ov.thickness}</div>
             </>
           )}
         </li>

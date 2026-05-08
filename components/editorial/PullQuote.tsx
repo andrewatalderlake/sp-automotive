@@ -15,12 +15,12 @@ type Props = {
 
 export default function PullQuote({ children, attribution, className = "" }: Props) {
   return (
-    <figure className={`my-12 md:my-16 border-l border-accent pl-6 md:pl-8 max-w-[40ch] ${className}`}>
-      <blockquote className="font-display text-3xl md:text-4xl text-accent leading-[1.05] tracking-[-0.01em]">
+    <figure className={`my-12 md:my-16 border-l border-bone pl-6 md:pl-8 max-w-[40ch] ${className}`}>
+      <blockquote className="font-display text-3xl md:text-4xl text-bone leading-[1.05] tracking-[-0.01em]">
         {children}
       </blockquote>
       {attribution && (
-        <figcaption className="mt-5 text-[10px] uppercase tracking-[0.3em] text-muted">
+        <figcaption className="mt-5 text-[10px] uppercase tracking-[0.3em] text-graphite">
           {attribution}
         </figcaption>
       )}

@@ -39,7 +39,7 @@ export default function PaintMatchExplainerPage() {
   return (
     <>
       <TechArticleJsonLd />
-      <article className="bg-bg px-6 md:px-10 pt-40 pb-24 border-b border-divider">
+      <article className="bg-ink px-6 md:px-10 pt-40 pb-24 border-b border-divider">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow">Explainer · 02</p>
           <h1 className="mt-4 display-lg">{TITLE}</h1>
@@ -47,7 +47,7 @@ export default function PaintMatchExplainerPage() {
         </div>
       </article>
 
-      <section className="bg-bg px-6 md:px-10 py-24 md:py-32">
+      <section className="bg-ink px-6 md:px-10 py-24 md:py-32">
         <div className="max-w-3xl mx-auto">
           <div className="editorial max-w-[65ch] space-y-7">
             <p>
@@ -75,7 +75,7 @@ export default function PaintMatchExplainerPage() {
               it reads pale. Both look obvious in sunlight.
             </p>
 
-            <h2 className="font-display text-2xl md:text-3xl text-accent leading-[1.1] !mt-14 mb-3">
+            <h2 className="font-display text-2xl md:text-3xl text-bone leading-[1.1]">
               How the factory does it
             </h2>
             <p>
@@ -93,7 +93,7 @@ export default function PaintMatchExplainerPage() {
               film thickness as factory spec.
             </p>
 
-            <h2 className="font-display text-2xl md:text-3xl text-accent leading-[1.1] !mt-14 mb-3">
+            <h2 className="font-display text-2xl md:text-3xl text-bone leading-[1.1]">
               How we handle it
             </h2>
             <p>
@@ -126,7 +126,7 @@ export default function PaintMatchExplainerPage() {
             <SmsCTA location="explainer-paint-match" />
             <Link
               href="/faq#paint-match"
-              className="link-underline text-sm uppercase tracking-[0.18em] text-muted hover:text-accent transition-colors ml-auto"
+              className="link-underline text-sm uppercase tracking-[0.18em] text-graphite hover:text-bone transition-colors ml-auto"
             >
               FAQ on paint &rarr;
             </Link>

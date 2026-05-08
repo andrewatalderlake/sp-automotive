@@ -6,7 +6,9 @@ export default function InsuranceHandling() {
       chapterNumber="02"
       eyebrow="We handle the carrier"
       headingId="insurance-handling-heading"
-      headline={<>We fight the file. You stay out of it.</>}
+      scrubTime={11}
+      animation="slide"
+      headline={"We fight the file.\nYou stay out of it."}
       body={
         <>
           <p>
@@ -15,7 +17,7 @@ export default function InsuranceHandling() {
             to estimator, line item to line item — until the carrier pays for
             the car you actually own.
           </p>
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-graphite">
             You don&apos;t see the friction. You see the result.
           </p>
         </>

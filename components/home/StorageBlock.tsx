@@ -6,7 +6,9 @@ export default function StorageBlock() {
       chapterNumber="03"
       eyebrow="Indoor storage"
       headingId="storage-heading"
-      headline={<>Inside. Always.</>}
+      scrubTime={14}
+      animation="spring"
+      headline={"Inside. Always."}
       body={
         <>
           <p>
@@ -14,7 +16,7 @@ export default function StorageBlock() {
             awaiting parts, ready for pickup. Climate-controlled. Monitored.
             Keys with Serge — not on a board.
           </p>
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-graphite">
             If overflow ever forces a different arrangement, you&apos;ll know
             before it happens.
           </p>
