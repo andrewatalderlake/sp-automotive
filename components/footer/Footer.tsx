@@ -11,8 +11,8 @@ export default function Footer() {
   // viewport. On other routes the html gradient already provides a dark
   // backdrop; the scrim is a near-imperceptible extra darken there.
   return (
-    <footer className="relative border-t border-divider px-6 md:px-10 py-16">
-      <Surface variant="solid" className="max-w-7xl mx-auto rounded-md py-12 px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer className="relative px-6 md:px-10 py-16">
+      <Surface variant="glass" className="max-w-7xl mx-auto rounded-2xl py-12 px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
           <Image
             src="/logos/sp-mark.png"

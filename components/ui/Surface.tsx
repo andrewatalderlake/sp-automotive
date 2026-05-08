@@ -13,13 +13,8 @@ import type { ReactNode } from "react";
 
 type Variant = "solid" | "veil" | "edge" | "glass";
 
-// `solid` uses a top-and-bottom alpha mask so its rectangular bg + backdrop
-// blur both feather to transparent at the card's vertical edges. Without the
-// mask, the hard top edge of bg-black/65 over the page-wide scrub video
-// reads as a horizontal seam where the section above ends.
 const variantClass: Record<Variant, string> = {
-  solid:
-    "bg-black/65 backdrop-blur-sm [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_88%,transparent_100%)]",
+  solid: "bg-black/65 backdrop-blur-sm",
   veil: "bg-black/40",
   edge: "bg-gradient-to-b from-black/75 via-black/25 to-black/75",
   glass:

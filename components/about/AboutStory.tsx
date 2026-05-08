@@ -3,6 +3,7 @@
 // with one pull-quote at the thesis line. Image slots render placeholders
 // until real photos land in /public/about/.
 
+import Link from "next/link";
 import { EditorialGrid, EditorialItem } from "@/components/editorial/EditorialGrid";
 import EditorialImageSlot from "@/components/editorial/EditorialImageSlot";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -122,13 +123,29 @@ export default function AboutStory() {
             </div>
           </EditorialItem>
 
-          {/* Models grid — full width, anchored to the start column. */}
+          {/* Models grid — full width, anchored to the start column.
+              Each tile links to its brand page where one exists; the rest
+              point at /contact with a brand query so a click never dead-ends.
+              Drop the `?brand=` query and replace with a real path once
+              the missing brand pages ship. */}
           <EditorialItem start={1} span={9}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
-              {["Lamborghini", "McLaren", "Audi R8", "BMW M", "Ferrari", "Porsche"].map((m) => (
-                <div key={m} className="border border-white/10 px-4 py-3 text-sm text-bone/85">
-                  {m}
-                </div>
+              {[
+                { name: "Lamborghini", href: "/lamborghini-collision-repair-sarasota" },
+                { name: "McLaren", href: "/mclaren-collision-repair-sarasota" },
+                { name: "Audi R8", href: "/audi-r8-collision-repair-sarasota" },
+                { name: "BMW M", href: "/contact?brand=bmw-m" },
+                { name: "Ferrari", href: "/contact?brand=ferrari" },
+                { name: "Porsche", href: "/contact?brand=porsche" },
+              ].map((m) => (
+                <Link
+                  key={m.name}
+                  href={m.href}
+                  data-cursor="View"
+                  className="border border-white/10 px-4 py-3 text-sm text-bone/85 hover:text-bone hover:border-white/25 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+                >
+                  {m.name}
+                </Link>
               ))}
             </div>
             <p className="mt-4 text-xs text-graphite">
