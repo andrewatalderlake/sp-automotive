@@ -124,19 +124,16 @@ export default function AboutStory() {
           </EditorialItem>
 
           {/* Models grid — full width, anchored to the start column.
-              Each tile links to its brand page where one exists; the rest
-              point at /contact with a brand query so a click never dead-ends.
-              Drop the `?brand=` query and replace with a real path once
-              the missing brand pages ship. */}
+              Each tile links to its brand page. */}
           <EditorialItem start={1} span={9}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
               {[
                 { name: "Lamborghini", href: "/lamborghini-collision-repair-sarasota" },
                 { name: "McLaren", href: "/mclaren-collision-repair-sarasota" },
                 { name: "Audi R8", href: "/audi-r8-collision-repair-sarasota" },
-                { name: "BMW M", href: "/contact?brand=bmw-m" },
-                { name: "Ferrari", href: "/contact?brand=ferrari" },
-                { name: "Porsche", href: "/contact?brand=porsche" },
+                { name: "BMW M", href: "/bmw-m-collision-repair-sarasota" },
+                { name: "Ferrari", href: "/ferrari-collision-repair-sarasota" },
+                { name: "Porsche", href: "/porsche-collision-repair-sarasota" },
               ].map((m) => (
                 <Link
                   key={m.name}
