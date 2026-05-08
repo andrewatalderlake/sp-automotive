@@ -1,6 +1,5 @@
 import Link from "next/link";
 import RevealWords from "@/components/effects/RevealWords";
-import Surface from "@/components/ui/Surface";
 
 // Pivot from "you found the right shop" (already covered in hero + AboutStory)
 // to the proof-of-craft angle: what the shop is, what it isn't, what it
@@ -8,7 +7,7 @@ import Surface from "@/components/ui/Surface";
 export default function AboutStrip() {
   return (
     <section className="relative px-6 md:px-10 py-32">
-      <Surface variant="solid" className="max-w-4xl mx-auto rounded-md py-20 px-6 md:px-10">
+      <div className="max-w-4xl mx-auto py-20 px-6 md:px-10">
         <p className="eyebrow">No subcontractors. No shortcuts.</p>
         <h2 className="mt-4 display-md">
           <RevealWords>One shop. One signature. Every weld.</RevealWords>
@@ -28,7 +27,7 @@ export default function AboutStrip() {
         >
           Read more about Serge →
         </Link>
-      </Surface>
+      </div>
     </section>
   );
 }

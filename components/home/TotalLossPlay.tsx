@@ -7,13 +7,8 @@ export default function TotalLossPlay() {
       eyebrow="The total-loss play"
       headingId="total-loss-heading"
       scrubTime={7}
-      headline={
-        <>
-          70% of value.
-          <br />
-          The math turns.
-        </>
-      }
+      animation="lift"
+      headline={"70% of value.\nThe math turns."}
       body={
         <>
           <p>

@@ -143,47 +143,54 @@ export default function Navigation() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-ink border-b border-divider">
-      <nav className="flex items-center px-6 md:px-10 h-20">
-        <div className="flex-1 flex justify-start">
-          <Link href="/" aria-label="SP Automotive home" className="flex items-center">
-            <Image
-              src="/logos/sp-mark.png"
-              alt="SP Automotive"
-              width={654}
-              height={241}
-              priority
-              className="h-12 w-auto invert"
-            />
-          </Link>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-6 md:px-10 pt-5">
+      <nav className="flex items-center justify-between gap-4">
+        <Link
+          href="/"
+          aria-label="SP Automotive home"
+          className="pointer-events-auto flex items-center"
+        >
+          <Image
+            src="/logos/sp-mark.png"
+            alt="SP Automotive"
+            width={654}
+            height={241}
+            priority
+            className="h-10 w-auto invert"
+          />
+        </Link>
+
+        {/* Desktop floating pill — nav links + phone CTA, top-right */}
+        <div className="pointer-events-auto hidden md:flex items-center gap-5 rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-6 py-2.5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
+          <ul className="flex items-center gap-5">
+            {links.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  onClick={handleClick(l.href)}
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  className="link-underline text-xs uppercase tracking-[0.18em] text-bone hover:text-bone transition-colors"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <span aria-hidden className="h-4 w-px bg-white/15" />
+          <PhoneCTA location="nav" />
         </div>
-        <ul className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                onClick={handleClick(l.href)}
-                aria-current={isActive(l.href) ? "page" : undefined}
-                className="link-underline text-sm uppercase tracking-[0.18em] text-bone hover:text-bone transition-colors"
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="flex-1 flex justify-end items-center">
-          <div className="hidden md:block"><PhoneCTA location="nav" /></div>
-          <button
-            ref={openButtonRef}
-            type="button"
-            className="md:hidden text-bone p-3 -mr-3 inline-flex items-center justify-center"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={open}
-          >
-            <Menu className="h-6 w-6" aria-hidden />
-          </button>
-        </div>
+
+        {/* Mobile floating pill — menu button, top-right */}
+        <button
+          ref={openButtonRef}
+          type="button"
+          className="pointer-events-auto md:hidden inline-flex items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-bone p-3"
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          aria-expanded={open}
+        >
+          <Menu className="h-5 w-5" aria-hidden />
+        </button>
       </nav>
 
       {open && (

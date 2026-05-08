@@ -8,7 +8,9 @@ export default function BodyworkAndEstimates() {
       chapterNumber="04"
       eyebrow="Estimate without the haul"
       headingId="bodywork-estimates-heading"
-      headline={<>We come to you.</>}
+      scrubTime={24}
+      animation="tilt"
+      headline={"We come to you."}
       body={
         <>
           <p>

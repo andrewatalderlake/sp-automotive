@@ -8,7 +8,7 @@ export default function InsuranceHandling() {
       headingId="insurance-handling-heading"
       scrubTime={11}
       animation="slide"
-      headline={<>We fight the file. You stay out of it.</>}
+      headline={"We fight the file.\nYou stay out of it."}
       body={
         <>
           <p>

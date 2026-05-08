@@ -221,7 +221,9 @@ body {
    Components — link underline, film grain, schematic blueprint art
    ─────────────────────────────────────────────────────────────────── */
 
-/* Animated underline — left-to-right wipe on hover. Apply to text links. */
+/* Animated underline — draws in from the left on hover, retracts to the
+   right on hover-out (origin flips so the motion reads continuous, not
+   "rewind"). Pure CSS, no JS. */
 .link-underline {
   position: relative;
   display: inline-block;
@@ -235,16 +237,70 @@ body {
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--motion-shutter);
+  transform-origin: right center;
+  transition: transform 220ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 .link-underline:hover::after,
 .link-underline:focus-visible::after,
 .link-underline[aria-current="page"]::after {
   transform: scaleX(1);
+  transform-origin: left center;
 }
 @media (prefers-reduced-motion: reduce) {
   .link-underline::after { transition: none; }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   SplitText — character stagger reveal driven by a single --st (0→1).
+   See components/effects/SplitText.tsx for the JS side.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Register --st as a number so the browser can interpolate it in a
+   transition. Without @property, --st is treated as a string token and
+   transitioning between values is instant rather than smooth. */
+@property --st {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.st-wrap {
+  display: inline-block;
+}
+/* Word-grouping wrapper: keeps a word as a single inline-block unit so the
+   browser can only break between words, never inside one. */
+.st-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.st-wrap[data-reveal="mount"] {
+  /* Mount reveal: a single --st transition carries the whole word. The
+     transition timing is the per-char stagger × char count + duration,
+     wrapped in a fast-out-slow-in curve for a "settling" finish. */
+  transition: --st var(--st-transition, 800ms) cubic-bezier(0.16, 1, 0.3, 1);
+}
+.st-char {
+  /* Each char's local progress = (--st * (total + overlap)) - index.
+     Clamped to [0,1]: 0 = fully hidden, 1 = fully revealed, in-between
+     = mid-fade. Larger --st-overlap = more parallel reveal between
+     adjacent chars; smaller = more sequential. */
+  display: inline-block;
+  --st-progress: clamp(
+    0,
+    calc(var(--st, 1) * (var(--st-total) + var(--st-overlap)) - var(--st-i)),
+    1
+  );
+  opacity: var(--st-progress);
+  transform: translate3d(0, calc((1 - var(--st-progress)) * 10px), 0);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-wrap { transition: none; }
+  .st-char {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Film-grain overlay — subtle organic texture. SVG turbulence inlined. */

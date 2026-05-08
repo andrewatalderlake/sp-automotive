@@ -111,12 +111,16 @@ export default function PageScrubVideo() {
         wps.push({ scrollY: Math.max(end, Math.max(start, last)), time });
       }
       const lastWp = wps[wps.length - 1];
-      // Final waypoint pins the very end of the clip to the bottom of the
-      // page so the remaining sections after the last dwell scrub through
-      // the leftover footage.
+      // Final waypoint pins the playhead near the last chapter's dwell time
+      // (instead of dur - 0.05) so the post-last-chapter scroll runway —
+      // AboutStrip, FinalCTA, footer — doesn't drag the video through any
+      // unwanted tail frames (like the tire region after the last chapter).
+      // We add ~1.2s of trailing room so a small forward drift still reads
+      // as motion rather than freezing dead.
+      const tailTime = Math.min(dur - 0.05, lastWp.time + 1.2);
       wps.push({
         scrollY: Math.max(maxScroll, lastWp.scrollY),
-        time: dur - 0.05,
+        time: tailTime,
       });
       waypoints = wps;
     }
