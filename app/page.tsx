@@ -5,15 +5,13 @@ import InsuranceHandling from "@/components/home/InsuranceHandling";
 import StorageBlock from "@/components/home/StorageBlock";
 import BodyworkAndEstimates from "@/components/home/BodyworkAndEstimates";
 import CustomWork from "@/components/home/CustomWork";
-import BeforeAfterGallery from "@/components/gallery/BeforeAfterGallery";
-import AboutStrip from "@/components/about/AboutStrip";
 import FinalCTA from "@/components/cta/FinalCTA";
 
 // Hero + chapter 01 share a scroll-scrub video region (SectionScrubVideo).
-// Chapters 02, 03, 04, 05, and 08 each carry their own full-bleed background
-// image via SectionParallaxImage. Chapter 07 is the intentional rest beat —
-// text-only — so the image-backed chapters land harder. Chapter 06
-// (BeforeAfterGallery) keeps its own gallery composition.
+// Chapters 02–05 each paint their own per-section gradient atmosphere
+// (no full-bleed photos). Chapter 08 closes on a looping backdrop video.
+// The selected-work gallery has moved to its own route at /gallery and is
+// linked from the nav.
 export default function Home() {
   return (
     <>
@@ -29,8 +27,6 @@ export default function Home() {
       <StorageBlock />
       <BodyworkAndEstimates />
       <CustomWork />
-      <BeforeAfterGallery />
-      <AboutStrip />
       <FinalCTA />
     </>
   );

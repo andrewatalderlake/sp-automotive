@@ -1,22 +1,24 @@
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import Surface from "@/components/ui/Surface";
-import SectionParallaxImage from "@/components/effects/SectionParallaxImage";
+import FinalCTABackdropVideo from "./FinalCTABackdropVideo";
 
 // Closing chapter ("08 / Next move"). Glass tab contains the action
 // triangle (phone, SMS, supporting copy) so the CTAs sit on a clearly
-// defined surface instead of floating on the daylight shop image behind.
-// Scrim is bumped up vs the chapter defaults because the image is bright
-// (Huracán at the open shop door, Florida daylight) and the CTA needs a
-// reliable contrast floor.
+// defined surface instead of floating directly on the looping backdrop
+// video behind. The section's CSS background (`ink → ink-deep`) is the
+// reduced-motion fallback: when `FinalCTABackdropVideo` returns null,
+// the gradient still gives the CTA a contrast floor.
 export default function FinalCTA() {
   return (
-    <section className="relative isolate w-full overflow-hidden px-6 md:px-10 pt-32 pb-32">
-      <SectionParallaxImage
-        src="/sections/ch08-huracan-door.jpg"
-        alt="White Lamborghini Huracán at SP Automotive's open shop door, Sarasota daylight"
-        scrimOpacity={0.55}
-      />
+    <section
+      className="relative isolate w-full overflow-hidden px-6 md:px-10 pt-32 pb-32"
+      style={{
+        background:
+          "linear-gradient(to bottom, var(--color-ink), var(--color-ink-deep))",
+      }}
+    >
+      <FinalCTABackdropVideo />
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
           08

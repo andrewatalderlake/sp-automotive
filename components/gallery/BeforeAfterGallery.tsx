@@ -31,17 +31,15 @@ const singles = [
   },
 ];
 
-// Free-floating chapter mark + glass-tab gallery, matching the homepage
-// chapter pattern (AboutStrip / FinalCTA). The id="work" stays on the
-// outer <section> so the navbar's /#work anchor lands here.
+// Standalone gallery body — rendered on its own /gallery route, no longer
+// part of the home-page chapter flow. The chapter-number mark has been
+// dropped; the eyebrow + display headline now function as the page's
+// title block. Top padding clears the floating nav comfortably.
 export default function BeforeAfterGallery() {
   return (
-    <section id="work" className="relative px-6 md:px-10 py-16 md:py-20 scroll-mt-32">
+    <section className="relative px-6 md:px-10 pt-32 pb-20 md:pt-40 md:pb-28">
       <div className="relative z-10 mb-8 md:mb-10">
-        <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          06
-        </div>
-        <p className="eyebrow mt-2">/ Selected work</p>
+        <p className="eyebrow">/ Selected work</p>
       </div>
       <Surface
         variant="glass"

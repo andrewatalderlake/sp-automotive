@@ -1,34 +1,38 @@
 import CornerSection from "./CornerSection";
-import SectionParallaxImage from "@/components/effects/SectionParallaxImage";
+
+// Section 03 atmosphere: cool steel. 135° linear gradient — steel-tinted
+// top-left (35% α) falling through ink to ink-deep bottom-right. Most
+// directional of the four chapter backgrounds; gives the eye something
+// to track as it crosses the "bay" beat.
+const BACKGROUND =
+  "linear-gradient(135deg, " +
+  "rgba(42, 45, 50, 0.35) 0%, " +
+  "rgba(14, 15, 17, 1) 45%, " +
+  "var(--color-ink-deep) 100%)";
 
 export default function StorageBlock() {
   return (
-    <div className="relative isolate overflow-hidden">
-      <SectionParallaxImage
-        src="/sections/ch03-storage-urus-bay.jpg"
-        alt="Matte-black Lamborghini Urus inside SP Automotive's secure climate-controlled bay, Sarasota"
-      />
-      <CornerSection
-        chapterNumber="03"
-        eyebrow="Indoor storage"
-        headingId="storage-heading"
-        scrubTime={14}
-        animation="spring"
-        headline={"Inside. Always."}
-        body={
-          <>
-            <p>
-              Every car lives behind a locked roll-up — totaled, mid-job,
-              awaiting parts, ready for pickup. Climate-controlled. Monitored.
-              Keys with Serge — not on a board.
-            </p>
-            <p className="mt-6 text-graphite">
-              If overflow ever forces a different arrangement, you&apos;ll know
-              before it happens.
-            </p>
-          </>
-        }
-      />
-    </div>
+    <CornerSection
+      chapterNumber="03"
+      eyebrow="Indoor storage"
+      headingId="storage-heading"
+      scrubTime={14}
+      animation="spring"
+      background={BACKGROUND}
+      headline={"Inside. Always."}
+      body={
+        <>
+          <p>
+            Every car lives behind a locked roll-up — totaled, mid-job,
+            awaiting parts, ready for pickup. Climate-controlled. Monitored.
+            Keys with Serge — not on a board.
+          </p>
+          <p className="mt-6 text-graphite">
+            If overflow ever forces a different arrangement, you&apos;ll know
+            before it happens.
+          </p>
+        </>
+      }
+    />
   );
 }

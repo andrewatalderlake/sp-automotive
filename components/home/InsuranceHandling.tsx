@@ -1,35 +1,38 @@
 import CornerSection from "./CornerSection";
-import SectionParallaxImage from "@/components/effects/SectionParallaxImage";
+
+// Section 02 atmosphere: warm-cool baseline. A radial bloom anchored
+// top-right (steel-tinted, ~55% α at center, fading by 65% of radius)
+// over the page's ink → ink-deep linear. Reads as light entering from
+// upper-right — the "arrival" beat for the insurance chapter.
+const BACKGROUND =
+  "radial-gradient(ellipse 80% 60% at 85% 15%, " +
+  "rgba(42, 45, 50, 0.55) 0%, " +
+  "rgba(14, 15, 17, 0) 65%), " +
+  "linear-gradient(to bottom, var(--color-ink), var(--color-ink-deep))";
 
 export default function InsuranceHandling() {
   return (
-    <div className="relative isolate overflow-hidden">
-      <SectionParallaxImage
-        src="/sections/ch02-insurance-urus-arrival.jpg"
-        alt="Black Lamborghini Urus mid-collision-repair, freshly arrived at SP Automotive in Sarasota"
-        objectPosition="center 75%"
-      />
-      <CornerSection
-        chapterNumber="02"
-        eyebrow="We handle the carrier"
-        headingId="insurance-handling-heading"
-        scrubTime={11}
-        animation="slide"
-        headline={"We fight the file.\nYou stay out of it."}
-        body={
-          <>
-            <p>
-              Most body shops file the claim, take the margin, hand you the keys.
-              Different math here. We document, supplement, negotiate — adjuster
-              to estimator, line item to line item — until the carrier pays for
-              the car you actually own.
-            </p>
-            <p className="mt-6 text-graphite">
-              You don&apos;t see the friction. You see the result.
-            </p>
-          </>
-        }
-      />
-    </div>
+    <CornerSection
+      chapterNumber="02"
+      eyebrow="We handle the carrier"
+      headingId="insurance-handling-heading"
+      scrubTime={11}
+      animation="slide"
+      background={BACKGROUND}
+      headline={"We fight the file.\nYou stay out of it."}
+      body={
+        <>
+          <p>
+            Most body shops file the claim, take the margin, hand you the keys.
+            Different math here. We document, supplement, negotiate — adjuster
+            to estimator, line item to line item — until the carrier pays for
+            the car you actually own.
+          </p>
+          <p className="mt-6 text-graphite">
+            You don&apos;t see the friction. You see the result.
+          </p>
+        </>
+      }
+    />
   );
 }
