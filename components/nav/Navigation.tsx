@@ -9,7 +9,6 @@ import PhoneCTA from "@/components/ui/PhoneCTA";
 // /#work scrolls to the BeforeAfterGallery (id="work") on the homepage.
 const links = [
   { href: "/", label: "Home" },
-  { href: "/process", label: "Process" },
   { href: "/#work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },

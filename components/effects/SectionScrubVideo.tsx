@@ -73,6 +73,10 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     }
 
     function apply() {
+      // Cancel any pending rAF so a synchronous call (resize → recacheLayout,
+      // RO, initial, loadedmetadata) doesn't leave an already-queued frame in
+      // flight to re-seek the video. On the rAF-dispatch path this is a no-op.
+      if (rafId) cancelAnimationFrame(rafId);
       rafId = 0;
       if (!dur) return;
       const scrolled = window.scrollY - regionTop;

@@ -38,7 +38,6 @@ export default function Footer() {
 
         <nav aria-label="Footer" className="flex flex-col gap-2 text-sm text-graphite md:items-end">
           <Link href="/about" className="link-underline hover:text-bone transition-colors">About Serge</Link>
-          <Link href="/process" className="link-underline hover:text-bone transition-colors">Process</Link>
           <Link href="/faq" className="link-underline hover:text-bone transition-colors">FAQ</Link>
           <Link href="/estimate" className="link-underline hover:text-bone transition-colors">Send 3 photos</Link>
           <Link href="/contact" className="link-underline hover:text-bone transition-colors">Contact</Link>

@@ -83,6 +83,10 @@ export default function SectionParallaxImage({
     let rafId = 0;
 
     function compute() {
+      // Cancel any pending rAF so a synchronous call (resize, RO, initial)
+      // doesn't leave an already-queued frame in flight to re-run us. On the
+      // rAF-dispatch path this is a no-op (the ID has already fired).
+      if (rafId) cancelAnimationFrame(rafId);
       rafId = 0;
       const el = section!;
       const vh = window.innerHeight;
