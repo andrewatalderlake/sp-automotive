@@ -80,6 +80,13 @@ type Props = {
    * solid) without nesting an extra DOM layer.
    */
   background?: string;
+  /**
+   * When true, reduces the top padding (pt-12 md:pt-16 instead of the
+   * default pt-28 md:pt-36) so the chapter mark sits closer to the section's
+   * upper edge. Bottom padding is unchanged. Use to tighten the perceived
+   * gap between consecutive chapters.
+   */
+  tightTop?: boolean;
 };
 
 // Resolve a visibility curve value `o` ∈ [0, 1] → the inline opacity to
@@ -105,6 +112,7 @@ export default function CornerSection({
   scrubTrailVh,
   animation = "fade",
   background,
+  tightTop = false,
 }: Props) {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -199,7 +207,9 @@ export default function CornerSection({
       aria-labelledby={headingId}
       data-scrub-time={scrubTime}
       data-scrub-trail={scrubTrailVh}
-      className="relative min-h-[100svh] w-full px-6 py-28 md:px-10 md:py-36"
+      className={`relative min-h-[100svh] w-full px-6 md:px-10 pb-28 md:pb-36 ${
+        tightTop ? "pt-12 md:pt-16" : "pt-28 md:pt-36"
+      }`}
       style={background ? { background } : undefined}
     >
       {/* Banner — chapter mark reimagined as a wide horizontal element

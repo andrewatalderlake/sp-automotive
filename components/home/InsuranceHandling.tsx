@@ -19,6 +19,7 @@ export default function InsuranceHandling() {
       scrubTime={11}
       animation="slide"
       background={BACKGROUND}
+      tightTop
       headline={"We fight the file.\nYou stay out of it."}
       body={
         <>

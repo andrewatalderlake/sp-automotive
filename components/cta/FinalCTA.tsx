@@ -3,7 +3,7 @@ import SmsCTA from "@/components/ui/SmsCTA";
 import Surface from "@/components/ui/Surface";
 import FinalCTABackdropVideo from "./FinalCTABackdropVideo";
 
-// Closing chapter ("08 / Next move"). Glass tab contains the action
+// Closing chapter ("06 / Next move"). Glass tab contains the action
 // triangle (phone, SMS, supporting copy) so the CTAs sit on a clearly
 // defined surface instead of floating directly on the looping backdrop
 // video behind. The section's CSS background (`ink → ink-deep`) is the
@@ -21,7 +21,7 @@ export default function FinalCTA() {
       <FinalCTABackdropVideo />
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          08
+          06
         </div>
         <p className="eyebrow mt-2">/ Next move</p>
       </div>

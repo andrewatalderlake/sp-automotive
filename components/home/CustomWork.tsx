@@ -32,6 +32,7 @@ export default function CustomWork() {
       headingId="custom-work-heading"
       animation="sweep"
       background={BACKGROUND}
+      tightTop
       headline={"Body kits.\nCustom paint.\nSprayable wrap."}
       body={
         <>

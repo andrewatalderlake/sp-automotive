@@ -33,7 +33,10 @@ const FADE_VH = 0.4;
 export default function FinalCTABackdropVideo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  // serverDefault: true — match SectionScrubVideo. Reduced-motion users get
+  // null on both the server and the first client render, so there's no
+  // hydration mismatch and no flash of the video element before it's removed.
+  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)", true);
 
   useEffect(() => {
     if (reduced) return;

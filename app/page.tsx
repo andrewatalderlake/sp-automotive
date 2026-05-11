@@ -2,6 +2,7 @@ import SectionScrubVideo from "@/components/effects/SectionScrubVideo";
 import HeroVideo from "@/components/hero/HeroVideo";
 import TotalLossPlay from "@/components/home/TotalLossPlay";
 import InsuranceHandling from "@/components/home/InsuranceHandling";
+import BrandShowcaseStrip from "@/components/showroom/BrandShowcaseStrip";
 import StorageBlock from "@/components/home/StorageBlock";
 import BodyworkAndEstimates from "@/components/home/BodyworkAndEstimates";
 import CustomWork from "@/components/home/CustomWork";
@@ -9,7 +10,7 @@ import FinalCTA from "@/components/cta/FinalCTA";
 
 // Hero + chapter 01 share a scroll-scrub video region (SectionScrubVideo).
 // Chapters 02–05 each paint their own per-section gradient atmosphere
-// (no full-bleed photos). Chapter 08 closes on a looping backdrop video.
+// (no full-bleed photos). Chapter 06 closes on a looping backdrop video.
 // The selected-work gallery has moved to its own route at /gallery and is
 // linked from the nav.
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
         <TotalLossPlay />
       </section>
       <InsuranceHandling />
+      <BrandShowcaseStrip />
       <StorageBlock />
       <BodyworkAndEstimates />
       <CustomWork />

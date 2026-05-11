@@ -22,6 +22,7 @@ export default function BodyworkAndEstimates() {
       scrubTime={24}
       animation="tilt"
       background={BACKGROUND}
+      tightTop
       headline={"We come to you."}
       body={
         <>

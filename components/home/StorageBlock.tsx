@@ -19,6 +19,7 @@ export default function StorageBlock() {
       scrubTime={14}
       animation="spring"
       background={BACKGROUND}
+      tightTop
       headline={"Indoor first.\nAlways covered."}
       body={
         <>
