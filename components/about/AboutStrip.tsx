@@ -6,16 +6,18 @@ import Surface from "@/components/ui/Surface";
 // to the proof-of-craft angle: what the shop is, what it isn't, what it
 // touches. Earns the "Read more" click instead of restating the welcome.
 //
-// Carries chapter mark "05 / The signature" to read as a continuation of
-// the four numbered process chapters above it. Body sits in a liquid-glass
-// tab so it's clearly a defined section rather than text floating on the
-// cinematic backdrop.
+// Carries chapter mark "07 / The signature" to read as the about beat
+// after the process chapters (01–05) and the proof gallery (06). Body
+// sits in a liquid-glass tab so it's clearly a defined section rather
+// than text floating on the cinematic backdrop. Intentionally text-only
+// — no background imagery — to give the reader a rest beat between the
+// gallery and the closing CTA.
 export default function AboutStrip() {
   return (
     <section className="relative px-6 md:px-10 py-32">
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          06
+          07
         </div>
         <p className="eyebrow mt-2">/ The signature</p>
       </div>

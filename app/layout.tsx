@@ -50,8 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${anton.variable} ${hanken.variable}`}>
       <head>
         <LocalBusinessJsonLd />
-        {/* Preload the poster only — it's the LCP candidate. The video element streams on its own; explicit video preload was tanking LCP at 9.8MB. */}
-        <link rel="preload" as="image" href="/hero-clips/cinematic-poster.jpg" fetchPriority="high" />
+        {/* Preload the home-page hero poster — it's the LCP candidate behind
+            hero + chapter 01. The video element streams on its own. */}
+        <link rel="preload" as="image" href="/hero-clips/total-loss-poster.jpg" fetchPriority="high" />
       </head>
       <body className="text-bone font-body antialiased film-grain">
         <a

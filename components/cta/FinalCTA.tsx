@@ -1,16 +1,25 @@
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import Surface from "@/components/ui/Surface";
+import SectionParallaxImage from "@/components/effects/SectionParallaxImage";
 
-// Closing chapter ("07 / Next move"). Glass tab contains the action
+// Closing chapter ("08 / Next move"). Glass tab contains the action
 // triangle (phone, SMS, supporting copy) so the CTAs sit on a clearly
-// defined surface instead of floating on the road footage behind them.
+// defined surface instead of floating on the daylight shop image behind.
+// Scrim is bumped up vs the chapter defaults because the image is bright
+// (Huracán at the open shop door, Florida daylight) and the CTA needs a
+// reliable contrast floor.
 export default function FinalCTA() {
   return (
-    <section className="relative w-full overflow-hidden px-6 md:px-10 pt-32 pb-32">
+    <section className="relative isolate w-full overflow-hidden px-6 md:px-10 pt-32 pb-32">
+      <SectionParallaxImage
+        src="/sections/ch08-huracan-door.jpg"
+        alt="White Lamborghini Huracán at SP Automotive's open shop door, Sarasota daylight"
+        scrimOpacity={0.55}
+      />
       <div className="relative z-10 mb-16">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          07
+          08
         </div>
         <p className="eyebrow mt-2">/ Next move</p>
       </div>

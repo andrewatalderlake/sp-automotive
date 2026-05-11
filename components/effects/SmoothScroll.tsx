@@ -4,7 +4,7 @@ import { useReducedMotion } from "framer-motion";
 
 // Lenis smooth-scroll initializer mounted at the app root. Lenis takes over
 // wheel + touch and updates window.scrollY smoothly via rAF, so existing
-// rAF readers (PageScrubVideo, CornerSection.compute()) keep working
+// rAF readers (SectionScrubVideo, CornerSection.compute()) keep working
 // unchanged.
 //
 // Reduced motion: Lenis is not constructed at all. Native scroll behavior
