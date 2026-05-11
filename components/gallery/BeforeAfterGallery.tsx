@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Magnetic from "@/components/effects/Magnetic";
 import Surface from "@/components/ui/Surface";
 
 const pairs = [
@@ -71,32 +70,30 @@ export default function BeforeAfterGallery() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {pairs.map((p) => (
-            <Magnetic key={p.id} radius={120} strength={0.12} display="block" className="w-full">
-              <figure>
-                <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
-                  <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
-                    <Image
-                      src={`/before-after/0${p.id}-before.jpg`}
-                      alt={`${p.caption} — before repair`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                  <div aria-hidden className="flex items-center justify-center text-bone font-display text-lg">VS</div>
-                  <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
-                    <Image
-                      src={`/before-after/0${p.id}-after.jpg`}
-                      alt={`${p.caption} — after repair`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
+            <figure key={p.id}>
+              <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
+                <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
+                  <Image
+                    src={`/before-after/0${p.id}-before.jpg`}
+                    alt={`${p.caption} — before repair`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
-                <figcaption className="mt-4 text-sm text-graphite">{p.caption}</figcaption>
-              </figure>
-            </Magnetic>
+                <div aria-hidden className="flex items-center justify-center text-bone font-display text-lg">VS</div>
+                <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
+                  <Image
+                    src={`/before-after/0${p.id}-after.jpg`}
+                    alt={`${p.caption} — after repair`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+              <figcaption className="mt-4 text-sm text-graphite">{p.caption}</figcaption>
+            </figure>
           ))}
         </div>
 
@@ -104,20 +101,18 @@ export default function BeforeAfterGallery() {
             visual variety without forcing pair structure. */}
         <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {singles.map((s) => (
-            <Magnetic key={s.src} radius={120} strength={0.1} display="block" className="w-full">
-              <figure>
-                <div className="relative aspect-[3/4] border border-white/10 hover:border-bone transition-colors">
-                  <Image
-                    src={s.src}
-                    alt={s.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                </div>
-                <figcaption className="mt-4 text-sm text-graphite">{s.caption}</figcaption>
-              </figure>
-            </Magnetic>
+            <figure key={s.src}>
+              <div className="relative aspect-[3/4] border border-white/10 hover:border-bone transition-colors">
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+              <figcaption className="mt-4 text-sm text-graphite">{s.caption}</figcaption>
+            </figure>
           ))}
         </div>
       </Surface>

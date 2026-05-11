@@ -1,7 +1,6 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
 import { PUBLISHED_TESTIMONIALS, type Testimonial } from "./testimonials-data";
-import RevealWords from "@/components/effects/RevealWords";
 import Surface from "@/components/ui/Surface";
 
 type Props = {
@@ -21,7 +20,7 @@ export default function TestimonialsSection({ brand, heading = "From the owners.
     <section id="testimonials" className="relative px-6 md:px-10 py-32 border-t border-divider">
       <Surface variant="solid" className="max-w-3xl mx-auto rounded-md py-20 px-6 md:px-10">
         <p className="eyebrow">05 / Trust</p>
-        <h2 className="mt-4 display-lg"><RevealWords>{heading}</RevealWords></h2>
+        <h2 className="mt-4 display-lg">{heading}</h2>
 
         <ul className="mt-16 space-y-16">
           {items.map((t, i) => (

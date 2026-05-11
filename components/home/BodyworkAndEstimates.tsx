@@ -26,9 +26,9 @@ export default function BodyworkAndEstimates() {
       body={
         <>
           <p>
-            Cars that can&apos;t move don&apos;t have to. We bring the estimate
-            to your driveway, your garage, your storage unit — wherever the
-            car is. One to two days from the call to the written number.
+            Cars that can&apos;t move don&apos;t have to. We pull up to your
+            driveway, look at the damage, and turn a call into a written
+            number in one to two days.
           </p>
           <p className="mt-6 text-graphite">
             Monday through Saturday.

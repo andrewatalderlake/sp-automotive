@@ -23,10 +23,10 @@ export default function InsuranceHandling() {
       body={
         <>
           <p>
-            Most body shops file the claim, take the margin, hand you the keys.
-            Different math here. We document, supplement, negotiate — adjuster
-            to estimator, line item to line item — until the carrier pays for
-            the car you actually own.
+            Most shops file the claim, pocket the margin, hand back the keys.
+            We negotiate line item to line item, adjuster to estimator, until
+            the carrier pays you in full — and you come out ahead on the car,
+            not the shop.
           </p>
           <p className="mt-6 text-graphite">
             You don&apos;t see the friction. You see the result.

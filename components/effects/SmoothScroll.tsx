@@ -33,9 +33,10 @@ export default function SmoothScroll() {
       if (cancelled) return;
 
       lenis = new Lenis({
-        // lerp: low → snappier, high → smoother. 0.1 is Lenis's default and
-        // matches the StringTune-reference feel out of the box.
-        lerp: 0.1,
+        // lerp: low → snappier, high → smoother. 0.08 reins the float in a
+        // notch from Lenis's 0.1 default — still smooth, but the page tracks
+        // the scroll wheel more directly. Calmer than the previous setting.
+        lerp: 0.08,
         smoothWheel: true,
         // syncTouch deliberately off — letting iOS use its own native
         // momentum scroll feels better than Lenis on touch.

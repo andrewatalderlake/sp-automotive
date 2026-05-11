@@ -19,13 +19,13 @@ export default function StorageBlock() {
       scrubTime={14}
       animation="spring"
       background={BACKGROUND}
-      headline={"Inside. Always."}
+      headline={"Indoor first.\nAlways covered."}
       body={
         <>
           <p>
-            Every car lives behind a locked roll-up — totaled, mid-job,
-            awaiting parts, ready for pickup. Climate-controlled. Monitored.
-            Keys with Serge — not on a board.
+            Every car under roof when we can — totaled, mid-job, awaiting
+            parts, ready for pickup. Same goes for the ones still driving.
+            Climate-controlled. Monitored. Keys with Serge — not on a board.
           </p>
           <p className="mt-6 text-graphite">
             If overflow ever forces a different arrangement, you&apos;ll know

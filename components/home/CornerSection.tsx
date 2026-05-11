@@ -2,40 +2,29 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { useReducedMotion } from "framer-motion";
 import { DWELL_LEAD_VH, DWELL_TRAIL_VH } from "@/lib/scrub-config";
-import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 
-// Cinematic section primitive used by the home-page chapter blocks.
+// Section primitive used by the home-page chapter blocks.
 //
 // Layout (desktop): a wide chapter "banner" sits ~40% down the section
 // — vertical accent stripe in `--color-ignite`, large display chapter
-// number, eyebrow label — and below it a liquid-glass body card spans
-// the majority of the section width (max-w-5xl, centered). On mobile
-// both stack in document flow with proportional spacing. Whatever media
-// layer sits behind the section bleeds uninterrupted through the gaps.
+// number, eyebrow label — and below it a glass body card spans the
+// majority of the section width (max-w-5xl, centered). On mobile both
+// stack in document flow with proportional spacing. Whatever media layer
+// sits behind the section bleeds uninterrupted through the gaps.
 //
-// Visibility (scroll-driven): banner + glass card reveal as the section
-// approaches its "fills viewport" position, hold at full visibility
-// through a dwell window centered on the viewport, and recede as the
-// section moves past. Fade thresholds are derived from `DWELL_LEAD_VH`
+// Visibility (scroll-driven): banner + glass card opacity-fade in as the
+// section approaches its "fills viewport" position, hold at full
+// visibility through a dwell window centered on the viewport, and recede
+// as the section moves past. Fade thresholds derive from `DWELL_LEAD_VH`
 // / `DWELL_TRAIL_VH` in `lib/scrub-config`, so any future scroll-scrub
 // video can lock onto the same geometry by construction. Honors
 // prefers-reduced-motion.
 //
-// The banner ALWAYS slides in from off-canvas-left, independent of the
-// `animation` prop — gives every chapter the same signature motion
-// while each body card carries its own reveal personality:
-//
-//   `fade`   — body opacity-only crossfade (baseline)
-//   `slide`  — body slides in from the right with a subtle rotateY tilt
-//              (Section 02)
-//   `sweep`  — clip-path mask reveals body from its anchor corner outward
-//              (Section 05)
-//   `lift`   — body translates up from below + opacity (Section 01)
-//   `spring` — body scales 0.88 → 1.04 → 1 with damped overshoot
-//              (Section 03)
-//   `tilt`   — body rises with rotateX + translateY + blur, settling
-//              into focus (Section 04)
+// Reveal is opacity-only on both groups — earlier presets (slide / sweep
+// / lift / spring / tilt) have been collapsed to a single calm fade for
+// a "normal cool website" feel. The `animation` prop is kept on the API
+// so callsites don't churn, but the value is ignored.
 
 type AnimationType = "fade" | "slide" | "sweep" | "lift" | "spring" | "tilt";
 
@@ -51,9 +40,9 @@ type Props = {
   /** Eyebrow text below the chapter number — uppercase, tracked. */
   eyebrow: string;
   /**
-   * Headline (display face). String only so SplitText can animate the
-   * reveal character-by-character. Use `\n` for an explicit line break.
-   * Two short lines reads best.
+   * Headline (display face). Use `\n` for an explicit line break — the
+   * h2 has `whitespace-pre-line` so newlines render as breaks. Two short
+   * lines reads best.
    */
   headline: string;
   /** Body copy — accepts paragraphs/markup. */
@@ -77,8 +66,12 @@ type Props = {
    */
   scrubTrailVh?: number;
   /**
-   * Reveal animation preset. Defaults to `"fade"`. See file header for the
-   * options.
+   * Currently a no-op. The per-preset reveal animations (`slide`, `sweep`,
+   * `lift`, `spring`, `tilt`) were collapsed to a single opacity fade in
+   * the calm-site refactor. The prop is preserved on the API — and the
+   * `AnimationType` union still names the intended vocabulary — so the five
+   * chapter call sites don't churn when the presets are reinstated. Passing
+   * any value today resolves to the same fade. See the file header.
    */
   animation?: AnimationType;
   /**
@@ -89,93 +82,16 @@ type Props = {
   background?: string;
 };
 
-// Resolve a motion preset → the style values we should write for a given
-// element group ("mark" = top-left anchor, "body" = bottom-right glass tab)
-// at a given visibility `o` ∈ [0, 1]. Empty string means "clear that
-// property". The four channels (opacity, transform, clipPath, filter) cover
-// every preset's needs without conditional property writes in the loop.
+// Resolve a visibility curve value `o` ∈ [0, 1] → the inline opacity to
+// write for a reveal group ("mark" or "body"). Both groups now fade in
+// uniformly — the AnimationType parameter is accepted so callsites stay
+// unchanged but is intentionally unused. See file header.
 function resolveAnim(
-  anim: AnimationType,
-  group: "mark" | "body",
+  _anim: AnimationType,
+  _group: "mark" | "body",
   o: number,
-): { opacity: string; transform: string; clipPath: string; filter: string } {
-  // Banner (mark group) — ALWAYS slides in from off-canvas-left,
-  // independent of the section's body animation preset. Keeps the
-  // banner motion consistent across every chapter so the eye learns
-  // the cadence on Section 02 and gets it back on every following beat.
-  if (group === "mark") {
-    const tx = (1 - o) * -100;
-    return {
-      opacity: String(o),
-      transform: `translate3d(${tx}%, 0, 0)`,
-      clipPath: "",
-      filter: "",
-    };
-  }
-
-  // Body group — per-section reveal preset.
-  switch (anim) {
-    case "slide": {
-      // Body slides in from the right (x = +100% at o=0 → 0 at o=1) with
-      // a subtle 3D tilt as it lands.
-      const tx = (1 - o) * 100;
-      const rotY = (1 - o) * -6;
-      return {
-        opacity: String(o),
-        transform: `translate3d(${tx}%, 0, 0) rotateY(${rotY}deg)`,
-        clipPath: "",
-        filter: "",
-      };
-    }
-    case "sweep": {
-      // Diagonal clip-path reveal — body expands from bottom-right toward
-      // top-left. At o=0 the inset is 100% → nothing visible; at o=1 the
-      // inset is 0 → fully visible.
-      const inset = (1 - o) * 100;
-      const clip = `inset(${inset}% 0 0 ${inset}%)`;
-      return { opacity: String(o), transform: "", clipPath: clip, filter: "" };
-    }
-    case "lift": {
-      // Body lifts up from below as it reveals.
-      const ty = (1 - o) * 32;
-      return {
-        opacity: String(o),
-        transform: `translate3d(0, ${ty}px, 0)`,
-        clipPath: "",
-        filter: "",
-      };
-    }
-    case "spring": {
-      // Body scales 0.88 → 1.04 (overshoot) → 1.0 (settle) as o goes 0→1.
-      // Two-segment piecewise: rise to overshoot at o=0.7, settle by o=1.
-      const scale =
-        o < 0.7
-          ? 0.88 + (o / 0.7) * (1.04 - 0.88)
-          : 1.04 - ((o - 0.7) / 0.3) * 0.04;
-      return {
-        opacity: String(o),
-        transform: `scale(${scale.toFixed(4)})`,
-        clipPath: "",
-        filter: "",
-      };
-    }
-    case "tilt": {
-      // Body rises into focus with a 3D rotateX, vertical translation, and
-      // a blur that clears as it settles.
-      const rotX = (1 - o) * 14;
-      const ty = (1 - o) * 40;
-      const blur = (1 - o) * 8;
-      return {
-        opacity: String(o),
-        transform: `translate3d(0, ${ty}px, 0) rotateX(${rotX}deg)`,
-        clipPath: "",
-        filter: blur > 0.1 ? `blur(${blur.toFixed(2)}px)` : "",
-      };
-    }
-    case "fade":
-    default:
-      return { opacity: String(o), transform: "", clipPath: "", filter: "" };
-  }
+): { opacity: string } {
+  return { opacity: String(o) };
 }
 
 export default function CornerSection({
@@ -193,47 +109,25 @@ export default function CornerSection({
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
-  // One text ref per group. The compute loop drives both via resolveAnim()
-  // for the chosen animation preset.
+  // One ref per group. The compute loop writes opacity for each on every
+  // scroll frame.
   const markRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
-  // We write opacity/transform/clip-path directly to the DOM instead of going
-  // through React state — this fires every scroll frame and we don't want a
-  // re-render per tick. SSR markup ships visible (no inline animation styles),
-  // so JS-off readers and the brief pre-hydration window still see chapter
-  // content; the effect below snaps each piece to the correct scroll-driven
-  // value on hydration.
+  // We write opacity directly to the DOM instead of going through React
+  // state — this fires every scroll frame and we don't want a re-render
+  // per tick. SSR markup ships visible (no inline opacity), so JS-off
+  // readers and the brief pre-hydration window still see chapter content;
+  // the effect below snaps each piece to the correct scroll-driven value
+  // on hydration.
   useEffect(() => {
     const mark = markRef.current;
     const body = bodyRef.current;
     if (!mark || !body) return;
 
-    const markGroup = [mark];
-    const bodyGroup = [body];
-
-    // Cache the kinetic-headline SplitText wrapper inside the body block.
-    // Reduced-motion mode renders SplitText as plain text (no wrapper),
-    // so this can legitimately be null.
-    const splitTextEl =
-      body.querySelector<HTMLElement>(
-        '[data-split-text][data-reveal="controlled"]',
-      ) ?? null;
-
-    function clearAnim(els: HTMLElement[]) {
-      for (const el of els) {
-        el.style.opacity = "1";
-        el.style.transform = "";
-        el.style.clipPath = "";
-        el.style.filter = "";
-      }
-    }
-
     if (reduced) {
-      clearAnim(markGroup);
-      clearAnim(bodyGroup);
-      // Reduced-motion: render the headline fully revealed (st = 1).
-      if (splitTextEl) splitTextEl.style.setProperty("--st", "1");
+      mark.style.opacity = "1";
+      body.style.opacity = "1";
       return;
     }
     const el = sectionRef.current;
@@ -260,8 +154,8 @@ export default function CornerSection({
       const trail = trailVh * vh;
       const fade = FADE_VH * vh;
 
-      // Piecewise visibility curve, identical to the fade case but the
-      // resolved value `o` now drives whichever animation preset was picked.
+      // Piecewise visibility curve. `o` drives both groups' opacity now
+      // that the per-preset animations have been retired.
       let o: number;
       if (progress <= -lead - fade) o = 0;
       else if (progress <= -lead) o = (progress + lead + fade) / fade;
@@ -269,44 +163,11 @@ export default function CornerSection({
       else if (progress <= trail + fade) o = 1 - (progress - trail) / fade;
       else o = 0;
 
-      // Kinetic-headline progress: rising edge only. Chars stay revealed
-      // through the hold and the fade-out (block opacity handles the
-      // exit). Avoids re-staggering when the user scrolls back down.
-      let st: number;
-      if (progress <= -lead - fade) st = 0;
-      else if (progress <= -lead) st = (progress + lead + fade) / fade;
-      else st = 1;
-
-      // Chapter parallax: subtle vertical drift so mark and body move at
-      // slightly different rates within the dwell window. Coefficient is
-      // small (10% of progress for mark, 9.2% for body); difference is
-      // capped naturally by the dwell window's small progress range.
-      const baseY = -progress * 0.1;
-      const markY = baseY;
-      const bodyY = baseY * 0.92;
-
       const markStyle = resolveAnim(animation, "mark", o);
       const bodyStyle = resolveAnim(animation, "body", o);
 
-      // Compose: parallax Y prepended to the preset's transform. For
-      // empty-transform presets the result is just the parallax. For
-      // slide/lift/spring/tilt the transforms compose correctly (parallax
-      // applied first, then preset's translate/rotate/scale).
-      for (const m of markGroup) {
-        m.style.opacity = markStyle.opacity;
-        m.style.transform = `translate3d(0, ${markY}px, 0) ${markStyle.transform}`.trim();
-        m.style.clipPath = markStyle.clipPath;
-        m.style.filter = markStyle.filter;
-      }
-      for (const b of bodyGroup) {
-        b.style.opacity = bodyStyle.opacity;
-        b.style.transform = `translate3d(0, ${bodyY}px, 0) ${bodyStyle.transform}`.trim();
-        b.style.clipPath = bodyStyle.clipPath;
-        b.style.filter = bodyStyle.filter;
-      }
-
-      // Drive the kinetic headline's per-char reveal via the shared --st var.
-      if (splitTextEl) splitTextEl.style.setProperty("--st", String(st));
+      mark!.style.opacity = markStyle.opacity;
+      body!.style.opacity = bodyStyle.opacity;
     }
 
     function onScroll() {
@@ -345,11 +206,12 @@ export default function CornerSection({
           with a vertical accent stripe in `--color-ignite`. Sits ~40%
           down the section (via mt-[Xvh]) instead of pinned top-left, so
           the eye lands on it after the section scroll-snaps in. The
-          banner ALWAYS slides in from off-canvas-left regardless of the
-          `animation` prop — see resolveAnim's mark-group early return.
-          A red-glow SVG sits behind the chapter content inside the inner
-          flex wrapper: rectangle that tapers down via a curved
-          ~45° right end into transparent, emanating from the stripe. */}
+          banner opacity-fades in with the rest of the chapter; the
+          previous slide-in-from-left has been retired with the other
+          flashy presets. A red-glow SVG sits behind the chapter content
+          inside the inner flex wrapper: rectangle that tapers down via a
+          curved ~45° right end into transparent, emanating from the
+          stripe. */}
       <div ref={markRef} className="relative z-10 mt-[22vh] md:mt-[26vh]">
         <div className="relative isolate inline-flex items-stretch gap-5 md:gap-6">
           {/* Red-glow shape behind the chapter content. Rectangle whose
@@ -400,28 +262,22 @@ export default function CornerSection({
       {/* Body card — sits below the banner, in flow, centered with a
           wide max-w-5xl so it takes up the majority of the section's
           width. The bodyRef is on the outer positioning wrapper so the
-          animation transforms apply to the whole card (incl. its glass
-          background) as a single unit. transform-origin is set so the
-          spring and tilt presets pivot around a sensible point. */}
+          opacity-fade applies to the whole card (incl. its glass
+          background) as a single unit. */}
       <div
         ref={bodyRef}
         className="relative z-10 mt-12 md:mt-20 md:max-w-5xl md:mx-auto"
-        style={{ transformOrigin: "center" }}
       >
         <Surface
           variant="glass"
           className="rounded-2xl p-8 md:p-14 text-left"
         >
-          <SplitText
-            as="h2"
+          <h2
             id={headingId}
-            className="display-lg text-bone leading-[1.05]"
-            reveal="controlled"
-            staggerMs={25}
-            durationMs={320}
+            className="display-lg text-bone leading-[1.05] whitespace-pre-line"
           >
             {headline}
-          </SplitText>
+          </h2>
           <div className="mt-8 text-bone text-xl md:text-2xl leading-relaxed">{body}</div>
           {cta && (
             <div className="mt-10 flex flex-wrap gap-4">{cta}</div>

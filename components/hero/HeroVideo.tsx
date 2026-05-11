@@ -7,30 +7,35 @@ import SplitText from "@/components/effects/SplitText";
 
 // Atmospheric video is provided by SectionScrubVideo behind the hero +
 // chapter 01 region on the home page. This component owns the foreground
-// composition only: a kinetic two-phrase
-// headline with staggered character reveals, a glass lead card that
-// lifts in afterward, and a hero-only parallax that drifts the text
-// upward as the user starts scrolling.
+// composition only: a "Totaled." kinetic reveal followed by "Paid in
+// Full." fading in as a block, a glass lead card that lifts in afterward,
+// and a hero-only parallax that drifts the text upward as the user starts
+// scrolling.
 //
 // Entry choreography (mount sequence):
 //   200 ms — "Totaled." characters stagger in
-//   600 ms — "Paid in Full." characters stagger in
+//   600 ms — "Paid in Full." fades in as a single block
 //   950 ms — glass lead card translates up + fades in
 //  1100 ms — phone + SMS CTAs fade up
 //
-// Parallax: text drifts at 0.22x scroll, card at 0.16x. CSS variables on
+// Parallax: text drifts at 0.10x scroll, card at 0.08x. CSS variables on
 // the section element propagate to mobile + desktop subtrees so a single
 // rAF writer drives both breakpoints without a ref-collision bug.
+// Coefficients were toned down from the original 0.22 / 0.16 — page now
+// reads as a normal site with a hint of drift rather than a kinetic edit.
 
 export default function HeroVideo() {
+  const [secondPhraseReady, setSecondPhraseReady] = useState(false);
   const [cardReady, setCardReady] = useState(false);
   const [ctasReady, setCtasReady] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const p = window.setTimeout(() => setSecondPhraseReady(true), 600);
     const a = window.setTimeout(() => setCardReady(true), 950);
     const b = window.setTimeout(() => setCtasReady(true), 1100);
     return () => {
+      window.clearTimeout(p);
       window.clearTimeout(a);
       window.clearTimeout(b);
     };
@@ -47,8 +52,8 @@ export default function HeroVideo() {
       if (!hero) return;
       const heroH = hero.offsetHeight || window.innerHeight;
       const y = Math.min(window.scrollY, heroH);
-      hero.style.setProperty("--hero-y-text", `${-y * 0.22}px`);
-      hero.style.setProperty("--hero-y-card", `${-y * 0.16}px`);
+      hero.style.setProperty("--hero-y-text", `${-y * 0.10}px`);
+      hero.style.setProperty("--hero-y-card", `${-y * 0.08}px`);
     };
     const onScroll = () => {
       if (rafId) return;
@@ -86,21 +91,20 @@ export default function HeroVideo() {
         >
           Totaled.
         </SplitText>
-        <SplitText
-          as="span"
-          className="display-bleed"
-          mountDelayMs={600}
-          staggerMs={26}
-          durationMs={420}
+        <span
+          className={`display-bleed transition-opacity duration-[420ms] ease-out ${
+            secondPhraseReady ? "opacity-100" : "opacity-0"
+          }`}
         >
           Paid in Full.
-        </SplitText>
+        </span>
         <p
           className={`lead text-bone/85 max-w-md mt-4 transition-[opacity,transform] duration-[420ms] ease-out ${
             cardReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
           }`}
         >
-          We deal with the insurance. You walk away whole — sometimes ahead.
+          We deal with the insurance. You walk away whole — sometimes tens of
+          thousands ahead.
         </p>
         <div
           className={`flex flex-wrap gap-4 justify-center transition-opacity duration-300 ease-out ${
@@ -140,15 +144,13 @@ export default function HeroVideo() {
         >
           Totaled.
         </SplitText>
-        <SplitText
-          as="span"
-          className="display-bleed absolute bottom-[22%] right-[3vw] z-[5] text-right"
-          mountDelayMs={600}
-          staggerMs={26}
-          durationMs={460}
+        <span
+          className={`display-bleed absolute bottom-[22%] right-[3vw] z-[5] text-right transition-opacity duration-[420ms] ease-out ${
+            secondPhraseReady ? "opacity-100" : "opacity-0"
+          }`}
         >
           Paid in Full.
-        </SplitText>
+        </span>
       </div>
 
       {/* Desktop: liquid-glass lead card — bottom-left, off-axis from "Paid in Full." */}
@@ -174,7 +176,8 @@ export default function HeroVideo() {
           "
         >
           <p className="lead text-bone/90">
-            We deal with the insurance. You walk away whole — sometimes ahead.
+            We deal with the insurance. You walk away whole — sometimes tens
+            of thousands ahead.
           </p>
           <div
             className={`mt-6 flex flex-wrap gap-3 transition-opacity duration-300 ease-out ${
