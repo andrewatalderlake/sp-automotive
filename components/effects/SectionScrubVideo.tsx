@@ -97,12 +97,19 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     }
 
     function onMeta() { recacheLayout(); }
+    // Surface load failures (404, CORS, codec) — otherwise the component
+    // silently displays the poster forever and the failure is invisible
+    // to anyone debugging from the console.
+    function onError() {
+      console.warn("SectionScrubVideo: video failed to load", video!.error);
+    }
 
     const ro = new ResizeObserver(recacheLayout);
     ro.observe(region);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", recacheLayout);
+    video.addEventListener("error", onError);
     if (video.readyState >= 1) recacheLayout();
     else video.addEventListener("loadedmetadata", onMeta, { once: true });
 
@@ -110,10 +117,11 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", recacheLayout);
       video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("error", onError);
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [reduced]);
+  }, [reduced, src]);
 
   // Wrapper takes the full height of its `[data-scrub-region]` parent (which
   // gets its height from the in-flow sibling sections — hero + ch01 = ~200vh).

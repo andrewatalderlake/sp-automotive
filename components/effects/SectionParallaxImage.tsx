@@ -27,8 +27,10 @@ import { useReducedMotion } from "framer-motion";
 //   section enters, hold while it fills the viewport, fall as it exits).
 // - On each frame writes inline transform/filter to the image wrapper,
 //   skipping React state to avoid a re-render per tick.
-// - ResizeObserver on documentElement catches font swaps and lazy image
-//   loads that shift the section's offsetTop after first paint.
+// - ResizeObserver on the section element catches font swaps and lazy
+//   image loads that shift its offsetTop after first paint, without
+//   firing for unrelated document-level resizes (which would multiply
+//   work across every <SectionParallaxImage> on the page).
 // - Reduced motion: effect early-returns; image renders static at full
 //   brightness (no scale, no curve).
 
@@ -124,7 +126,7 @@ export default function SectionParallaxImage({
     }
 
     const ro = new ResizeObserver(compute);
-    ro.observe(document.documentElement);
+    ro.observe(section);
 
     compute();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -136,7 +138,14 @@ export default function SectionParallaxImage({
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [reduced, scaleAmplitude, brightnessFloor]);
+    // scaleAmplitude/brightnessFloor are intentionally NOT in deps —
+    // they're captured by closure in compute() at effect setup and are
+    // passed as literals at every call site. Including them would tear
+    // down and rebuild listeners + RO on parent re-render with no
+    // benefit. If a future call site needs dynamic values, lift them
+    // to refs read inside compute() rather than re-running the effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduced]);
 
   return (
     <div
