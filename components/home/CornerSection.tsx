@@ -5,17 +5,18 @@ import { DWELL_LEAD_VH, DWELL_TRAIL_VH } from "@/lib/scrub-config";
 import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 
-// Corner-anchored cinematic section primitive used by the four home-page copy
+// Corner-anchored cinematic section primitive used by the home-page chapter
 // blocks. Chapter mark pins to the top-left; body lives in a liquid-glass tab
-// anchored bottom-right on desktop / stacked below the mark on mobile. The
-// full section is uninterrupted PageScrubVideo bleed behind the glass card.
+// anchored bottom-right on desktop / stacked below the mark on mobile.
+// Whatever media layer sits behind the section bleeds uninterrupted through
+// the gaps around the glass card.
 //
 // Visibility (scroll-driven): chapter mark + glass card reveal as the section
 // approaches its "fills viewport" position, hold at full visibility through
-// the PageScrubVideo dwell window, and recede as the video starts moving
-// toward the next chapter. The fade thresholds are derived from the same
-// geometry PageScrubVideo uses (section center + scrubTrailVh), so the text
-// and the video pause stay aligned. Honors prefers-reduced-motion.
+// a dwell window centered on the viewport, and recede as the section moves
+// past. Fade thresholds are derived from `DWELL_LEAD_VH`/`DWELL_TRAIL_VH` in
+// `lib/scrub-config`, so any future scroll-scrub video can lock onto the
+// same geometry by construction. Honors prefers-reduced-motion.
 //
 // Each chapter can pick a distinct motion preset via the `animation` prop:
 //
@@ -53,15 +54,17 @@ type Props = {
   /** id for aria-labelledby; the headline renders with this id. */
   headingId: string;
   /**
-   * Optional video timestamp (seconds) at which `PageScrubVideo` should dwell
-   * while this section fills the viewport. Discovered via the `data-scrub-time`
-   * attribute on the section element — see PageScrubVideo for the contract.
+   * Optional video timestamp (seconds) at which a chapter-aware scroll-scrub
+   * video should dwell while this section fills the viewport. Forwarded to
+   * the section element as `data-scrub-time`. Currently inert — no consumer
+   * on the home page; reserved for future per-section treatments.
    */
   scrubTime?: number;
   /**
    * Optional override for this chapter's dwell trail (post-roll), in viewport
-   * heights. Lets a single chapter rest on its frame for shorter or longer
-   * than the global default in `PageScrubVideo`. Read off `data-scrub-trail`.
+   * heights. Forwarded as `data-scrub-trail`. Used by CornerSection itself
+   * to control how long the chapter copy holds full opacity past the
+   * viewport center; future video layers can read it for the same purpose.
    */
   scrubTrailVh?: number;
   /**

@@ -6,10 +6,11 @@ import Surface from "@/components/ui/Surface";
 import { CITY, REGION, HOURS_LABEL, BY_APPOINTMENT } from "@/lib/site";
 
 export default function Footer() {
-  // Surface scrim keeps footer copy legible on the home route where the
-  // page-wide PageScrubVideo can be playing a bright frame behind the
-  // viewport. On other routes the html gradient already provides a dark
-  // backdrop; the scrim is a near-imperceptible extra darken there.
+  // Surface scrim keeps footer copy legible across routes. The html
+  // gradient already provides a dark backdrop, so the scrim is a
+  // near-imperceptible extra darken — but it earns its keep on any future
+  // route that lands a bright media layer (video, hero image) behind the
+  // footer band.
   return (
     <footer className="relative px-6 md:px-10 py-16">
       <Surface variant="glass" className="max-w-7xl mx-auto rounded-2xl py-12 px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-12">

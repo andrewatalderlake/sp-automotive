@@ -1,7 +1,8 @@
-// Single source of truth for the scroll-scrub video's dwell timing. Both
-// PageScrubVideo (which freezes the video on each chapter's target frame) and
-// CornerSection (which fades chapter copy in/out around the same dwell) read
-// from here so the text and the video stay aligned by construction.
+// Dwell-window timing for chapter copy reveals. CornerSection reads these
+// to compute when its chapter mark + glass card fade in, hold, and fade
+// out as the section passes through the viewport center. Originally
+// shared with a page-wide scroll-scrub video; the chapter-side timing
+// remains a useful primitive even where no video is present.
 
 /**
  * Half-width of the pre-roll before a chapter's "fills viewport" scroll

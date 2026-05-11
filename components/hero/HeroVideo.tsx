@@ -5,8 +5,9 @@ import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import SplitText from "@/components/effects/SplitText";
 
-// Atmospheric video lives on PageScrubVideo at the page root. This
-// component owns the foreground composition: a kinetic two-phrase
+// Atmospheric video is provided by SectionScrubVideo behind the hero +
+// chapter 01 region on the home page. This component owns the foreground
+// composition only: a kinetic two-phrase
 // headline with staggered character reveals, a glass lead card that
 // lifts in afterward, and a hero-only parallax that drifts the text
 // upward as the user starts scrolling.

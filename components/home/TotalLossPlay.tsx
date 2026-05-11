@@ -6,7 +6,6 @@ export default function TotalLossPlay() {
       chapterNumber="01"
       eyebrow="The total-loss play"
       headingId="total-loss-heading"
-      scrubTime={7}
       animation="lift"
       headline={"70% of value.\nThe math turns."}
       body={
