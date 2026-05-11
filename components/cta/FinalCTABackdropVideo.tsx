@@ -45,6 +45,12 @@ export default function FinalCTABackdropVideo() {
 
     let rafId = 0;
     let playing = false;
+    // With preload="none" the browser holds the fetch until we ask. We
+    // trigger v.load() the first time the visibility curve becomes
+    // non-zero — i.e. the section is entering its leading fade ramp,
+    // approaching the viewport — so the file doesn't compete with LCP
+    // resources on first paint.
+    let loaded = false;
 
     const tryPlay = () => {
       if (playing) return;
@@ -85,6 +91,10 @@ export default function FinalCTABackdropVideo() {
       else o = 0;
 
       c!.style.opacity = String(o);
+      if (o > 0 && !loaded) {
+        loaded = true;
+        v!.load();
+      }
       if (o > 0.01) tryPlay();
       else pause();
     }
@@ -128,11 +138,11 @@ export default function FinalCTABackdropVideo() {
     >
       <video
         ref={videoRef}
-        src="/sections/radient-thingy.mp4"
+        src="/sections/radiant-backdrop.mp4"
         loop
         muted
         playsInline
-        preload="auto"
+        preload="none"
         className="absolute inset-0 h-full w-full object-cover"
       />
       {/* Dark scrim — matches the prior SectionParallaxImage scrimOpacity
