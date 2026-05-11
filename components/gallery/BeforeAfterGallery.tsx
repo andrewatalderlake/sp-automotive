@@ -55,7 +55,7 @@ export default function BeforeAfterGallery() {
         {/* Featured composite — single frame already shows wrecked + restored
             side-by-side, so it gets a full-width hero slot above the pair grid
             instead of being split into two tiles. */}
-        <figure data-cursor="View" className="mb-12 md:mb-16">
+        <figure className="mb-12 md:mb-16">
           <div className="relative aspect-[16/9] border border-white/10">
             <Image
               src="/sections/ch06-urus-pair.jpg"
@@ -73,7 +73,7 @@ export default function BeforeAfterGallery() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {pairs.map((p) => (
             <Magnetic key={p.id} radius={120} strength={0.12} display="block" className="w-full">
-              <figure data-cursor="View">
+              <figure>
                 <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
                   <div className="relative aspect-[4/3] border border-white/10 hover:border-bone transition-colors">
                     <Image
@@ -106,7 +106,7 @@ export default function BeforeAfterGallery() {
         <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {singles.map((s) => (
             <Magnetic key={s.src} radius={120} strength={0.1} display="block" className="w-full">
-              <figure data-cursor="View">
+              <figure>
                 <div className="relative aspect-[3/4] border border-white/10 hover:border-bone transition-colors">
                   <Image
                     src={s.src}

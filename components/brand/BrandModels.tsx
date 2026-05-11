@@ -15,7 +15,6 @@ export default function BrandModels({ brand }: { brand: Brand }) {
             <li key={m}>
               <Magnetic radius={60} strength={0.18} display="block" className="w-full">
                 <div
-                  data-cursor="Open"
                   className="border border-white/10 px-4 py-3 text-sm text-bone/90 hover:border-bone hover:text-bone transition-colors"
                 >
                   {m}

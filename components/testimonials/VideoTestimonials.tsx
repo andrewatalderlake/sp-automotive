@@ -73,7 +73,6 @@ function VideoCard({ testimonial }: { testimonial: VideoTestimonial }) {
   return (
     <Magnetic display="block" radius={140} strength={0.18}>
       <figure
-        data-cursor="Watch"
         className="relative border border-white/10 overflow-hidden bg-steel"
       >
         <video

@@ -138,7 +138,6 @@ export default function AboutStory() {
                 <Link
                   key={m.name}
                   href={m.href}
-                  data-cursor="View"
                   className="border border-white/10 px-4 py-3 text-sm text-bone/85 hover:text-bone hover:border-white/25 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
                 >
                   {m.name}
