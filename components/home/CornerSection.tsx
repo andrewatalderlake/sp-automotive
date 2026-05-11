@@ -66,8 +66,12 @@ type Props = {
    */
   scrubTrailVh?: number;
   /**
-   * Reveal animation preset. Defaults to `"fade"`. See file header for the
-   * options.
+   * Currently a no-op. The per-preset reveal animations (`slide`, `sweep`,
+   * `lift`, `spring`, `tilt`) were collapsed to a single opacity fade in
+   * the calm-site refactor. The prop is preserved on the API — and the
+   * `AnimationType` union still names the intended vocabulary — so the five
+   * chapter call sites don't churn when the presets are reinstated. Passing
+   * any value today resolves to the same fade. See the file header.
    */
   animation?: AnimationType;
   /**

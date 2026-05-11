@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
 
 // Full-bleed background image for a chapter section. Provides a subtle
-// ken-burns scale (1.0 → 1.0 + scaleAmplitude) and brightness ramp
-// (brightnessFloor → 1.0) tied to scroll position, so the image feels
-// alive without competing with the chapter copy on top of it.
+// brightness ramp (brightnessFloor → 1.0) tied to scroll position, so the
+// image feels alive without competing with the chapter copy on top of it.
+// A ken-burns scale ramp was retired in the calm-site refactor; the
+// `scaleAmplitude` prop is preserved as a documented no-op for callers
+// that may opt back in (see the prop's JSDoc).
 //
 // Wrap a chapter like this:
 //
@@ -40,8 +42,10 @@ type Props = {
   /** Dark scrim opacity layered above the image (under chapter copy) so
    *  glass cards stay legible across light/dark photo subjects. */
   scrimOpacity?: number;
-  /** Ken-burns scale range. The image scales from 1.0 to (1 + amplitude)
-   *  across the dwell window. */
+  /** Currently a no-op. The ken-burns scale ramp this prop controlled was
+   *  retired in the calm-site refactor in favor of a still frame; the prop
+   *  is kept on the API so a caller can opt back in once the ramp is
+   *  reinstated. Passing a non-default value today has no visual effect. */
   scaleAmplitude?: number;
   /** Brightness floor — the image starts darker (multiplied by this
    *  factor) and fades to full brightness as it enters the viewport. */
@@ -115,12 +119,12 @@ export default function SectionParallaxImage({
       else o = 0;
 
       // Ken-burns scale ramp retired for a calmer feel — keep the brightness
-      // ramp (it reads as ambient, not animated) and pin scale at 1.0 so the
-      // image holds its frame. `scaleAmplitude` left in the API for callers
-      // that opt back in, but the read here is intentionally inert.
+      // ramp (it reads as ambient, not animated) and leave transform untouched
+      // so the wrapper holds its initial frame (no inline transform = scale 1).
+      // `scaleAmplitude` left in the API for callers that opt back in, but
+      // the read here is intentionally inert.
       void scaleAmplitude;
       const brightness = brightnessFloor + (1 - brightnessFloor) * o;
-      wrapper!.style.transform = "scale(1)";
       wrapper!.style.filter = `brightness(${brightness.toFixed(3)})`;
     }
 
