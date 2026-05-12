@@ -36,7 +36,7 @@ function Cell({ value }: { value: boolean }) {
 
 export default function PositioningTable() {
   return (
-    <section className="bg-ink px-6 md:px-10 py-24 md:py-32 border-t border-divider">
+    <section className="bg-ink px-6 md:px-10 py-24 md:py-32">
       <div className="max-w-5xl mx-auto">
         <p className="eyebrow">What makes us different</p>
         <h2 className="mt-4 display-md">A factual comparison.</h2>

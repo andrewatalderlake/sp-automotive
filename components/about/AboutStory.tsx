@@ -1,16 +1,14 @@
 // Owner-letter voice — the bio is written in second person, addressed to the
 // owner who just crashed. Editorial layout: asymmetric image/text blocks
-// with one pull-quote at the thesis line. Image slots render placeholders
-// until real photos land in /public/about/.
+// with an oversized thesis line set as its own display heading. Image slots
+// render placeholders until real photos land in /public/about/.
 
-import Link from "next/link";
 import { EditorialGrid, EditorialItem } from "@/components/editorial/EditorialGrid";
 import EditorialImageSlot from "@/components/editorial/EditorialImageSlot";
-import PullQuote from "@/components/editorial/PullQuote";
 
 export default function AboutStory() {
   return (
-    <section className="bg-ink px-6 md:px-10 py-24 md:py-32 border-t border-divider">
+    <section className="bg-ink px-6 md:px-10 py-24 md:py-32">
       <div className="max-w-7xl mx-auto">
         <EditorialGrid rhythm="loose">
           {/* Header — single column, anchored left of the 12-col grid. */}
@@ -52,101 +50,47 @@ export default function AboutStory() {
             />
           </EditorialItem>
 
-          {/* Pull-quote — the thesis line, set off as a magazine pull. */}
-          <EditorialItem start={2} span={9}>
-            <PullQuote attribution="— Serge">
-              Forensic intake. Factory-spec process. One signature on every job — mine.
-            </PullQuote>
+          {/* Thesis — oversized, intentional line breaks; no border, no choke.
+              Each phrase claims its own line by design. */}
+          <EditorialItem start={1} span={12}>
+            <figure className="my-8 md:my-16">
+              <blockquote className="display-md">
+                <span className="block">Forensic intake.</span>
+                <span className="block">Factory-spec process.</span>
+                <span className="block">One signature — mine.</span>
+              </blockquote>
+              <figcaption className="mt-8 text-[10px] uppercase tracking-[0.3em] text-graphite">
+                — Serge
+              </figcaption>
+            </figure>
           </EditorialItem>
 
-          {/* Block 2 — image left (cols 1–4), text right (cols 6–12).
-              Intake → strip. */}
+          {/* Process block — image left (cols 1–4), text right (cols 6–12).
+              Single condensed pass over intake → strip → paint → reassembly. */}
           <EditorialItem start={1} span={4}>
             <EditorialImageSlot
               src="/about/intake-walkthrough.webp"
-              alt="Serge documenting damage during forensic intake"
+              alt="White Porsche Cayman GT4 in the SP Automotive service bay"
               aspectClass="aspect-[3/4]"
               placeholderLabel="Intake — pending"
             />
           </EditorialItem>
-          <EditorialItem start={6} span={7}>
+          <EditorialItem start={6} span={7} className="self-center">
             <div className="editorial space-y-7 max-w-[55ch]">
               <p>
-                Here&apos;s how it works when you bring me your car. We document everything in the
-                first walkthrough — every panel, every gap, every component, photographed and
-                measured. Your insurance adjuster gets a report they can defend. You get clarity
-                on what your car actually needs.
+                When your car comes in we walk through it together — every panel, every gap,
+                photographed and measured. Then we strip it down so we can see what the estimate
+                missed: frame stress, hidden fractures, misalignment.
               </p>
               <p>
-                Then we strip it. Every panel comes off. We see what insurance estimates miss —
-                frame stress, hidden fractures, suspension misalignment, the things only
-                disassembly reveals. The plan changes if it has to. We tell you when it does.
-              </p>
-            </div>
-          </EditorialItem>
-
-          {/* Block 3 — text left (cols 1–7), image right (cols 9–12).
-              Paint + reassembly. */}
-          <EditorialItem start={1} span={7}>
-            <div className="editorial space-y-7 max-w-[55ch]">
-              <p>
-                Paint is mixed in a booth that runs the same codes the factory uses. Same primer
-                process. Same clear coat depth. Same gloss. Layered — not sprayed — so the only way
-                to tell your car was ever damaged is the carfax. We can help with that too.
+                Paint goes on in layers, mixed to factory color codes. Reassembly is to
+                torque-spec, every gap checked against the data.
               </p>
               <p>
-                Reassembly is to torque-spec. Every gap measured against factory data. Every
-                alignment verified. The car doesn&apos;t leave my shop until it&apos;s right.
+                The car doesn&apos;t leave until it&apos;s right. Warranty signed by me — not a
+                subcontractor.
               </p>
             </div>
-          </EditorialItem>
-          <EditorialItem start={9} span={4}>
-            <EditorialImageSlot
-              src="/about/booth-detail.webp"
-              alt="Paint booth detail"
-              aspectClass="aspect-[3/4]"
-              placeholderLabel="Booth detail — pending"
-            />
-          </EditorialItem>
-
-          {/* Block 4 — closing. Inset slightly from the left for emphasis. */}
-          <EditorialItem start={2} span={9}>
-            <div className="editorial space-y-7 max-w-[60ch]">
-              <p>
-                No subcontractors. No shortcuts. No surprises on the invoice. When you pick up your
-                car, you get a complete restoration record and a written warranty backed by the
-                person who did the work.
-              </p>
-              <p className="text-bone">
-                Your car is more than transportation. It&apos;s a build. I treat it that way.
-              </p>
-            </div>
-          </EditorialItem>
-
-          {/* Models grid — full width, anchored to the start column.
-              Each tile links to its brand page. */}
-          <EditorialItem start={1} span={9}>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
-              {[
-                { name: "Lamborghini", href: "/lamborghini-collision-repair-sarasota" },
-                { name: "McLaren", href: "/mclaren-collision-repair-sarasota" },
-                { name: "Audi R8", href: "/audi-r8-collision-repair-sarasota" },
-                { name: "BMW M", href: "/bmw-m-collision-repair-sarasota" },
-                { name: "Ferrari", href: "/ferrari-collision-repair-sarasota" },
-                { name: "Porsche", href: "/porsche-collision-repair-sarasota" },
-              ].map((m) => (
-                <Link
-                  key={m.name}
-                  href={m.href}
-                  className="border border-white/10 px-4 py-3 text-sm text-bone/85 hover:text-bone hover:border-white/25 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
-                >
-                  {m.name}
-                </Link>
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-graphite">
-              If you don&apos;t see your model — call. We&apos;ve worked on cars older than this list.
-            </p>
           </EditorialItem>
         </EditorialGrid>
       </div>
