@@ -158,6 +158,7 @@ export default function Navigation() {
             alt="SP Automotive"
             width={654}
             height={241}
+            // `preload` replaces deprecated `priority` in Next 16+; above-the-fold on every page.
             preload
             className="h-10 w-auto invert"
           />

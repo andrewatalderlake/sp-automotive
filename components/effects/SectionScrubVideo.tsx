@@ -147,6 +147,7 @@ export default function SectionScrubVideo({ src, poster }: Props) {
             src={poster}
             alt=""
             fill
+            // `preload` replaces deprecated `priority` in Next 16+; reduced-motion LCP candidate.
             preload
             sizes="100vw"
             className="object-cover"

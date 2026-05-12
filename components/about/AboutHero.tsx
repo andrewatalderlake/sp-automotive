@@ -44,6 +44,7 @@ export default function AboutHero() {
               src={PORTRAIT_PATH}
               alt="Serge, founder of SP Automotive"
               fill
+              // `preload` replaces deprecated `priority` in Next 16+; LCP candidate.
               preload
               sizes="(max-width: 768px) 100vw, 40vw"
               className="object-cover"
