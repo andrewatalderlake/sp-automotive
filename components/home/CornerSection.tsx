@@ -8,12 +8,28 @@ import Surface from "@/components/ui/Surface";
 //
 // Layout (desktop): a wide chapter "banner" sits ~40% down the section
 // — vertical accent stripe in `--color-ignite`, large display chapter
-// number, eyebrow label — and below it a glass body card spans the
-// majority of the section width (max-w-5xl, centered). On mobile both
-// stack in document flow with proportional spacing. Whatever media layer
-// sits behind the section bleeds uninterrupted through the gaps.
+// number, eyebrow label — and below it the body region renders one of
+// two ways depending on the `layout` prop:
 //
-// Visibility (scroll-driven): banner + glass card opacity-fade in as the
+//   layout="card"  — body sits inside a `Surface variant="glass-dense"`
+//                    rounded card. Used by chapter 01 (TotalLossPlay)
+//                    only, because that chapter sits over the scroll-
+//                    scrubbed hero video and needs a contrast floor.
+//   layout="plain" — headline + body + optional CTA render directly on
+//                    the section's gradient atmosphere with no card,
+//                    no rounded corners, no padding. Body copy is
+//                    constrained to `max-w-3xl` for a comfortable
+//                    reading measure. Used by chapters 02–05.
+//
+// The body region spans the majority of the section width (max-w-5xl,
+// centered) in either layout. On mobile both stack in document flow with
+// proportional spacing. Whatever media layer sits behind the section
+// bleeds uninterrupted through the gaps. The previous uniform glass card
+// across all chapters was replaced in the "no more cards" rework — only
+// chapter 01 retains a card (now glass-dense), and the standard `glass`
+// variant is no longer used by chapters.
+//
+// Visibility (scroll-driven): banner + body opacity-fade in as the
 // section approaches its "fills viewport" position, hold at full
 // visibility through a dwell window centered on the viewport, and recede
 // as the section moves past. Fade thresholds derive from `DWELL_LEAD_VH`
@@ -87,6 +103,14 @@ type Props = {
    * gap between consecutive chapters.
    */
   tightTop?: boolean;
+  /**
+   * Body presentation. `"card"` wraps headline + body in a dense glass
+   * card (only chapter 01, over the hero scrub video). `"plain"` renders
+   * heading-above-body directly on the section atmosphere with no card
+   * (chapters 02–05). Required — no default so the layout intent is
+   * obvious at every call site.
+   */
+  layout: "card" | "plain";
 };
 
 // Resolve a visibility curve value `o` ∈ [0, 1] → the inline opacity to
@@ -113,6 +137,7 @@ export default function CornerSection({
   animation = "fade",
   background,
   tightTop = false,
+  layout,
 }: Props) {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -269,30 +294,50 @@ export default function CornerSection({
         </div>
       </div>
 
-      {/* Body card — sits below the banner, in flow, centered with a
+      {/* Body region — sits below the banner, in flow, centered with a
           wide max-w-5xl so it takes up the majority of the section's
           width. The bodyRef is on the outer positioning wrapper so the
-          opacity-fade applies to the whole card (incl. its glass
-          background) as a single unit. */}
+          opacity-fade applies to the whole region (incl. any card
+          background) as a single unit. The `layout` prop selects between
+          a dense glass card (chapter 01 only) and a plain heading-above-
+          body composition that renders directly on the section gradient
+          (chapters 02–05). */}
       <div
         ref={bodyRef}
         className="relative z-10 mt-12 md:mt-20 md:max-w-5xl md:mx-auto"
       >
-        <Surface
-          variant="glass"
-          className="rounded-2xl p-8 md:p-14 text-left"
-        >
-          <h2
-            id={headingId}
-            className="display-lg text-bone leading-[1.05] whitespace-pre-line"
+        {layout === "card" ? (
+          <Surface
+            variant="glass-dense"
+            className="rounded-2xl p-8 md:p-14 text-left"
           >
-            {headline}
-          </h2>
-          <div className="mt-8 text-bone text-xl md:text-2xl leading-relaxed">{body}</div>
-          {cta && (
-            <div className="mt-10 flex flex-wrap gap-4">{cta}</div>
-          )}
-        </Surface>
+            <h2
+              id={headingId}
+              className="display-lg text-bone leading-[1.05] whitespace-pre-line"
+            >
+              {headline}
+            </h2>
+            <div className="mt-8 text-bone text-xl md:text-2xl leading-relaxed">{body}</div>
+            {cta && (
+              <div className="mt-10 flex flex-wrap gap-4">{cta}</div>
+            )}
+          </Surface>
+        ) : (
+          <>
+            <h2
+              id={headingId}
+              className="display-lg text-bone leading-[1.05] whitespace-pre-line"
+            >
+              {headline}
+            </h2>
+            <div className="mt-8 max-w-3xl text-bone text-xl md:text-2xl leading-relaxed">
+              {body}
+            </div>
+            {cta && (
+              <div className="mt-10 flex flex-wrap gap-4">{cta}</div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

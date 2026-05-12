@@ -7,6 +7,7 @@ export default function TotalLossPlay() {
       eyebrow="Built for exotics and rental fleets"
       headingId="total-loss-heading"
       animation="lift"
+      layout="card"
       headline={"70% of value.\nThe math turns."}
       body={
         <>

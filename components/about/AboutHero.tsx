@@ -38,24 +38,34 @@ export default function AboutHero() {
           </div>
         </div>
 
-        <div className="md:col-span-5 relative aspect-[4/5] md:aspect-auto md:min-h-[540px] border border-white/10 overflow-hidden">
-          {portrait ? (
-            <Image
-              src={PORTRAIT_PATH}
-              alt="Serge, founder of SP Automotive"
-              fill
-              // `preload` replaces deprecated `priority` in Next 16+; LCP candidate.
-              preload
-              sizes="(max-width: 768px) 100vw, 40vw"
-              className="object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-end justify-center bg-steel">
-              <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
-                Portrait — pending
-              </p>
-            </div>
-          )}
+        <div className="md:col-span-5 flex items-center">
+          {/* 3:4 portrait container matches the source crop (3598×4797).
+              The build-time crop trims a strip of sky off the top and
+              narrows the frame within its safe side margins so the cars
+              sit in the lower portion of the 3:4 frame instead of dead
+              center. `object-cover` over a matching aspect ratio means no
+              further crop and no distortion. Text column may be taller
+              than the image on desktop — we vertically center the image
+              within its grid cell rather than forcing it to fill. */}
+          <div className="relative w-full aspect-[3/4] border border-white/10 overflow-hidden">
+            {portrait ? (
+              <Image
+                src={PORTRAIT_PATH}
+                alt="Serge, founder of SP Automotive"
+                fill
+                // `preload` replaces deprecated `priority` in Next 16+; LCP candidate.
+                preload
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-end justify-center bg-steel">
+                <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
+                  Portrait — pending
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
