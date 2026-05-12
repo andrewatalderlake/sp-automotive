@@ -6,17 +6,15 @@ import FinalCTABackdropVideo from "./FinalCTABackdropVideo";
 // Closing chapter ("06 / Next move"). Glass tab contains the action
 // triangle (phone, SMS, supporting copy) so the CTAs sit on a clearly
 // defined surface instead of floating directly on the looping backdrop
-// video behind. The section's CSS background (`ink → ink-deep`) is the
-// reduced-motion fallback: when `FinalCTABackdropVideo` returns null,
-// the gradient still gives the CTA a contrast floor.
+// video behind. No per-section background — the html canvas (`ink →
+// ink-deep`, fixed) provides the reduced-motion fallback contrast floor
+// and keeps this section's top edge continuous with the chapter 05
+// gradient above. When `FinalCTABackdropVideo` returns null, the canvas
+// still gives the CTA a contrast floor.
 export default function FinalCTA() {
   return (
     <section
       className="relative isolate w-full overflow-hidden px-6 md:px-10 pt-32 pb-32"
-      style={{
-        background:
-          "linear-gradient(to bottom, var(--color-ink), var(--color-ink-deep))",
-      }}
     >
       <FinalCTABackdropVideo />
       <div className="relative z-10 mb-16">

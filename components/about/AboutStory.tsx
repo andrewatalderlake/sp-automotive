@@ -45,10 +45,10 @@ export default function AboutStory() {
           </EditorialItem>
           <EditorialItem start={8} span={5}>
             <EditorialImageSlot
-              src="/about/serge-booth.webp"
-              alt="Serge in the paint booth"
+              src="/about/lambo-front.webp"
+              alt="Lamborghini Huracán in the SP Automotive service bay"
               aspectClass="aspect-[4/5]"
-              placeholderLabel="Booth portrait — pending"
+              placeholderLabel="Bay photo — pending"
             />
           </EditorialItem>
 

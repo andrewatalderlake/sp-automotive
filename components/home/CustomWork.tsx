@@ -13,16 +13,16 @@ import CornerSection from "./CornerSection";
 // follow-up.
 //
 // Section 05 atmosphere: a faint `--color-ignite` (#C8281D) bloom anchored
-// bottom-left (8% α inner → 4% → 0% by 65% of radius). The one section
-// where the brand red shows up as atmosphere — primes the eye for the
-// BeforeAfterGallery beat that follows. Hardcoded rgba because alpha
+// bottom-left, fully dissolving into the shared html-canvas base. The one
+// chapter where the brand red shows up as atmosphere — primes the eye for
+// the BeforeAfterGallery beat that follows. Hardcoded rgba because alpha
 // mixing on a CSS custom property inside an inline string is awkward.
+// No opaque base — see the rationale on sections 02–04.
 const BACKGROUND =
-  "radial-gradient(ellipse 70% 55% at 15% 85%, " +
-  "rgba(200, 40, 29, 0.08) 0%, " +
-  "rgba(200, 40, 29, 0.04) 30%, " +
-  "rgba(14, 15, 17, 0) 65%), " +
-  "linear-gradient(to bottom, var(--color-ink), var(--color-ink-deep))";
+  "radial-gradient(ellipse 95% 75% at 15% 85%, " +
+  "rgba(200, 40, 29, 0.07) 0%, " +
+  "rgba(200, 40, 29, 0.03) 35%, " +
+  "transparent 80%)";
 
 export default function CustomWork() {
   return (
@@ -33,6 +33,7 @@ export default function CustomWork() {
       animation="sweep"
       background={BACKGROUND}
       tightTop
+      layout="plain"
       headline={"Body kits.\nCustom paint.\nSprayable wrap."}
       body={
         <>

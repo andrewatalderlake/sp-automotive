@@ -1,14 +1,16 @@
 import CornerSection from "./CornerSection";
 
-// Section 02 atmosphere: warm-cool baseline. A radial bloom anchored
-// top-right (steel-tinted, ~55% α at center, fading by 65% of radius)
-// over the page's ink → ink-deep linear. Reads as light entering from
+// Section 02 atmosphere: a single soft radial bloom anchored top-right
+// (steel-tinted, ~45% α at center, fully transparent by 80% of radius).
+// No opaque base — the html canvas (`ink → ink-deep`, fixed) provides the
+// shared background that all chapter sections sit on, so adjacent sections
+// don't show a seam at their boundary. Reads as light entering from
 // upper-right — the "arrival" beat for the insurance chapter.
 const BACKGROUND =
-  "radial-gradient(ellipse 80% 60% at 85% 15%, " +
-  "rgba(42, 45, 50, 0.55) 0%, " +
-  "rgba(14, 15, 17, 0) 65%), " +
-  "linear-gradient(to bottom, var(--color-ink), var(--color-ink-deep))";
+  "radial-gradient(ellipse 90% 70% at 85% 15%, " +
+  "rgba(42, 45, 50, 0.45) 0%, " +
+  "rgba(42, 45, 50, 0.18) 35%, " +
+  "transparent 80%)";
 
 export default function InsuranceHandling() {
   return (
@@ -20,6 +22,7 @@ export default function InsuranceHandling() {
       animation="slide"
       background={BACKGROUND}
       tightTop
+      layout="plain"
       headline={"We fight the file.\nYou stay out of it."}
       body={
         <>
