@@ -54,11 +54,11 @@ export default function AboutStory() {
               Each phrase claims its own line by design. */}
           <EditorialItem start={1} span={12}>
             <figure className="my-8 md:my-16">
-              <blockquote className="display-md">
+              <p className="display-md">
                 <span className="block">Forensic intake.</span>
                 <span className="block">Factory-spec process.</span>
                 <span className="block">One signature — mine.</span>
-              </blockquote>
+              </p>
               <figcaption className="mt-8 text-[10px] uppercase tracking-[0.3em] text-graphite">
                 — Serge
               </figcaption>
