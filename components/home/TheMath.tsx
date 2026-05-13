@@ -99,18 +99,24 @@ export default function TheMath() {
             "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%)",
         }}
       >
-        <SparklesCore
-          id="the-math-sparkles"
-          background="transparent"
-          // Bone (#C9C4BB) — bright enough to register as dust against
-          // the dark plume but on-brand with the headline color above.
-          particleColor="#C9C4BB"
-          minSize={0.4}
-          maxSize={1.4}
-          particleDensity={30}
-          speed={3}
-          className="h-full w-full"
-        />
+        {/* WCAG 2.2.2: tsparticles runs continuous opacity + position
+            animation with no internal reduced-motion gate, so skip the
+            render entirely for users who've opted out. The plume gradient
+            below still carries the section transition without it. */}
+        {!reduced && (
+          <SparklesCore
+            id="the-math-sparkles"
+            background="transparent"
+            // Bone (#C9C4BB) — bright enough to register as dust against
+            // the dark plume but on-brand with the headline color above.
+            particleColor="#C9C4BB"
+            minSize={0.4}
+            maxSize={1.4}
+            particleDensity={30}
+            speed={3}
+            className="h-full w-full"
+          />
+        )}
         {/* Ink plume rising from the bottom edge. Linear (vertical)
             gradient instead of radial: the bottom 30% is fully-opaque
             ink across the entire width, then fades up to transparent.
