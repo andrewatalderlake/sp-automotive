@@ -113,11 +113,11 @@ export default function CustomCursor() {
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[71] rounded-full bg-bone"
         style={{
-          width: "6px",
-          height: "6px",
-          marginLeft: "-3px",
-          marginTop: "-3px",
-          boxShadow: "0 0 8px rgba(255,255,255,0.8)",
+          width: "4px",
+          height: "4px",
+          marginLeft: "-2px",
+          marginTop: "-2px",
+          boxShadow: "0 0 4px rgba(255,255,255,0.7)",
           transition: "opacity 200ms",
           opacity: label ? 0 : 1,
         }}
