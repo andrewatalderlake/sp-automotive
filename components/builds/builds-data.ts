@@ -244,7 +244,7 @@ export const BUILDS: Build[] = [
     eyebrow: "Featured build · McLaren 720S",
     title: "720S, 1016 widebody.",
     description:
-      "1016 Industries' McLaren program — the same shop behind the Urus widebody above — applies its trademark forged-carbon treatment to the 720S. Wider arches, redesigned aero, dihedral doors uncompromised.",
+      "1016 Industries' McLaren program — the same shop behind the Urus widebody — applies its trademark forged-carbon treatment to the 720S. Wider arches, redesigned aero, dihedral doors uncompromised.",
     specs: [
       { label: "Kit", value: "1016 Industries 720S widebody" },
       { label: "Material", value: "Forged carbon fiber" },
