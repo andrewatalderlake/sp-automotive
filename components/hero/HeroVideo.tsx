@@ -69,6 +69,7 @@ export default function HeroVideo() {
   return (
     <section
       ref={heroRef}
+      data-theme="dark"
       className="relative min-h-[100svh] w-full overflow-hidden"
       aria-label="Exotic collision — totaled, paid in full."
     >

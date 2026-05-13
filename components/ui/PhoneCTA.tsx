@@ -4,7 +4,13 @@ import Button from "./Button";
 import { PHONE, PHONE_HREF } from "@/lib/site";
 import { track } from "@/lib/analytics";
 
-type Props = { size?: "default" | "lg"; className?: string; location?: string };
+type Props = {
+  size?: "default" | "lg";
+  /** "dark" (default) for dark sections; "light" for paper/cream sections. */
+  theme?: "dark" | "light";
+  className?: string;
+  location?: string;
+};
 
 // Note: we intentionally render a <button> rather than an <a href="tel:…">.
 // Chrome shows a native "Click-to-Call" hover card on tel: links that we
@@ -16,12 +22,18 @@ type Props = { size?: "default" | "lg"; className?: string; location?: string };
 //
 // The cursor-pull (Magnetic) wrapper has been retired site-wide for a
 // calmer feel — Button still carries its color/transform hover styles.
-export default function PhoneCTA({ size = "default", className = "", location }: Props) {
+export default function PhoneCTA({
+  size = "default",
+  theme = "dark",
+  className = "",
+  location,
+}: Props) {
   const sizing = size === "lg" ? "px-10 py-5 text-base" : "";
+  const variant = theme === "light" ? "primary-light" : "primary";
   return (
     <span className="inline-block">
       <Button
-        variant="primary"
+        variant={variant}
         onClick={() => {
           track("phone_cta_click", location ? { location } : undefined);
           window.location.replace(PHONE_HREF);

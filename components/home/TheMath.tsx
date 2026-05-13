@@ -2,7 +2,6 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import SplitText from "@/components/effects/SplitText";
-import { SparklesCore } from "@/components/effects/SparklesCore";
 
 // Chapter 01 — paper-light editorial. Replaces the older corner-cinematic
 // TotalLossPlay for this slot. The section is the first (and only first-half)
@@ -82,58 +81,6 @@ export default function TheMath() {
           backgroundSize: "512px 512px",
         }}
       />
-
-      {/* Exit transition at the bottom: dissolves the opaque paper ground
-          into the ink that the next section (chapter 02) sits on. Uses
-          the exact `--color-ink` tokens so the fade lands at the same
-          color the html canvas paints below — no boundary seam. Faint
-          bone-toned sparkles drift inside the dark plume like dust
-          motes settling, signalling the return to the cinematic dark. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[70vh] overflow-hidden"
-        style={{
-          maskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%)",
-        }}
-      >
-        {/* Skip the tsparticles canvas entirely when the user has
-            requested reduced motion — SparklesCore animates `move` and
-            `opacity` continuously and exposes no internal preference
-            hook (WCAG 2.2.2). The static ink-plume gradient below
-            stays put on its own. */}
-        {!reduced && (
-          <SparklesCore
-            id="the-math-sparkles"
-            background="transparent"
-            // Bone (#C9C4BB) — bright enough to register as dust against
-            // the dark plume but on-brand with the headline color above.
-            particleColor="#C9C4BB"
-            minSize={0.4}
-            maxSize={1.4}
-            particleDensity={30}
-            speed={3}
-            className="h-full w-full"
-          />
-        )}
-        {/* Ink plume rising from the bottom edge. Linear (vertical)
-            gradient instead of radial: the bottom 30% is fully-opaque
-            ink across the entire width, then fades up to transparent.
-            Color matches the html canvas midpoint (#0C0D0F) so the
-            section boundary disappears into the next section's
-            background. No filter:blur — the linear gradient's own
-            color stops provide the soft fade, and blur was causing
-            the paper to bleed through the edge as a light hairline. */}
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(12, 13, 15, 1) 0%, rgba(12, 13, 15, 1) 88%, rgba(12, 13, 15, 0.5) 96%, rgba(12, 13, 15, 0) 100%)",
-          }}
-        />
-      </div>
 
       {/* Chapter mark — same corner-anchor convention as CornerSection
           but inverted color for the paper ground. */}

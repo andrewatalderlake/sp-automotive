@@ -14,26 +14,26 @@ type Props = {
 
 export default function FinalCTA({ chapterMarker = false }: Props) {
   return (
-    <section className="relative w-full overflow-hidden px-6 md:px-10 pt-32 pb-32">
+    <section className="relative w-full overflow-hidden bg-paper text-ink px-6 md:px-10 py-20 md:py-28">
       {chapterMarker && (
-        <div className="relative z-10 mb-16">
-          <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
+        <div className="relative z-10 mx-auto mb-12 max-w-3xl md:mb-14">
+          <div className="font-display text-ink leading-none tracking-[-0.02em] text-3xl md:text-5xl">
             09
           </div>
-          <p className="eyebrow mt-2">/ Next move</p>
+          <p className="eyebrow mt-2 text-graphite">/ Next move</p>
         </div>
       )}
       <Surface
-        variant="glass"
+        variant="light"
         className="relative z-10 max-w-3xl mx-auto rounded-2xl p-8 md:p-12 flex flex-col items-center text-center"
       >
-        <p className="eyebrow">Tell us what happened.</p>
-        <h2 className="mt-3 display-md">We&apos;ll handle the rest.</h2>
+        <p className="eyebrow text-graphite">Tell us what happened.</p>
+        <h2 className="mt-3 display-md text-ink">We&apos;ll handle the rest.</h2>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-          <PhoneCTA size="lg" location="final-cta" />
-          <SmsCTA location="final-cta" />
+          <PhoneCTA size="lg" theme="light" location="final-cta" />
+          <SmsCTA theme="light" location="final-cta" />
         </div>
-        <p className="eyebrow mt-8">
+        <p className="eyebrow mt-8 text-graphite">
           Photos by text. Estimate by phone. Insurance by us.
         </p>
       </Surface>
