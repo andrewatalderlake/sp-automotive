@@ -92,10 +92,10 @@ export default function CustomCursor() {
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[71] rounded-full bg-bone"
         style={{
-          width: "5px",
-          height: "5px",
-          marginLeft: "-2.5px",
-          marginTop: "-2.5px",
+          width: "6px",
+          height: "6px",
+          marginLeft: "-3px",
+          marginTop: "-3px",
           boxShadow: "0 0 1px rgba(255,255,255,0.25)",
         }}
       />
