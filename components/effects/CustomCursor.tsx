@@ -79,11 +79,11 @@ export default function CustomCursor() {
         aria-hidden
         className="pointer-events-none fixed top-0 left-0 z-[60]"
         style={{
-          width: "720px",
-          height: "720px",
-          marginLeft: "-360px",
-          marginTop: "-360px",
-          background: "radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%)",
+          width: "480px",
+          height: "480px",
+          marginLeft: "-240px",
+          marginTop: "-240px",
+          background: "radial-gradient(circle, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 55%)",
           mixBlendMode: "screen",
         }}
       />
