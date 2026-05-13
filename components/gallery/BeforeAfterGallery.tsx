@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import RevealWords from "@/components/effects/RevealWords";
 import { CardStack, type CardStackItem } from "./CardStack";
 import { BUILDS } from "@/components/builds/builds-data";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 // Section 06 — Featured builds. A 3D fan-stack carousel of body-kit
 // transformations. Each card teases the STOCK car so the click reveals
@@ -25,53 +26,71 @@ const builds: CardStackItem[] = BUILDS.map((b, i) => ({
   accentColor: b.accentColor,
 }));
 
-function BuildCard({ item }: { item: CardStackItem }) {
+function BuildCard({
+  item,
+  active,
+}: {
+  item: CardStackItem;
+  active: boolean;
+}) {
+  // Same ShineBorder ring as DefaultFanCard so the landing-page carousel
+  // gets the rotating accent even though we use a custom renderer (for
+  // the "See build" pill). Active card sweeps faster for emphasis.
   return (
-    <div className="relative h-full w-full">
-      {item.imageSrc ? (
-        <Image
-          src={item.imageSrc}
-          alt={item.title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 760px"
-          draggable={false}
-        />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center bg-steel text-sm text-graphite">
-          No image
-        </div>
-      )}
-
-      {/* Bottom gradient for text legibility. */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-      {/* Title + description (bottom-left). */}
-      <div className="relative z-10 flex h-full flex-col justify-end p-5 pr-32 md:pr-40">
-        <div className="truncate text-lg font-semibold text-white">
-          {item.title}
-        </div>
-        {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
-            {item.description}
+    <ShineBorder
+      borderRadius={16}
+      borderWidth={4}
+      duration={active ? 4 : 8}
+      color={item.accentColor ?? ["#C9C4BB", "#6E727A"]}
+      animated
+      className="h-full w-full"
+    >
+      <div className="relative h-full w-full">
+        {item.imageSrc ? (
+          <Image
+            src={item.imageSrc}
+            alt={item.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 760px"
+            draggable={false}
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-steel text-sm text-graphite">
+            No image
           </div>
+        )}
+
+        {/* Bottom gradient for text legibility. */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+        {/* Title + description (bottom-left). */}
+        <div className="relative z-10 flex h-full flex-col justify-end p-5 pr-32 md:pr-40">
+          <div className="truncate text-lg font-semibold text-white">
+            {item.title}
+          </div>
+          {item.description ? (
+            <div className="mt-1 line-clamp-2 text-sm text-white/80">
+              {item.description}
+            </div>
+          ) : null}
+        </div>
+
+        {/* See-build glass pill (bottom-right). stopPropagation keeps the
+            carousel's setActive handler from firing during navigation. */}
+        {item.href ? (
+          <Link
+            href={item.href}
+            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-5 right-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs uppercase tracking-[0.18em] text-bone backdrop-blur-md transition hover:bg-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bone/60"
+            aria-label={`See ${item.title}${item.description ? ` ${item.description}` : ""} build`}
+          >
+            See build
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+          </Link>
         ) : null}
       </div>
-
-      {/* See-build glass pill (bottom-right). stopPropagation keeps the
-          carousel's setActive handler from firing during navigation. */}
-      {item.href ? (
-        <Link
-          href={item.href}
-          onClick={(e) => e.stopPropagation()}
-          className="absolute bottom-5 right-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs uppercase tracking-[0.18em] text-bone backdrop-blur-md transition hover:bg-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bone/60"
-          aria-label={`See ${item.title}${item.description ? ` ${item.description}` : ""} build`}
-        >
-          See build
-          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
-        </Link>
-      ) : null}
-    </div>
+    </ShineBorder>
   );
 }
 
@@ -134,7 +153,9 @@ export default function BeforeAfterGallery() {
           intervalMs={4200}
           pauseOnHover
           showDots
-          renderCard={(item) => <BuildCard item={item} />}
+          renderCard={(item, { active }) => (
+            <BuildCard item={item} active={active} />
+          )}
         />
       </div>
     </section>
