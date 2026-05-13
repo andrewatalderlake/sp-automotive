@@ -202,6 +202,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Porsche 911 GT3 RS GMG Build — SP Automotive",
     metaDescription:
       "Porsche 911 GT3 RS with GMG Racing aero package. Carbon splitter, dive planes, swan-neck wing. SP Automotive Sarasota, FL.",
+    accentColor: ["#7F8284", "#FFFFFF"],
   },
   {
     slug: "488-novitec",
@@ -224,6 +225,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Ferrari 488 Novitec N-Largo Build — SP Automotive",
     metaDescription:
       "Ferrari 488 Novitec N-Largo widebody conversion. Carbon panels, paint match, optional tune. SP Automotive Sarasota, FL.",
+    accentColor: ["#D40000", "#FFFFFF"],
   },
   {
     slug: "m4-3d-design",
@@ -246,6 +248,7 @@ export const BUILDS: Build[] = [
     metaTitle: "BMW M4 3D Design Carbon Build — SP Automotive",
     metaDescription:
       "BMW M4 Competition with 3D Design pre-preg carbon aero. Splitter, diffuser, ducktail. SP Automotive Sarasota, FL.",
+    accentColor: ["#1C69D4", "#FFFFFF"],
   },
   {
     slug: "720s-1016",
@@ -268,6 +271,7 @@ export const BUILDS: Build[] = [
     metaTitle: "McLaren 720S 1016 Industries Widebody — SP Automotive",
     metaDescription:
       "McLaren 720S with 1016 Industries forged-carbon widebody kit. Full install, paint match. SP Automotive Sarasota, FL.",
+    accentColor: ["#FF8700", "#FFFFFF"],
   },
   {
     slug: "r8-libertywalk",
@@ -290,6 +294,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Audi R8 Liberty Walk Widebody — SP Automotive",
     metaDescription:
       "Audi R8 V10 with Liberty Walk LB-Silhouette widebody. Bolt-on overfenders, paint, install. SP Automotive Sarasota, FL.",
+    accentColor: ["#7A8085", "#FFFFFF"],
   },
 ];
 

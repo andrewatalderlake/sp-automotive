@@ -79,6 +79,7 @@ export function ShineBorder({
           --shine-angle has inherits:true so the ::before sees the
           interpolated value. */}
       <div
+        aria-hidden
         style={
           {
             borderRadius: `${borderRadius}px`,
