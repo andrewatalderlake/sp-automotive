@@ -41,9 +41,9 @@ export default function AboutStrip() {
         <p className="mt-8 lead text-ink max-w-[65ch]">
           SP Automotive is Serge — start to finish. He documents the intake himself.
           He runs the booth. He measures the gaps. The cars he&apos;s built his name on —{" "}
-          <Link href="/lamborghini-collision-repair-sarasota" data-cursor="View" className="link-underline text-ink transition-colors">Lamborghinis</Link>,{" "}
-          <Link href="/mclaren-collision-repair-sarasota" data-cursor="View" className="link-underline text-ink transition-colors">McLarens</Link>,{" "}
-          <Link href="/audi-r8-collision-repair-sarasota" data-cursor="View" className="link-underline text-ink transition-colors">R8s</Link>{" "}
+          <Link href="/lamborghini-collision-repair-sarasota" className="link-underline text-ink transition-colors">Lamborghinis</Link>,{" "}
+          <Link href="/mclaren-collision-repair-sarasota" className="link-underline text-ink transition-colors">McLarens</Link>,{" "}
+          <Link href="/audi-r8-collision-repair-sarasota" className="link-underline text-ink transition-colors">R8s</Link>{" "}
           — leave the same way they came in: with one set of fingerprints on the work.
         </p>
 
@@ -77,7 +77,6 @@ export default function AboutStrip() {
 
         <Link
           href="/about"
-          data-cursor="Read"
           className="link-underline inline-block mt-10 text-ink uppercase tracking-[0.18em] text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
         >
           Read more about Serge →

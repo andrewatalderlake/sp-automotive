@@ -36,6 +36,10 @@ export type Build = {
   metaTitle: string;
   /** SEO description (under 160 chars). */
   metaDescription: string;
+  /** Per-card accent for the ShineBorder ring on the featured-builds
+   *  carousel. Hex string, or a 2-color array for a richer mid-sweep
+   *  transition. See components/gallery/CardStack.tsx. */
+  accentColor: string | string[];
 };
 
 export const BUILDS: Build[] = [
@@ -60,6 +64,7 @@ export const BUILDS: Build[] = [
     metaTitle: "1016 Industries Urus Widebody — SP Automotive",
     metaDescription:
       "Lamborghini Urus widebody build by SP Automotive in Sarasota, FL. 1016 Industries forged-carbon kit, factory paint match, full install.",
+    accentColor: ["#000000", "#FFFFFF"],
   },
   {
     slug: "urus-mansory",
@@ -82,6 +87,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Mansory Venatus Urus — SP Automotive",
     metaDescription:
       "Mansory Venatus full body conversion for the Lamborghini Urus. Carbon panels, paint match, interior coordination. SP Automotive Sarasota.",
+    accentColor: ["#000000", "#FFFFFF"],
   },
   {
     slug: "huracan-mansory",
@@ -104,6 +110,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Mansory Huracán Widebody — SP Automotive",
     metaDescription:
       "Mansory full body conversion for the Lamborghini Huracán. Forged carbon panels, paint match, install. SP Automotive in Sarasota, FL.",
+    accentColor: ["#00B86B", "#FFFFFF"],
   },
   {
     slug: "huracan-sto",
@@ -126,6 +133,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Lamborghini Huracán STO Conversion — SP Automotive",
     metaDescription:
       "Full Huracán EVO to STO body conversion. Cofango, wing, NACA scoop, paint match. SP Automotive Sarasota, FL.",
+    accentColor: ["#FF6B00", "#FFFFFF"],
   },
   {
     slug: "g-wagon-brabus",
@@ -148,6 +156,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Brabus G63 Widebody Build — SP Automotive",
     metaDescription:
       "Mercedes G63 Brabus widebody build by SP Automotive. Flares, hood scoops, exhaust, Monoblock wheels. Sarasota, FL.",
+    accentColor: ["#000000", "#FFFFFF"],
   },
   {
     slug: "g-wagon-mansory",
@@ -170,6 +179,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Mansory Gronos G-Wagon Build — SP Automotive",
     metaDescription:
       "Mansory Gronos full carbon widebody for the Mercedes G63. Hand-laid panels, paint, install. SP Automotive Sarasota, FL.",
+    accentColor: ["#000000", "#FFFFFF"],
   },
   {
     slug: "911-gt3rs-gmg",
@@ -192,6 +202,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Porsche 911 GT3 RS GMG Build — SP Automotive",
     metaDescription:
       "Porsche 911 GT3 RS with GMG Racing aero package. Carbon splitter, dive planes, swan-neck wing. SP Automotive Sarasota, FL.",
+    accentColor: ["#7F8284", "#FFFFFF"],
   },
   {
     slug: "488-novitec",
@@ -214,6 +225,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Ferrari 488 Novitec N-Largo Build — SP Automotive",
     metaDescription:
       "Ferrari 488 Novitec N-Largo widebody conversion. Carbon panels, paint match, optional tune. SP Automotive Sarasota, FL.",
+    accentColor: ["#D40000", "#FFFFFF"],
   },
   {
     slug: "m4-3d-design",
@@ -236,6 +248,7 @@ export const BUILDS: Build[] = [
     metaTitle: "BMW M4 3D Design Carbon Build — SP Automotive",
     metaDescription:
       "BMW M4 Competition with 3D Design pre-preg carbon aero. Splitter, diffuser, ducktail. SP Automotive Sarasota, FL.",
+    accentColor: ["#1C69D4", "#FFFFFF"],
   },
   {
     slug: "720s-1016",
@@ -258,6 +271,7 @@ export const BUILDS: Build[] = [
     metaTitle: "McLaren 720S 1016 Industries Widebody — SP Automotive",
     metaDescription:
       "McLaren 720S with 1016 Industries forged-carbon widebody kit. Full install, paint match. SP Automotive Sarasota, FL.",
+    accentColor: ["#FF8700", "#FFFFFF"],
   },
   {
     slug: "r8-libertywalk",
@@ -280,6 +294,7 @@ export const BUILDS: Build[] = [
     metaTitle: "Audi R8 Liberty Walk Widebody — SP Automotive",
     metaDescription:
       "Audi R8 V10 with Liberty Walk LB-Silhouette widebody. Bolt-on overfenders, paint, install. SP Automotive Sarasota, FL.",
+    accentColor: ["#7A8085", "#FFFFFF"],
   },
 ];
 

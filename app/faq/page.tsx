@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import FinalCTA from "@/components/cta/FinalCTA";
+import FAQAccordionList from "@/components/faq/FAQAccordionList";
 import { PUBLISHED_FAQS } from "@/lib/faq-data";
 import { SITE_URL } from "@/lib/site";
 
@@ -72,44 +73,11 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Jump-to index: chip-pill links to each question. Each FAQ <li>
-          carries id={f.id} and scroll-mt-32 so the anchor lands below the
-          fixed header pill. */}
-      <section className="bg-ink px-6 md:px-10 pt-16 pb-8">
-        <div className="max-w-3xl mx-auto">
-          <p className="eyebrow mb-4">Jump to a question</p>
-          <ul className="flex flex-wrap gap-2">
-            {PUBLISHED_FAQS.map((f) => (
-              <li key={f.id}>
-                <a
-                  href={`#${f.id}`}
-                  className="inline-block rounded-full border border-white/10 px-3 py-1.5 text-xs text-bone/80 hover:text-bone hover:border-white/30 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
-                >
-                  {f.question.replace(/\?$/, "")}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="bg-ink px-6 md:px-10 pt-12 pb-24 md:pb-32">
-        <div className="max-w-3xl mx-auto">
-          <ol className="space-y-16">
-            {PUBLISHED_FAQS.map((f, idx) => (
-              <li key={f.id} id={f.id} className="scroll-mt-32">
-                <p className="spec text-xs text-graphite">
-                  {String(idx + 1).padStart(2, "0")}
-                </p>
-                <h2 className="mt-3 font-display text-3xl md:text-4xl text-bone leading-[1.05]">
-                  {f.question}
-                </h2>
-                <p className="editorial mt-5 max-w-[65ch]">{f.answer}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* Chip jump-nav + the scroll-revealed accordion list both live in
+          FAQAccordionList so they can share open-state. Each row carries
+          id={f.id} and scroll-mt-32 inside the component, preserving deep
+          links like /faq#timeline. */}
+      <FAQAccordionList faqs={PUBLISHED_FAQS} />
 
       <FinalCTA />
     </>
