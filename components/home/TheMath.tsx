@@ -99,10 +99,11 @@ export default function TheMath() {
             "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%)",
         }}
       >
-        {/* WCAG 2.2.2: tsparticles runs continuous opacity + position
-            animation with no internal reduced-motion gate, so skip the
-            render entirely for users who've opted out. The plume gradient
-            below still carries the section transition without it. */}
+        {/* Skip the tsparticles canvas entirely when the user has
+            requested reduced motion — SparklesCore animates `move` and
+            `opacity` continuously and exposes no internal preference
+            hook (WCAG 2.2.2). The static ink-plume gradient below
+            stays put on its own. */}
         {!reduced && (
           <SparklesCore
             id="the-math-sparkles"
