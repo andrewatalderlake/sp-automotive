@@ -124,13 +124,22 @@ export function SectionDottedSurface({ className, ...props }: Props) {
       rafId = 0;
     }
 
+    // Respect reduced motion: render one static frame and never start the
+    // rAF loop. Declared before the IO so its callback closure sees it.
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      renderer.render(scene, camera);
+    }
+
     // Visibility gate.
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           const wasVisible = visible;
           visible = e.isIntersecting;
-          if (!wasVisible && visible) startLoop();
+          if (!wasVisible && visible && !reduced) startLoop();
           else if (wasVisible && !visible) stopLoop();
         }
       },
@@ -148,16 +157,6 @@ export function SectionDottedSurface({ className, ...props }: Props) {
       renderer.setSize(width, height);
     });
     ro.observe(container);
-
-    // Respect reduced motion: render once and don't start the loop.
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduced) {
-      // IO will start the loop when it fires.
-    } else {
-      renderer.render(scene, camera);
-    }
 
     return () => {
       io.disconnect();

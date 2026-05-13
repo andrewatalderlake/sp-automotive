@@ -17,8 +17,8 @@ import FinalCTA from "@/components/cta/FinalCTA";
 //
 // Section sequence: hero (Totaled / Paid in Full) -> 01 the math ->
 // 02 carrier handling -> 03 indoor storage -> 04 mobile estimate ->
-// 05 how it works -> selected work (before/after gallery) ->
-// 06 the signature (about) -> 07 common questions (FAQ) -> 08 next move
+// 05 how it works -> 06 selected work (before/after gallery) ->
+// 07 the signature (about) -> 08 common questions (FAQ) -> 09 next move
 // (final CTA). The html canvas (atmospheric ink gradient, `globals.css`)
 // carries the background for sections without their own clip.
 export default function Home() {

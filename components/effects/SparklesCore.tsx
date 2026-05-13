@@ -34,9 +34,13 @@ export const SparklesCore = (props: ParticlesProps) => {
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
+    })
+      .then(() => {
+        setInit(true);
+      })
+      .catch(() => {
+        /* silently degrade — particles won't render */
+      });
   }, []);
   const controls = useAnimation();
 

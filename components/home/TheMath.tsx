@@ -156,19 +156,16 @@ export default function TheMath() {
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           <NumeralBlock
-            index={0}
             eyebrow="Insurance offers"
             value="70%"
             caption="of ACV"
           />
           <NumeralBlock
-            index={1}
             eyebrow="What you owe"
             value="100%"
             caption="payoff + value"
           />
           <NumeralBlock
-            index={2}
             eyebrow="The gap we close"
             value="+30%"
             caption="& up recovered"
@@ -238,7 +235,6 @@ function NumeralBlock({
   value,
   caption,
 }: {
-  index: number;
   eyebrow: string;
   value: string;
   caption: string;
