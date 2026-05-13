@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { BRANDS } from "@/components/brand/brands-data";
+import { BUILDS } from "@/components/builds/builds-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -10,6 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/${b.slug}`,
       lastModified,
       priority: 0.9,
+    })),
+    ...BUILDS.map((b) => ({
+      url: `${SITE_URL}/builds/${b.slug}`,
+      lastModified,
+      priority: 0.85,
     })),
     { url: `${SITE_URL}/about`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/process`, lastModified, priority: 0.8 },

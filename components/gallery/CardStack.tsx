@@ -198,12 +198,19 @@ export function CardStack<T extends CardStackItem>({
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      {/* Stage — cardHeight + 30 leaves just enough room for the active
-          card's lift animation (~22px) without parking the cards at the
-          bottom of a tall void above them. */}
+      {/* Stage — height accounts for the fan-stack geometry: inactive
+          cards rotate up to ±spreadDeg/2 and their corners extend above
+          the unrotated bounding box. Without headroom the section's
+          overflow-hidden clips the tops of the outermost cards. Formula:
+          card height + active lift + sin(maxRotate) * cardWidth / 2. */}
       <div
         className="relative w-full"
-        style={{ height: cardHeight + 30 }}
+        style={{
+          height:
+            cardHeight +
+            activeLiftPx +
+            Math.ceil(Math.sin((spreadDeg * Math.PI) / 180 / 2) * cardWidth),
+        }}
         tabIndex={0}
         onKeyDown={onKeyDown}
       >
