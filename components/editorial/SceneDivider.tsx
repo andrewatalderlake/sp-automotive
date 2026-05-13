@@ -20,8 +20,8 @@ type Props = {
   imageSrc: string;
   /** Decorative by default. Pass alt text only when the image carries meaning the caption doesn't. */
   imageAlt?: string;
-  /** Optional priority hint for above-the-fold use. */
-  priority?: boolean;
+  /** Optional preload hint for above-the-fold use (LCP candidate). */
+  preload?: boolean;
 };
 
 export default function SceneDivider({
@@ -30,7 +30,7 @@ export default function SceneDivider({
   caption,
   imageSrc,
   imageAlt = "",
-  priority = false,
+  preload = false,
 }: Props) {
   return (
     <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden bg-ink border-t border-divider">
@@ -38,7 +38,7 @@ export default function SceneDivider({
         src={imageSrc}
         alt={imageAlt}
         fill
-        priority={priority}
+        preload={preload}
         sizes="100vw"
         className="object-cover"
       />

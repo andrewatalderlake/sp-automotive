@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Magnetic from "@/components/effects/Magnetic";
 import {
   PUBLISHED_VIDEO_TESTIMONIALS,
   type VideoTestimonial,
@@ -71,34 +70,31 @@ function VideoCard({ testimonial }: { testimonial: VideoTestimonial }) {
   }, []);
 
   return (
-    <Magnetic display="block" radius={140} strength={0.18}>
-      <figure
-        data-cursor="Watch"
-        className="relative border border-white/10 overflow-hidden bg-steel"
+    <figure
+      className="relative border border-white/10 overflow-hidden bg-steel"
+    >
+      <video
+        ref={videoRef}
+        poster={testimonial.posterSrc}
+        muted
+        loop
+        playsInline
+        preload="none"
+        className={`w-full ${testimonial.aspectClass ?? "aspect-[4/5]"} object-cover`}
+        aria-label={`${testimonial.name}, ${testimonial.vehicle} — ${testimonial.repairType}`}
       >
-        <video
-          ref={videoRef}
-          poster={testimonial.posterSrc}
-          muted
-          loop
-          playsInline
-          preload="none"
-          className={`w-full ${testimonial.aspectClass ?? "aspect-[4/5]"} object-cover`}
-          aria-label={`${testimonial.name}, ${testimonial.vehicle} — ${testimonial.repairType}`}
-        >
-          {testimonial.webmSrc && <source src={testimonial.webmSrc} type="video/webm" />}
-          <source src={testimonial.mp4Src} type="video/mp4" />
-        </video>
-        <figcaption className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
-          <p className="font-display text-xl text-bone leading-tight">
-            {testimonial.captionText}
-          </p>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-graphite">
-            {testimonial.name} <span className="text-bone">·</span>{" "}
-            {testimonial.vehicle}
-          </p>
-        </figcaption>
-      </figure>
-    </Magnetic>
+        {testimonial.webmSrc && <source src={testimonial.webmSrc} type="video/webm" />}
+        <source src={testimonial.mp4Src} type="video/mp4" />
+      </video>
+      <figcaption className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 to-transparent">
+        <p className="font-display text-xl text-bone leading-tight">
+          {testimonial.captionText}
+        </p>
+        <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-graphite">
+          {testimonial.name} <span className="text-bone">·</span>{" "}
+          {testimonial.vehicle}
+        </p>
+      </figcaption>
+    </figure>
   );
 }

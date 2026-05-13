@@ -78,7 +78,6 @@
   --z-overlay: 10;
   --z-section: 30;
   --z-nav:     50;
-  --z-cursor:  70;
   --z-modal:   80;
   --z-toast:   90;
   --z-skip:    100;
@@ -108,9 +107,9 @@ html, body {
 }
 
 /* Atmospheric vertical gradient lives on the html canvas so the body can
-   stay transparent. The home page mounts a fixed-position PageScrubVideo as
-   a child of body that paints over this canvas — other routes show the
-   gradient as their backdrop. */
+   stay transparent. Routes that mount their own media layer (e.g. the home
+   page wraps hero + chapter 01 in a SectionScrubVideo region) paint over
+   this canvas in that band; everywhere else the gradient is the backdrop. */
 html {
   background:
     radial-gradient(ellipse at top, rgba(255, 255, 255, 0.02), transparent 60%),
