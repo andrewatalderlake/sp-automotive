@@ -1,7 +1,7 @@
 import FinalCTA from "@/components/cta/FinalCTA";
 import BuildHero from "./BuildHero";
 import BuildSpecs from "./BuildSpecs";
-import BeforeAfterSlider from "./BeforeAfterSlider";
+import BeforeAfterCompare from "./BeforeAfterCompare";
 import type { Build } from "./builds-data";
 
 // Reusable composition for every featured-build page. One Build entry in
@@ -14,12 +14,10 @@ export default function BuildPage({ build }: { build: Build }) {
       <BuildHero build={build} />
       <section className="bg-ink px-6 md:px-10 pb-16 md:pb-20">
         <div className="max-w-6xl mx-auto">
-          <BeforeAfterSlider
+          <BeforeAfterCompare
             stockImage={build.stockImage}
             kitImage={build.kitImage}
             alt={`${build.car} with ${build.kit}`}
-            stockLabel="Stock"
-            kitLabel={`With ${build.kit}`}
           />
         </div>
       </section>

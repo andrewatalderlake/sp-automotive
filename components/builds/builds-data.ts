@@ -181,6 +181,116 @@ export const BUILDS: Build[] = [
       "Mansory Gronos full carbon widebody for the Mercedes G63. Hand-laid panels, paint, install. SP Automotive Sarasota, FL.",
     accentColor: ["#000000", "#FFFFFF"],
   },
+  {
+    slug: "911-gt3rs-gmg",
+    car: "Porsche 911 GT3 RS",
+    kit: "GMG Racing",
+    eyebrow: "Featured build · Porsche 911 GT3 RS",
+    title: "GT3 RS, GMG-treated.",
+    description:
+      "GMG Racing — the West-Coast Porsche tuner GT3 owners actually trust — adds a track-ready carbon aero package: front splitter extensions, dive planes, hood vents, and a redesigned swan-neck wing. Track-day weapon, street-legal finish.",
+    specs: [
+      { label: "Kit", value: "GMG WC-GT aero package" },
+      { label: "Material", value: "Pre-preg carbon fiber" },
+      { label: "Components", value: "Front splitter extensions, dive planes, hood vents, rear wing extensions" },
+      { label: "Install time", value: "~2 weeks (incl. corner balance + alignment)" },
+      { label: "Finish", value: "Exposed weave or color-matched" },
+      { label: "Donor", value: "911 GT3 RS (992) or 991.2" },
+    ],
+    stockImage: "/builds/911-gt3rs-gmg/stock.webp",
+    kitImage: "/builds/911-gt3rs-gmg/kit.webp",
+    metaTitle: "Porsche 911 GT3 RS GMG Build — SP Automotive",
+    metaDescription:
+      "Porsche 911 GT3 RS with GMG Racing aero package. Carbon splitter, dive planes, swan-neck wing. SP Automotive Sarasota, FL.",
+  },
+  {
+    slug: "488-novitec",
+    car: "Ferrari 488",
+    kit: "Novitec",
+    eyebrow: "Featured build · Ferrari 488",
+    title: "488, Novitec N-Largo.",
+    description:
+      "Novitec's N-Largo widebody program is the Mansory equivalent for Ferrari — wider by 9 cm, carbon-redesigned bumpers, and a tuned twin-turbo V8 if you want the matching power. The Maranello flagship, reimagined.",
+    specs: [
+      { label: "Kit", value: "Novitec N-Largo widebody" },
+      { label: "Material", value: "Visible + clear-coated carbon" },
+      { label: "Components", value: "Front bumper, fenders (+90mm wider), side skirts, rear bumper, rear wing, hood" },
+      { label: "Install time", value: "~5 weeks (incl. paint and trim)" },
+      { label: "Finish", value: "Exposed weave or color-coded" },
+      { label: "Power option", value: "Novitec N-Largo S tune (772 hp) available" },
+    ],
+    stockImage: "/builds/488-novitec/stock.webp",
+    kitImage: "/builds/488-novitec/kit.webp",
+    metaTitle: "Ferrari 488 Novitec N-Largo Build — SP Automotive",
+    metaDescription:
+      "Ferrari 488 Novitec N-Largo widebody conversion. Carbon panels, paint match, optional tune. SP Automotive Sarasota, FL.",
+  },
+  {
+    slug: "m4-3d-design",
+    car: "BMW M4",
+    kit: "3D Design",
+    eyebrow: "Featured build · BMW M4",
+    title: "M4, 3D Design carbon.",
+    description:
+      "3D Design — the Tokyo carbon house BMW M tuners revere — adds the most precisely-fit carbon aero in the game: front splitter, side skirts, rear diffuser, ducktail spoiler. Tasteful, OEM-finish carbon for the G82 chassis.",
+    specs: [
+      { label: "Kit", value: "3D Design carbon aero (G82)" },
+      { label: "Material", value: "Pre-preg autoclave carbon fiber" },
+      { label: "Components", value: "Front splitter, canards, side skirts, rear diffuser, ducktail spoiler, mirror caps" },
+      { label: "Install time", value: "~2 weeks" },
+      { label: "Finish", value: "Glossy clear-coat exposed weave" },
+      { label: "Donor", value: "BMW M4 Competition (G82) or M3 Competition" },
+    ],
+    stockImage: "/builds/m4-3d-design/stock.webp",
+    kitImage: "/builds/m4-3d-design/kit.webp",
+    metaTitle: "BMW M4 3D Design Carbon Build — SP Automotive",
+    metaDescription:
+      "BMW M4 Competition with 3D Design pre-preg carbon aero. Splitter, diffuser, ducktail. SP Automotive Sarasota, FL.",
+  },
+  {
+    slug: "720s-1016",
+    car: "McLaren 720S",
+    kit: "1016 Industries",
+    eyebrow: "Featured build · McLaren 720S",
+    title: "720S, 1016 widebody.",
+    description:
+      "1016 Industries' McLaren program — the same shop behind the Urus widebody — applies its trademark forged-carbon treatment to the 720S. Wider arches, redesigned aero, dihedral doors uncompromised.",
+    specs: [
+      { label: "Kit", value: "1016 Industries 720S widebody" },
+      { label: "Material", value: "Forged carbon fiber" },
+      { label: "Components", value: "Front bumper, fender flares, side skirts, rear bumper, swan-neck wing, hood vents" },
+      { label: "Install time", value: "~4 weeks (dihedral re-alignment included)" },
+      { label: "Finish", value: "Color-matched body, exposed-weave accents" },
+      { label: "Donor", value: "McLaren 720S coupe or Spider" },
+    ],
+    stockImage: "/builds/720s-1016/stock.webp",
+    kitImage: "/builds/720s-1016/kit.webp",
+    metaTitle: "McLaren 720S 1016 Industries Widebody — SP Automotive",
+    metaDescription:
+      "McLaren 720S with 1016 Industries forged-carbon widebody kit. Full install, paint match. SP Automotive Sarasota, FL.",
+  },
+  {
+    slug: "r8-libertywalk",
+    car: "Audi R8",
+    kit: "Liberty Walk",
+    eyebrow: "Featured build · Audi R8",
+    title: "R8, Liberty Walk widebody.",
+    description:
+      "Liberty Walk's signature widebody — riveted bolt-on overfenders, the polarizing JDM look that started the trend — applied to the V10 R8. Aggressive, deliberately overstated, unmistakably Liberty Walk.",
+    specs: [
+      { label: "Kit", value: "Liberty Walk LB-Silhouette Works R8" },
+      { label: "Material", value: "FRP + carbon options" },
+      { label: "Components", value: "Bolt-on overfenders (riveted), front lip, side skirts, rear diffuser, optional GT wing" },
+      { label: "Install time", value: "~3 weeks" },
+      { label: "Finish", value: "Body-color with exposed rivets, optional carbon accents" },
+      { label: "Donor", value: "Audi R8 V10 (Gen 1 or Gen 2)" },
+    ],
+    stockImage: "/builds/r8-libertywalk/stock.webp",
+    kitImage: "/builds/r8-libertywalk/kit.webp",
+    metaTitle: "Audi R8 Liberty Walk Widebody — SP Automotive",
+    metaDescription:
+      "Audi R8 V10 with Liberty Walk LB-Silhouette widebody. Bolt-on overfenders, paint, install. SP Automotive Sarasota, FL.",
+  },
 ];
 
 export function getBuild(slug: string): Build | undefined {
