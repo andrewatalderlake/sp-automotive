@@ -5,9 +5,10 @@ import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Draggable before/after comparison slider. Two stacked next/image fills
-// in a 16:10 frame; the top image is clipped via `clip-path: inset(0 N% 0
-// 0)` driven by a 0..100 state. The handle is keyboard-accessible (Left
-// / Right move ±5%; Home / End snap to 0 / 100).
+// in a 16:9 frame (matches the Higgsfield gen ratio); the top image is
+// clipped via `clip-path: inset(0 N% 0 0)` driven by a 0..100 state.
+// The handle is keyboard-accessible (Left / Right move ±5%; Home / End
+// snap to 0 / 100).
 //
 // Below `md` (768px) or under prefers-reduced-motion, we fall back to a
 // stacked layout — two images one above the other with text labels — so
@@ -105,7 +106,7 @@ export function BeforeAfterSlider({
     <div
       ref={frameRef}
       className={cn(
-        "relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-ink-deep select-none",
+        "relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-ink-deep select-none",
         "ring-1 ring-bone/10 shadow-2xl",
         className,
       )}
@@ -177,7 +178,7 @@ export function BeforeAfterSlider({
 
 function FrameImage({ src, alt, label }: { src: string; alt: string; label: string }) {
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-ink-deep ring-1 ring-bone/10 shadow-xl">
+    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-ink-deep ring-1 ring-bone/10 shadow-xl">
       <Image
         src={src}
         alt={alt}
