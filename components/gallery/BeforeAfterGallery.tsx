@@ -22,6 +22,7 @@ const builds: CardStackItem[] = BUILDS.map((b, i) => ({
   description: b.kit,
   imageSrc: b.stockImage,
   href: `/builds/${b.slug}`,
+  accentColor: b.accentColor,
 }));
 
 function BuildCard({ item }: { item: CardStackItem }) {

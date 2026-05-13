@@ -70,6 +70,13 @@
   --motion-manual:    420ms cubic-bezier(0.83, 0, 0.17, 1);    /* precise — leader lines, annotations */
   --motion-quick:     200ms cubic-bezier(0.4, 0, 0.2, 1);      /* micro — hover, focus */
 
+  /* ShineBorder — rotates --shine-angle 0→360deg. Duration is per-instance
+     via inline --duration. The conic-gradient on the ::before reads
+     --shine-angle, so the bright sector orbits the card's border ring.
+     See @keyframes shine-rotate + @property --shine-angle below; consumed
+     by components/ui/shine-border.tsx. */
+  --animate-shine-rotate: shine-rotate var(--duration, 6s) infinite linear;
+
   /* ─── Atmosphere ─────────────────────────────────────────────────── */
   --grain-opacity: 0.04;
 
@@ -227,6 +234,23 @@ body {
     animation: none;
     background-position: 50% 0;
   }
+}
+
+/* ShineBorder — bright sector of a conic gradient orbits the card border.
+   --shine-angle is registered as <angle> via @property so CSS can
+   interpolate it across the keyframe (without @property it would snap
+   instantly at 100%). mask-composite: exclude on the ::before keeps only
+   the border-ring portion of the rotating gradient visible. Consumed by
+   components/ui/shine-border.tsx; used on the cars carousel in
+   components/gallery/CardStack.tsx. */
+@property --shine-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes shine-rotate {
+  to { --shine-angle: 360deg; }
 }
 
 /* Lead — opening paragraph after a display headline */

@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 export type CardStackItem = {
   id: string | number;
@@ -15,6 +16,9 @@ export type CardStackItem = {
   href?: string;
   ctaLabel?: string;
   tag?: string;
+  /** Per-card accent for the animated ShineBorder ring around the card.
+   *  Hex string, or 2+ hex strings for a multi-stop radial gradient. */
+  accentColor?: string | string[];
 };
 
 export type CardStackProps<T extends CardStackItem> = {
@@ -289,7 +293,7 @@ export function CardStack<T extends CardStackItem>({
                 <motion.div
                   key={item.id}
                   className={cn(
-                    "absolute bottom-0 rounded-2xl border-4 border-white/10 overflow-hidden shadow-xl",
+                    "absolute bottom-0 rounded-2xl overflow-hidden shadow-xl",
                     "will-change-transform select-none",
                     isActive
                       ? "cursor-grab active:cursor-grabbing"
@@ -383,41 +387,60 @@ export function CardStack<T extends CardStackItem>({
   );
 }
 
-function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
+function DefaultFanCard({
+  item,
+  active,
+}: {
+  item: CardStackItem;
+  active: boolean;
+}) {
+  // Every card runs the rotating shine (the conic-gradient approach is
+  // GPU-cheap — it just animates one CSS variable per card). Active card
+  // gets a faster sweep for emphasis. Fallback uses palette neutrals so
+  // cards without an accentColor still get an on-brand ring.
   return (
-    <div className="relative h-full w-full">
-      {/* image */}
-      <div className="absolute inset-0">
-        {item.imageSrc ? (
-          <Image
-            src={item.imageSrc}
-            alt={item.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 540px"
-            draggable={false}
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-steel text-sm text-graphite">
-            No image
-          </div>
-        )}
-      </div>
-
-      {/* subtle gradient overlay at bottom for text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-      {/* content */}
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate text-lg font-semibold text-white">
-          {item.title}
+    <ShineBorder
+      borderRadius={16}
+      borderWidth={4}
+      duration={active ? 4 : 8}
+      color={item.accentColor ?? ["#C9C4BB", "#6E727A"]}
+      animated
+      className="h-full w-full"
+    >
+      <div className="relative h-full w-full">
+        {/* image */}
+        <div className="absolute inset-0">
+          {item.imageSrc ? (
+            <Image
+              src={item.imageSrc}
+              alt={item.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 540px"
+              draggable={false}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-steel text-sm text-graphite">
+              No image
+            </div>
+          )}
         </div>
-        {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
-            {item.description}
+
+        {/* subtle gradient overlay at bottom for text readability */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+        {/* content */}
+        <div className="relative z-10 flex h-full flex-col justify-end p-5">
+          <div className="truncate text-lg font-semibold text-white">
+            {item.title}
           </div>
-        ) : null}
+          {item.description ? (
+            <div className="mt-1 line-clamp-2 text-sm text-white/80">
+              {item.description}
+            </div>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </ShineBorder>
   );
 }
