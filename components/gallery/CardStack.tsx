@@ -121,10 +121,15 @@ export function CardStack<T extends CardStackItem>({
     wrapIndex(initialIndex, len),
   );
   const [hovering, setHovering] = React.useState(false);
+  const [prevLen, setPrevLen] = React.useState(len);
 
-  React.useEffect(() => {
+  // When items.length changes, wrap the active index into the new range.
+  // Adjusted during render (React's recommended pattern) rather than in an
+  // effect, so we don't trigger a cascading render after commit.
+  if (prevLen !== len) {
+    setPrevLen(len);
     setActive((a) => wrapIndex(a, len));
-  }, [len]);
+  }
 
   React.useEffect(() => {
     if (!len) return;
