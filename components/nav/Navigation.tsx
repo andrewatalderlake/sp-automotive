@@ -9,7 +9,6 @@ import PhoneCTA from "@/components/ui/PhoneCTA";
 // /#work scrolls to the BeforeAfterGallery (id="work") on the homepage.
 const links = [
   { href: "/", label: "Home" },
-  { href: "/process", label: "Process" },
   { href: "/#work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
@@ -25,8 +24,7 @@ export default function Navigation() {
 
   // Anchor hrefs (e.g. /#work) are not "active" destinations — they scroll
   // within the home page. For path hrefs, mark active when the pathname
-  // matches exactly or is a sub-route (e.g. /explainers/adas could mark
-  // /process active in future, but for now the link list is flat).
+  // matches exactly or is a sub-route.
   function isActive(href: string): boolean {
     if (href.includes("#")) return false;
     if (href === "/") return pathname === "/";

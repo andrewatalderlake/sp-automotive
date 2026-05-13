@@ -18,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     })),
     { url: `${SITE_URL}/about`, lastModified, priority: 0.8 },
-    { url: `${SITE_URL}/process`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/contact`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/estimate`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/faq`, lastModified, priority: 0.7 },
