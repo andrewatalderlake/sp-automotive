@@ -98,7 +98,7 @@ export default function BeforeAfterGallery() {
   return (
     <section
       id="work"
-      className="bag-section relative overflow-hidden px-6 md:px-10 pt-16 pb-20 md:pt-20 md:pb-24 scroll-mt-32"
+      className="bag-section relative min-h-[100svh] overflow-hidden px-6 md:px-10 pt-16 pb-20 md:pt-20 md:pb-24"
     >
       {/* Subtle red breathing glow behind the carousel. Two stacked
           radial-gradient layers: a wide warm bed + a tighter ember core
@@ -133,7 +133,7 @@ export default function BeforeAfterGallery() {
           .bag-pulse { animation: none; opacity: 0.6; }
         }
       `}</style>
-      <div className="relative z-10 mb-8 md:mb-10">
+      <div className="relative z-10 mb-6 md:mb-8">
         <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
           06
         </div>
