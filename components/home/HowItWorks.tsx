@@ -70,7 +70,8 @@ export default function HowItWorks() {
       ref={sectionRef}
       aria-labelledby="how-it-works-heading"
       data-scrub-time={SCRUB_TIME}
-      className="how-it-works relative min-h-[110svh] w-full overflow-hidden px-6 py-28 md:px-10 md:py-36"
+      data-theme="dark"
+      className="how-it-works relative min-h-[110svh] w-full overflow-hidden px-6 py-20 md:px-10 md:py-28"
     >
       {/* Workshop OOF backdrop — autoplay loop, no scroll scrub. The clip
           is intentionally out-of-focus so a continuous loop reads as

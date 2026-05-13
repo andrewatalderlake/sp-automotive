@@ -114,15 +114,26 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       rafId = requestAnimationFrame(apply);
     }
 
-    function onMeta() { apply(); }
+    // Prime + seek as soon as metadata is available so the video element
+    // actually renders a frame on first paint — without this, the poster
+    // sits there forever if the user never scrolls (the hero case, before
+    // any scroll input has happened).
+    function onMeta() {
+      prime();
+      apply();
+    }
 
     const ro = new ResizeObserver(apply);
     ro.observe(section);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", apply);
-    if (video.readyState >= 1) apply();
-    else video.addEventListener("loadedmetadata", onMeta, { once: true });
+    if (video.readyState >= 1) {
+      prime();
+      apply();
+    } else {
+      video.addEventListener("loadedmetadata", onMeta, { once: true });
+    }
 
     return () => {
       window.removeEventListener("scroll", onScroll);

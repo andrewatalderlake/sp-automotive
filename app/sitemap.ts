@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       priority: 0.9,
     })),
+    { url: `${SITE_URL}/builds`, lastModified, priority: 0.9 },
     ...BUILDS.map((b) => ({
       url: `${SITE_URL}/builds/${b.slug}`,
       lastModified,

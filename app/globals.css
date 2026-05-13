@@ -152,7 +152,9 @@ body {
 .display-md,
 .display-sm {
   font-family: var(--font-display);
-  color: var(--color-bone);
+  /* Color is inherited from the parent so paper-flipped sections (text-ink)
+     and dark sections (text-bone via body default) both render correctly
+     without per-call overrides. Set color on a parent element. */
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   font-weight: 400;

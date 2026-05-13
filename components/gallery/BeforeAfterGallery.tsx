@@ -78,7 +78,7 @@ export default function BeforeAfterGallery() {
   return (
     <section
       id="work"
-      className="bag-section relative overflow-hidden px-6 md:px-10 pt-16 pb-20 md:pt-20 md:pb-24 scroll-mt-32"
+      className="bag-section relative overflow-hidden bg-paper text-ink px-6 md:px-10 py-20 md:py-28 scroll-mt-32"
     >
       {/* Subtle red breathing glow behind the carousel. Two stacked
           radial-gradient layers: a wide warm bed + a tighter ember core
@@ -89,7 +89,7 @@ export default function BeforeAfterGallery() {
         className="pointer-events-none absolute inset-0 -z-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(200, 40, 29, 0.16) 0%, rgba(200, 40, 29, 0.08) 40%, rgba(200, 40, 29, 0) 75%)",
+            "radial-gradient(ellipse 80% 70% at 50% 50%, rgba(200, 40, 29, 0.08) 0%, rgba(200, 40, 29, 0.04) 40%, rgba(200, 40, 29, 0) 75%)",
         }}
       />
       <div
@@ -97,7 +97,7 @@ export default function BeforeAfterGallery() {
         className="bag-pulse pointer-events-none absolute inset-0 -z-0"
         style={{
           background:
-            "radial-gradient(ellipse 45% 40% at 50% 50%, rgba(200, 40, 29, 0.35) 0%, rgba(200, 40, 29, 0.18) 35%, rgba(200, 40, 29, 0) 70%)",
+            "radial-gradient(ellipse 45% 40% at 50% 50%, rgba(200, 40, 29, 0.18) 0%, rgba(200, 40, 29, 0.09) 35%, rgba(200, 40, 29, 0) 70%)",
         }}
       />
       <style>{`
@@ -113,14 +113,14 @@ export default function BeforeAfterGallery() {
           .bag-pulse { animation: none; opacity: 0.6; }
         }
       `}</style>
-      <div className="relative z-10 mb-8 md:mb-10">
-        <div className="font-display text-bone leading-none tracking-[-0.02em] text-3xl md:text-5xl">
+      <div className="relative z-10 mx-auto mb-8 max-w-7xl md:mb-10">
+        <div className="font-display text-ink leading-none tracking-[-0.02em] text-3xl md:text-5xl">
           06
         </div>
-        <p className="eyebrow mt-2">/ Featured builds</p>
+        <p className="eyebrow mt-2 text-graphite">/ Featured builds</p>
       </div>
       <div className="relative z-10 max-w-7xl mx-auto">
-        <h2 className="display-lg mb-6 md:mb-8 text-center">
+        <h2 className="display-lg text-ink mb-6 md:mb-8 text-center">
           <RevealWords>Built to a higher spec.</RevealWords>
         </h2>
         <CardStack

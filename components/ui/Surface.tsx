@@ -18,10 +18,15 @@
 //           border + ring + shadow. The other home chapters dropped their
 //           glass card in the "no more cards" rework; only chapter 01
 //           keeps a card because video is moving behind it.
+//   light — White card with hairline ink border + subtle shadow, for use
+//           on paper-cream sections (post light-flip). The mirror of
+//           `glass`: a darker plate on a darker bg, vs a lighter plate on
+//           a lighter bg. Inverts the visual relationship. No blur — the
+//           card sits on a flat paper ground, nothing to dampen.
 
 import type { ReactNode } from "react";
 
-type Variant = "solid" | "veil" | "edge" | "glass" | "glass-dense";
+type Variant = "solid" | "veil" | "edge" | "glass" | "glass-dense" | "light";
 
 const variantClass: Record<Variant, string> = {
   solid: "bg-black/65 backdrop-blur-sm",
@@ -35,6 +40,9 @@ const variantClass: Record<Variant, string> = {
     "bg-black/75 backdrop-blur-2xl backdrop-saturate-[1.15] " +
     "border border-white/[0.12] ring-1 ring-inset ring-white/[0.08] " +
     "shadow-[0_28px_70px_-22px_rgba(0,0,0,0.7)]",
+  light:
+    "bg-white border border-ink/10 " +
+    "shadow-[0_24px_60px_-30px_rgba(14,15,17,0.18)]",
 };
 
 export default function Surface({
