@@ -1,5 +1,5 @@
 import Link from "next/link";
-import RevealWords from "@/components/effects/RevealWords";
+import { TextScramble } from "@/components/effects/TextScramble";
 import Surface from "@/components/ui/Surface";
 
 // Pivot from "you found the right shop" (already covered in hero + AboutStory)
@@ -32,7 +32,7 @@ export default function AboutStrip() {
       >
         <p className="eyebrow text-graphite">No subcontractors. No shortcuts.</p>
         <h2 className="mt-4 display-md text-ink">
-          <RevealWords>One shop. One signature. Every weld.</RevealWords>
+          One shop. One signature. Every weld.
         </h2>
         <p className="mt-8 lead text-ink max-w-[65ch]">
           SP Automotive is Serge — start to finish. He documents the intake himself.
@@ -54,7 +54,9 @@ export default function AboutStrip() {
                 className="font-display leading-none tracking-[-0.03em] text-ink text-[clamp(2.25rem,4.5vw,3.5rem)]"
                 style={{ fontVariantNumeric: "tabular-nums" }}
               >
-                {s.value}
+                <TextScramble duration={2} speed={0.05} characterSet="0123456789">
+                  {s.value}
+                </TextScramble>
               </dt>
               <dd className="mt-3 text-graphite text-sm leading-tight max-w-[14ch]">
                 {s.label}

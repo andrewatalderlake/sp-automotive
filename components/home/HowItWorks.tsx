@@ -23,7 +23,7 @@ const STEPS = [
   {
     n: "01",
     label: "Send photos",
-    body: "Text us the damage. We come back with a number, fast.",
+    body: "Text us the damage. We come back with a number, fast. Usually inside the hour.",
   },
   {
     n: "02",
@@ -120,19 +120,29 @@ export default function HowItWorks() {
               className="how-it-works__card"
               style={{ "--i": i } as React.CSSProperties}
             >
-              <Surface variant="glass" className="relative h-full rounded-2xl p-7 md:p-8 text-left">
-                {/* Step number sits oversize behind the body text. */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute right-5 top-3 font-display leading-none tracking-[-0.02em] text-bone/[0.18] text-[5rem] md:text-[6rem]"
-                >
+              {/* `flex flex-col` + `mt-auto` on the body bottom-anchors body
+                  text across all four cards so a wrapping headline (card 4)
+                  doesn't push that card visibly taller than the rest.
+                  Hover state: subtle lift + brighter border + deeper shadow
+                  (on-voice with the glass surface; no 3D tilt drama).
+                  motion-reduce:* cancels the lift + tween for reduced-motion. */}
+              <Surface
+                variant="glass"
+                className="relative flex h-full flex-col rounded-2xl p-7 md:p-8 text-left transition duration-300 ease-out hover:-translate-y-1 hover:border-white/30 hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.7)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                {/* Step number as the visual hero of the card — Anton, big,
+                    bone-color. The hairline under it is an owner's-manual
+                    ruling that separates the chapter mark from the headline.
+                    Dropped the redundant "Step 01" eyebrow since the numeral
+                    now carries that role. */}
+                <div className="font-display leading-none tracking-[-0.03em] text-bone text-5xl md:text-6xl">
                   {step.n}
-                </span>
-                <p className="eyebrow text-graphite">Step {step.n}</p>
-                <h3 className="mt-3 font-display text-2xl md:text-3xl leading-tight text-bone">
+                </div>
+                <span aria-hidden className="mt-5 block h-px w-12 bg-bone/25" />
+                <h3 className="mt-5 font-display text-2xl md:text-3xl leading-tight text-bone">
                   {step.label}
                 </h3>
-                <p className="mt-4 text-bone/80">{step.body}</p>
+                <p className="mt-auto pt-4 text-bone/80">{step.body}</p>
               </Surface>
             </li>
           ))}

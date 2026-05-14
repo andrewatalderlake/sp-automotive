@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
+import AmbientVideo from "@/components/effects/AmbientVideo";
 import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 import PhoneCTA from "@/components/ui/PhoneCTA";
@@ -97,7 +97,11 @@ export default function BodyworkAndEstimates() {
         <div className="mt-12 md:mt-16">
           <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-6">
 
-          {/* Card 1 — photo, edge-to-edge inside the light surface. */}
+          {/* Card 1 — ambient video of an inspection lamp passing over a
+              carbon-fiber panel + gloved hands hovering over the weave.
+              Replaces the previous static estimate-tablet photo. Autoplay
+              loop with a poster fallback for reduced-motion users
+              (AmbientVideo handles the swap). */}
           <div
             className="bodywork-estimates__card"
             style={{ "--i": 0 } as React.CSSProperties}
@@ -107,12 +111,9 @@ export default function BodyworkAndEstimates() {
               className="relative h-full overflow-hidden rounded-2xl p-0"
             >
               <div className="relative h-full min-h-[18rem] w-full bg-ink">
-                <Image
-                  src="/sections/ch04-estimate.webp"
-                  alt="Stylus and tablet resting on the polished hood of a luxury exotic car at golden hour"
-                  fill
-                  sizes="(min-width: 1024px) 30rem, 100vw"
-                  className="object-cover"
+                <AmbientVideo
+                  src="/chapter-clips/04-estimate.mp4"
+                  poster="/chapter-clips/04-estimate-poster.jpg"
                 />
               </div>
             </Surface>

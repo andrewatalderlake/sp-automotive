@@ -51,8 +51,9 @@ export default function FeaturedBuilds() {
   return (
     <section
       ref={sectionRef}
+      id="work"
       aria-labelledby="featured-builds-heading"
-      className="featured-builds relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
+      className="featured-builds relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 scroll-mt-32"
     >
       {/* Header row: tracked-uppercase label + headline + all-builds link. */}
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -76,14 +77,18 @@ export default function FeaturedBuilds() {
         </div>
       </div>
 
-      {/* Hero featured build card. Edge-bleed image with overlay copy. */}
+      {/* Hero featured build card. Edge-bleed image with overlay copy.
+          Hover: kit image (default) crossfades to reveal the stock image
+          underneath, plus a subtle card lift. Tells the brand promise
+          ("here's what we made of it / here's what we started with") inside
+          the card itself. Reduced-motion users get the kit image only. */}
       <div
         className="featured-builds__card relative z-10 mx-auto mt-12 max-w-7xl md:mt-16"
         style={{ "--i": 0 } as React.CSSProperties}
       >
         <Surface
           variant="light"
-          className="group relative overflow-hidden rounded-2xl p-0"
+          className="group relative overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           <Link
             href={`/builds/${hero.slug}`}
@@ -91,12 +96,21 @@ export default function FeaturedBuilds() {
             className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
           >
             <div className="relative aspect-[16/10] w-full bg-ink md:aspect-[21/9]">
+              {/* Stock — bottom layer, revealed when the kit fades. */}
+              <Image
+                src={hero.stockImage}
+                alt={hero.car}
+                fill
+                sizes="(min-width: 1024px) 80rem, 100vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+              {/* Kit — top layer, fades out on hover. */}
               <Image
                 src={hero.kitImage}
                 alt={`${hero.car} with ${hero.kit} kit`}
                 fill
                 sizes="(min-width: 1024px) 80rem, 100vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                className="object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] group-hover:opacity-0 motion-reduce:transition-none motion-reduce:group-hover:opacity-100"
               />
               <div
                 aria-hidden
@@ -133,7 +147,7 @@ export default function FeaturedBuilds() {
           >
             <Surface
               variant="light"
-              className="group relative h-full overflow-hidden rounded-2xl p-0"
+              className="group relative h-full overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_60px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
               <Link
                 href={`/builds/${build.slug}`}
@@ -141,12 +155,21 @@ export default function FeaturedBuilds() {
                 className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
               >
                 <div className="relative aspect-[16/10] w-full bg-ink">
+                  {/* Stock — bottom layer, revealed when the kit fades. */}
+                  <Image
+                    src={build.stockImage}
+                    alt={build.car}
+                    fill
+                    sizes="(min-width: 1024px) 25rem, 100vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                  {/* Kit — top layer, fades out on hover. */}
                   <Image
                     src={build.kitImage}
                     alt={`${build.car} with ${build.kit} kit`}
                     fill
                     sizes="(min-width: 1024px) 25rem, 100vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    className="object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-0 motion-reduce:transition-none motion-reduce:group-hover:opacity-100"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6 md:p-7">
