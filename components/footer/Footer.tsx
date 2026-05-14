@@ -40,21 +40,24 @@ export default function Footer() {
           </p>
         </div>
 
-        <nav aria-label="Footer" className="flex flex-col gap-2 text-sm text-graphite md:items-end">
-          <Link href="/about" className="link-underline hover:text-bone transition-colors">About Serge</Link>
-          <Link href="/faq" className="link-underline hover:text-bone transition-colors">FAQ</Link>
-          <Link href="/estimate" className="link-underline hover:text-bone transition-colors">Send 3 photos</Link>
-          <Link href="/contact" className="link-underline hover:text-bone transition-colors">Contact</Link>
-          <Link href="/lamborghini-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">Lamborghini</Link>
-          <Link href="/mclaren-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">McLaren</Link>
-          <Link href="/audi-r8-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">Audi R8</Link>
-          <Link href="/bmw-m-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">BMW M</Link>
-          <Link href="/ferrari-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">Ferrari</Link>
-          <Link href="/porsche-collision-repair-sarasota" className="link-underline hover:text-bone transition-colors">Porsche</Link>
+        {/* Mobile-only min-h-[44px] on each link to meet the 44pt touch-target
+            rule — desktop reverts to natural inline-like line-height via
+            `md:block md:min-h-0` on the link className. Audit P1-b (2026-05-14). */}
+        <nav aria-label="Footer" className="flex flex-col gap-3 md:gap-2 text-sm text-graphite md:items-end">
+          <Link href="/about" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">About Serge</Link>
+          <Link href="/faq" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">FAQ</Link>
+          <Link href="/estimate" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Send 3 photos</Link>
+          <Link href="/contact" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Contact</Link>
+          <Link href="/lamborghini-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Lamborghini</Link>
+          <Link href="/mclaren-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">McLaren</Link>
+          <Link href="/audi-r8-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Audi R8</Link>
+          <Link href="/bmw-m-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">BMW M</Link>
+          <Link href="/ferrari-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Ferrari</Link>
+          <Link href="/porsche-collision-repair-sarasota" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Porsche</Link>
           <span className="mt-2 eyebrow !text-[10px]">Explainers</span>
-          <Link href="/explainers/adas" className="link-underline hover:text-bone transition-colors">ADAS recalibration</Link>
-          <Link href="/explainers/paint-match" className="link-underline hover:text-bone transition-colors">Paint match</Link>
-          <Link href="/explainers/oem-parts" className="link-underline hover:text-bone transition-colors">OEM parts</Link>
+          <Link href="/explainers/adas" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">ADAS recalibration</Link>
+          <Link href="/explainers/paint-match" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">Paint match</Link>
+          <Link href="/explainers/oem-parts" className="link-underline flex md:block items-center min-h-[44px] md:min-h-0 hover:text-bone transition-colors">OEM parts</Link>
         </nav>
       </Surface>
     </footer>

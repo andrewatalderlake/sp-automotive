@@ -82,13 +82,11 @@ export default function TheMath() {
         }}
       />
 
-      {/* Chapter mark — same corner-anchor convention as CornerSection
-          but inverted color for the paper ground. */}
+      {/* Section label — Anton uppercase, no chapter numeral. */}
       <div className="relative z-10">
-        <div className="font-display leading-none tracking-[-0.02em] text-3xl md:text-5xl text-ink">
-          01
-        </div>
-        <p className="eyebrow mt-2 text-graphite">/ The numbers</p>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          The numbers
+        </p>
       </div>
 
       {/* Center stack: measurement rule -> three big numerals -> closing

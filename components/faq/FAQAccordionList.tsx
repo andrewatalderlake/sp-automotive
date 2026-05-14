@@ -109,16 +109,18 @@ export default function FAQAccordionList({ faqs }: Props) {
       <section className="bg-ink px-6 md:px-10 pt-16 pb-8">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow mb-4">Jump to a question</p>
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-2.5">
             {faqs.map((f) => (
               <li key={f.id}>
                 {/* Strip trailing "?" so chip widths follow the original
                     design — the pill row is sized for the question text
-                    without punctuation. */}
+                    without punctuation.
+                    min-h-[44px] + inline-flex items-center meets the 44pt
+                    touch-target rule (see audit P1-a, 2026-05-14). */}
                 <button
                   type="button"
                   onClick={() => openAndScroll(f.id)}
-                  className="inline-block rounded-full border border-white/10 px-3 py-1.5 text-xs text-bone/80 hover:text-bone hover:border-white/30 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+                  className="inline-flex items-center min-h-[44px] rounded-full border border-white/10 px-4 py-2.5 text-xs text-bone/80 hover:text-bone hover:border-white/30 hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
                 >
                   {f.question.replace(/\?$/, "")}
                 </button>
