@@ -38,8 +38,12 @@ export function ProgressiveBlur({
   blurIntensity = 0.25,
   ...props
 }: ProgressiveBlurProps) {
+  // segmentSize must derive from the CLAMPED layers value, not the raw
+  // prop — otherwise blurLayers={1} (clamped to 2) ends up with two
+  // layers whose mask windows both span the same mid-range slice
+  // instead of forming a progressive gradient.
   const layers = Math.max(blurLayers, 2);
-  const segmentSize = 1 / (blurLayers + 1);
+  const segmentSize = 1 / (layers + 1);
 
   // Caller owns positioning via className (typically `absolute inset-x-0
   // bottom-0 …` to overlay a section's bottom edge). We do NOT prepend
@@ -66,15 +70,18 @@ export function ProgressiveBlur({
         const gradient = `linear-gradient(${angle}deg, ${gradientStops.join(", ")})`;
 
         return (
+          // `{...props}` first so the essential mask + backdrop-filter
+          // styles below always win — caller-supplied style/className
+          // can't silently disable the gradient blur by collision.
           <motion.div
             key={index}
+            {...props}
             className="pointer-events-none absolute inset-0 rounded-[inherit]"
             style={{
               maskImage: gradient,
               WebkitMaskImage: gradient,
               backdropFilter: `blur(${index * blurIntensity}px)`,
             }}
-            {...props}
           />
         );
       })}

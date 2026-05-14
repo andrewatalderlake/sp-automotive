@@ -101,7 +101,7 @@ export default function HomeFAQ() {
             <summary
               className="home-faq__summary flex cursor-pointer items-start gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-4 focus-visible:ring-offset-ink"
             >
-              <span className="font-mono text-graphite text-sm pt-1 shrink-0">
+              <span className="font-mono text-bone/60 text-sm pt-1 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="flex-1 text-bone text-lg md:text-xl leading-snug">
@@ -114,7 +114,7 @@ export default function HomeFAQ() {
                 +
               </span>
             </summary>
-            <div className="mt-5 pl-12 pr-12 md:pr-16 text-graphite max-w-[60ch]">
+            <div className="mt-5 pl-12 pr-12 md:pr-16 text-bone/80 max-w-[60ch]">
               {item.a}
             </div>
           </details>
@@ -123,7 +123,7 @@ export default function HomeFAQ() {
 
       {/* Closing line + SMS CTA to keep the urgent path one tap away. */}
       <div className="mx-auto mt-12 max-w-3xl flex flex-wrap items-center gap-6">
-        <p className="text-graphite">More questions? Text us a photo —</p>
+        <p className="text-bone/80">More questions? Text us a photo —</p>
         <SmsCTA location="home-faq" />
       </div>
 

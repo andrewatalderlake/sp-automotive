@@ -128,6 +128,13 @@ export function TextScramble({
     return () => clearInterval(interval);
   }, [shouldRun, reduced, children, characterSet, duration, speed]);
 
+  // When the scramble isn't running (reduced-motion or not yet in view),
+  // render `children` directly. This prevents stale text if `children`
+  // changes after mount but before/without a scramble — useState(children)
+  // only captures the initial value, and the scramble effect bails out
+  // before it can resync. Rendering through state is reserved for the
+  // active-scramble case, where displayText holds the current frame.
+  const rendered = reduced || !shouldRun ? children : displayText;
   return (
     <MotionSpan
       ref={ref}
@@ -136,7 +143,7 @@ export function TextScramble({
       aria-label={children}
       {...motionProps}
     >
-      {displayText}
+      {rendered}
     </MotionSpan>
   );
 }
