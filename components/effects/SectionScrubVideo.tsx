@@ -19,9 +19,10 @@ import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 // - Source clips are encoded at 120fps with dense keyframes (gop=30 = 0.25s
 //   at 120fps) so seeks land on a real frame at any scroll position.
 //   faststart puts moov at the head so seeks work mid-load.
-// - rAF-throttled scroll handler with a 0.016s seek-threshold gate (~one
-//   120fps frame) so we don't write currentTime more often than the decoder
-//   can render.
+// - rAF-throttled scroll handler with a 0.008s seek-threshold gate (one
+//   120fps frame: 1/120 = 0.00833s) so we write currentTime at the source
+//   frame rate. Was 0.03s previously, which gated out small seeks and read
+//   as choppy on slow scroll.
 // - iOS Safari quirk: setting currentTime on a paused video doesn't render
 //   new frames until play() then pause() once -- we prime on first scroll.
 // - ResizeObserver on the section keeps the cached bounds current when
@@ -103,7 +104,7 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       // out-of-range seeks.
       const target = Math.min(dur - 0.05, p * dur);
 
-      if (Math.abs(target - lastTarget) < 0.03) return;
+      if (Math.abs(target - lastTarget) < 0.008) return;
       lastTarget = target;
       try { video!.currentTime = target; } catch {/* pre-metadata, ignore */}
     }
