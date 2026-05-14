@@ -60,30 +60,44 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     // Prime: play() then pause() once so subsequent currentTime seeks
     // render frames. Without this, Safari / WebKit shows the poster
     // forever on a never-played paused video, even after setting
-    // currentTime — which looks identical to a frozen still image. We
-    // try to prime as early as possible (on loadedmetadata / canplay),
-    // and again as a fallback on the first scroll event.
+    // currentTime — which looks identical to a frozen still image.
     //
-    // `primed` flips to true ONLY after play() resolves successfully.
-    // If the browser rejects play() (autoplay throttling, no user
-    // gesture yet, hidden tab, etc.), `primed` stays false and the
-    // next scroll/metadata event retries. Previously this flag was set
-    // unconditionally before the play() result was known, so a single
-    // silent rejection would lock the video on its poster forever.
+    // Three things this implementation guards against:
+    //   1. Visible autoplay during the play() promise's async window —
+    //      call pause() SYNCHRONOUSLY right after play() so the video
+    //      element doesn't render its way through frames before the
+    //      promise resolves. Without this, the video appears to play
+    //      from frame 0 forward until the .then() finally fires.
+    //   2. Stale playhead — after priming, immediately call apply()
+    //      so currentTime jumps to wherever the scroll position now
+    //      maps to. Covers the case where the user scrolled during
+    //      the play() window.
+    //   3. Silent autoplay rejection — `primed` flips to true ONLY in
+    //      the .then() success branch. If play() rejects (autoplay
+    //      throttling, no user gesture, hidden tab), primed stays
+    //      false and the next scroll/metadata event retries.
     function prime() {
       if (primed) return;
-      const p = video!.play();
-      if (p && typeof p.then === "function") {
-        p.then(() => {
+      const playPromise = video!.play();
+      // (1) Halt any auto-playback synchronously. If play() hasn't
+      // entered "playing" state yet this is a no-op; if it has, this
+      // stops visible frame progression immediately.
+      try { video!.pause(); } catch {/* ignore */}
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise.then(() => {
           primed = true;
-          video!.pause();
+          // (1, again) Safety re-pause in case the sync pause was
+          // ignored while play() was still pending.
+          try { video!.pause(); } catch {/* ignore */}
+          // (2) Sync playhead to current scroll position.
+          apply();
         }).catch(() => {
-          /* leave primed=false so the next event retries */
+          // (3) Play rejected — leave primed=false for retry.
         });
       } else {
-        // Older browsers: play() returned undefined synchronously.
+        // Legacy browsers: play() returned undefined synchronously.
         primed = true;
-        try { video!.pause(); } catch {/* ignore */}
+        apply();
       }
     }
 
