@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import AmbientVideo from "@/components/effects/AmbientVideo";
+import { ProgressiveBlur } from "@/components/effects/ProgressiveBlur";
 import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 
@@ -151,6 +152,17 @@ export default function HowItWorks() {
           ))}
         </ol>
       </div>
+
+      {/* Bottom progressive blur — softens the §05 dark → Selected Work
+          paper handoff. Apple-style gradient backdrop blur intensifying
+          toward the bottom edge, so the workshop video reads as "fading
+          out" rather than cutting abruptly. z-20 so it sits above the
+          AmbientVideo + cards but below any potential nav overlays. */}
+      <ProgressiveBlur
+        direction="bottom"
+        blurLayers={5}
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 md:h-40 z-20"
+      />
 
       <style jsx>{`
         .how-it-works__connector {
