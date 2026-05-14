@@ -4,11 +4,11 @@ import { useReducedMotion } from "framer-motion";
 import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 
-// Chapter 02 — Carrier-side advocacy. Mirrors the §05 composition:
-// chapter mark top-left, display-bleed headline on the canvas, row of
-// three glass cards below connected by a hairline that draws across on
-// reveal. No per-section backdrop — the html canvas ink gradient shows
-// through. Cards describe the three phases of how the claim is handled.
+// §02 Carrier-side advocacy. Mirrors the §05 composition: section label
+// top-left, display headline on the canvas, row of three light cards
+// below connected by a hairline that draws across on reveal. No per-
+// section backdrop — the html canvas ink gradient shows through. Cards
+// describe the three phases of how the claim is handled.
 
 const SCRUB_TIME = 11; // unchanged — keeps PageScrubVideo waypoint timing
 
@@ -61,18 +61,12 @@ export default function InsuranceHandling() {
       className="insurance-handling relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
     >
       <div className="relative z-10 mx-auto max-w-7xl">
-        {/* Chapter mark — Lambo-style section label: bigger numeral + Anton
-            uppercase label inline. Reads as a confident section header. */}
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-          <div className="font-display leading-none tracking-[-0.02em] text-4xl md:text-6xl text-ink">
-            02
-          </div>
-          <p className="font-display uppercase tracking-[0.10em] text-ink text-lg md:text-2xl leading-none">
-            Carrier-side advocacy
-          </p>
-        </div>
+        {/* Section label — Anton uppercase, no chapter numeral. */}
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          Carrier-side advocacy
+        </p>
 
-        {/* Display headline — left-aligned to the chapter mark's edge. */}
+        {/* Display headline — left-aligned to the section-label edge. */}
         <div className="mt-10 md:mt-14 max-w-5xl">
           <SplitText
             as="h2"

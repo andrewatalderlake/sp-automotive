@@ -49,17 +49,12 @@ export default function StorageBlock() {
       data-scrub-time={SCRUB_TIME}
       className="storage-block relative min-h-[110svh] w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
     >
-      {/* Chapter mark — Lambo-style section label. Pinned to max-w-7xl
-          grid so it aligns with the rest of the homepage sections. */}
+      {/* Section label — Anton uppercase, no chapter numeral. Pinned to
+          the max-w-7xl grid so it aligns with the rest of the homepage. */}
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-          <div className="font-display leading-none tracking-[-0.02em] text-4xl md:text-6xl text-ink">
-            03
-          </div>
-          <p className="font-display uppercase tracking-[0.10em] text-ink text-lg md:text-2xl leading-none">
-            Climate-controlled storage
-          </p>
-        </div>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          Climate-controlled storage
+        </p>
       </div>
 
       {/* Spotlight — full-bleed image with overlaid headline + callouts.

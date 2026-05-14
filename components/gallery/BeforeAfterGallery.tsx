@@ -134,10 +134,9 @@ export default function BeforeAfterGallery() {
         }
       `}</style>
       <div className="relative z-10 mx-auto mb-8 max-w-7xl md:mb-10">
-        <div className="font-display text-ink leading-none tracking-[-0.02em] text-3xl md:text-5xl">
-          06
-        </div>
-        <p className="eyebrow mt-2 text-graphite">/ Before + after</p>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          Before + after
+        </p>
       </div>
       <div className="relative z-10 max-w-7xl mx-auto">
         <h2 className="display-lg text-ink mb-6 md:mb-8 text-center">

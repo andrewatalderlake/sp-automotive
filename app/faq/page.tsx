@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import FinalCTA from "@/components/cta/FinalCTA";
-import FAQAccordionList from "@/components/faq/FAQAccordionList";
+import FAQExplorer from "@/components/faq/FAQExplorer";
 import { PUBLISHED_FAQS } from "@/lib/faq-data";
 import { SITE_URL } from "@/lib/site";
 
@@ -73,11 +73,12 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Chip jump-nav + the scroll-revealed accordion list both live in
-          FAQAccordionList so they can share open-state. Each row carries
-          id={f.id} and scroll-mt-32 inside the component, preserving deep
-          links like /faq#timeline. */}
-      <FAQAccordionList faqs={PUBLISHED_FAQS} />
+      {/* Search + topical-cluster card grid. Replaces the old chip-jump-nav
+          + stacked accordion. Each card carries id={f.id} and scroll-mt-32
+          inside the component, preserving deep links like /faq#timeline.
+          (FAQAccordionList.tsx is kept in the repo for one cycle in case
+          rollback is needed; delete in a follow-up PR.) */}
+      <FAQExplorer faqs={PUBLISHED_FAQS} />
 
       <FinalCTA />
     </>

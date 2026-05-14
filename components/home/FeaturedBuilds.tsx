@@ -6,9 +6,10 @@ import { useReducedMotion } from "framer-motion";
 import Surface from "@/components/ui/Surface";
 import { BUILDS } from "@/components/builds/builds-data";
 
-// SELECTED WORK — 1+3 builds grid, Lambo-style. Unnumbered utility
-// section (no chapter mark numeral) so we don't disturb §06-§09 chapter
-// numbering. Data pulled from the existing BUILDS array.
+// SELECTED WORK — 1+3 builds grid, Lambo-style. Utility section with a
+// `// Selected work` callout-style label instead of a proper section
+// label, since this slot sits between numbered sections and shouldn't
+// compete with them. Data pulled from the existing BUILDS array.
 //
 // Hero pick: urus-1016 (recognizable Lambo flagship).
 // Thumbnails: huracan-mansory, r8-libertywalk, g-wagon-brabus (variety

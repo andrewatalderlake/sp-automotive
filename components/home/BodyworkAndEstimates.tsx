@@ -73,15 +73,10 @@ export default function BodyworkAndEstimates() {
       className="bodywork-estimates relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
     >
       <div className="relative z-10 mx-auto max-w-7xl">
-        {/* Chapter mark — Lambo-style section label. */}
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-          <div className="font-display leading-none tracking-[-0.02em] text-4xl md:text-6xl text-ink">
-            04
-          </div>
-          <p className="font-display uppercase tracking-[0.10em] text-ink text-lg md:text-2xl leading-none">
-            Estimate without the haul
-          </p>
-        </div>
+        {/* Section label — Anton uppercase, no chapter numeral. */}
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          Estimate without the haul
+        </p>
 
         <div className="mt-10 md:mt-14 max-w-4xl">
           <SplitText

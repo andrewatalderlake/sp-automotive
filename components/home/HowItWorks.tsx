@@ -82,12 +82,11 @@ export default function HowItWorks() {
         poster="/chapter-clips/05-workshop-poster.jpg"
       />
 
-      {/* Chapter mark — same convention as CornerSection. */}
+      {/* Section label — Anton uppercase, no chapter numeral. */}
       <div className="relative z-10">
-        <div className="font-display leading-none tracking-[-0.02em] text-3xl md:text-5xl text-bone">
-          05
-        </div>
-        <p className="eyebrow mt-2 text-graphite">/ How it works</p>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-bone text-3xl md:text-5xl leading-none">
+          How it works
+        </p>
       </div>
 
       {/* Display-bleed headline. Lives in the canvas, NOT inside a glass

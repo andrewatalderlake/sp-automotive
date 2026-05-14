@@ -3,9 +3,10 @@ import RevealWords from "@/components/effects/RevealWords";
 import Surface from "@/components/ui/Surface";
 
 // Pivot from "you found the right shop" (already covered in hero + AboutStory)
-// to the proof-of-craft angle. The Lambo-style chapter mark matches §02-04.
-// Inline 4-stat row anchors the "one shop, one signature" copy with numbers,
-// and a typographic "— Serge" signature closes the section before the
+// to the proof-of-craft angle. Uses the standard Anton uppercase section
+// label ("The signature") above a Surface light card. Inline 4-stat row
+// anchors the "one shop, one signature" copy with numbers, and a
+// typographic "— Serge" signature closes the section before the
 // Read-more link.
 //
 // Stats values are placeholders — verify with Serge before launch.
@@ -21,14 +22,9 @@ export default function AboutStrip() {
   return (
     <section className="relative bg-paper text-ink px-6 md:px-10 py-20 md:py-28">
       <div className="relative z-10 mx-auto mb-12 max-w-4xl md:mb-16">
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-          <div className="font-display leading-none tracking-[-0.02em] text-4xl md:text-6xl text-ink">
-            07
-          </div>
-          <p className="font-display uppercase tracking-[0.10em] text-ink text-lg md:text-2xl leading-none">
-            The signature
-          </p>
-        </div>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          The signature
+        </p>
       </div>
       <Surface
         variant="light"

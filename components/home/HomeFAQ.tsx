@@ -61,13 +61,12 @@ export default function HomeFAQ() {
       aria-labelledby="home-faq-heading"
       className="relative w-full bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
     >
-      {/* Chapter mark — aligned to the same max-w-3xl grid as the headline
-          and FAQ list below. */}
+      {/* Section label — Anton uppercase, no chapter numeral. Aligned to
+          the same max-w-3xl grid as the headline and FAQ list below. */}
       <div className="relative z-10 mx-auto mb-10 max-w-3xl md:mb-14">
-        <div className="font-display leading-none tracking-[-0.02em] text-3xl md:text-5xl text-ink">
-          08
-        </div>
-        <p className="eyebrow mt-2 text-graphite">/ Common questions</p>
+        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+          Common questions
+        </p>
       </div>
 
       {/* Display headline — quieter than other chapters (8–10vw), since this
