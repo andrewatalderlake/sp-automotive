@@ -58,7 +58,7 @@ export default function InsuranceHandling() {
       ref={sectionRef}
       aria-labelledby="insurance-handling-heading"
       data-scrub-time={SCRUB_TIME}
-      className="insurance-handling relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 border-t border-ink/10"
+      className="insurance-handling relative w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 border-t border-ink/15"
     >
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section label — Anton uppercase, no chapter numeral. */}

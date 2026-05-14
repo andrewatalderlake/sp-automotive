@@ -20,7 +20,7 @@ const STATS = [
 
 export default function AboutStrip() {
   return (
-    <section className="relative bg-paper text-ink px-6 md:px-10 py-20 md:py-28 border-t border-ink/10">
+    <section className="relative bg-paper text-ink px-6 md:px-10 py-20 md:py-28 border-t border-ink/15">
       <div className="relative z-10 mx-auto mb-12 max-w-4xl md:mb-16">
         <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
           The signature
@@ -45,7 +45,7 @@ export default function AboutStrip() {
 
         {/* Stats — 4 anchoring numbers. Hairline-bordered. */}
         <dl
-          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-y border-ink/10 py-8 md:grid-cols-4 md:gap-x-8"
+          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-y border-ink/15 py-8 md:grid-cols-4 md:gap-x-8"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {STATS.map((s) => (

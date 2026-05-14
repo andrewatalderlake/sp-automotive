@@ -99,7 +99,7 @@ export default function TrustStrip() {
     <section
       ref={sectionRef}
       aria-label="How to reach us, carriers we work with, and marques we restore"
-      className="trust-strip relative w-full bg-paper border-y border-ink/10 px-6 py-14 md:px-10 md:py-20"
+      className="trust-strip relative w-full bg-paper border-y border-ink/15 px-6 py-14 md:px-10 md:py-20"
     >
       {/* Reach us — quiet single-line dateline. Deliberately styled
           differently from the carrier/marque rows below so practical
@@ -124,7 +124,7 @@ export default function TrustStrip() {
           <span>{HOURS_LABEL}</span>
         </p>
       </div>
-      <div className="trust-strip__row mx-auto mt-10 max-w-6xl md:mt-14 pt-10 md:pt-14 border-t border-ink/10">
+      <div className="trust-strip__row mx-auto mt-10 max-w-6xl md:mt-14 pt-10 md:pt-14 border-t border-ink/15">
         <p className="eyebrow text-graphite">{"// We work with"}</p>
         <div className="mt-4">
           <Wordmarks items={CARRIERS} size="small" />
