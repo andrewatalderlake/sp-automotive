@@ -21,6 +21,11 @@ const CARRIERS = [
   "Chubb",
 ];
 
+// Six prestige marques — aligned with the Footer nav links and the FAQ
+// "models we work on" answer in lib/faq-data.ts. Trimmed from 9 (was
+// wrapping to two rows awkwardly on desktop); the dropped marques
+// (Mercedes-AMG, Aston Martin, Bentley) aren't promoted elsewhere on
+// the site, so this is a single-source-of-truth alignment.
 const MAKES = [
   "Ferrari",
   "Lamborghini",
@@ -28,9 +33,6 @@ const MAKES = [
   "Porsche",
   "Audi R8",
   "BMW M",
-  "Mercedes-AMG",
-  "Aston Martin",
-  "Bentley",
 ];
 
 function Wordmarks({ items }: { items: string[] }) {
