@@ -77,26 +77,30 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     //      throttling, no user gesture, hidden tab), primed stays
     //      false and the next scroll/metadata event retries.
     function prime() {
-      if (primed) return;
+      if (primed) {
+        console.log("[scrub] prime: already primed, skipping");
+        return;
+      }
+      console.log("[scrub] prime: calling play()");
       const playPromise = video!.play();
-      // (1) Halt any auto-playback synchronously. If play() hasn't
-      // entered "playing" state yet this is a no-op; if it has, this
-      // stops visible frame progression immediately.
-      try { video!.pause(); } catch {/* ignore */}
+      try {
+        video!.pause();
+        console.log("[scrub] prime: sync pause called, video.paused=", video!.paused);
+      } catch (e) {
+        console.log("[scrub] prime: sync pause failed", e);
+      }
       if (playPromise && typeof playPromise.then === "function") {
         playPromise.then(() => {
           primed = true;
-          // (1, again) Safety re-pause in case the sync pause was
-          // ignored while play() was still pending.
+          console.log("[scrub] prime: play resolved, primed=true, video.paused=", video!.paused, "currentTime=", video!.currentTime);
           try { video!.pause(); } catch {/* ignore */}
-          // (2) Sync playhead to current scroll position.
           apply();
-        }).catch(() => {
-          // (3) Play rejected — leave primed=false for retry.
+        }).catch((err) => {
+          console.log("[scrub] prime: play REJECTED", err);
         });
       } else {
-        // Legacy browsers: play() returned undefined synchronously.
         primed = true;
+        console.log("[scrub] prime: synchronous play path, primed=true");
         apply();
       }
     }
@@ -104,7 +108,10 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     function apply() {
       rafId = 0;
       const dur = video!.duration;
-      if (!dur || Number.isNaN(dur)) return;
+      if (!dur || Number.isNaN(dur)) {
+        console.log("[scrub] apply: no duration yet, bailing. video.readyState=", video!.readyState);
+        return;
+      }
 
       // Map the parent section's scroll-through range to [0, 1]:
       //   p = 0 -> section's TOP has just reached the viewport's TOP
@@ -132,9 +139,30 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       // out-of-range seeks.
       const target = Math.min(dur - 0.05, p * dur);
 
-      if (Math.abs(target - lastTarget) < 1 / 120) return;
+      const delta = Math.abs(target - lastTarget);
+      if (delta < 1 / 120) {
+        // Gate blocked — too small a delta to be worth a seek.
+        return;
+      }
+      console.log(
+        "[scrub] apply: rect.top=",
+        rect.top.toFixed(1),
+        "p=",
+        p.toFixed(3),
+        "target=",
+        target.toFixed(3),
+        "lastTarget=",
+        lastTarget.toFixed(3),
+        "delta=",
+        delta.toFixed(3),
+      );
       lastTarget = target;
-      try { video!.currentTime = target; } catch {/* pre-metadata, ignore */}
+      try {
+        video!.currentTime = target;
+        console.log("[scrub] apply: SET currentTime=", target.toFixed(3), "→ video.currentTime is now", video!.currentTime.toFixed(3));
+      } catch (e) {
+        console.log("[scrub] apply: currentTime write FAILED", e);
+      }
     }
 
     function onScroll() {
@@ -142,6 +170,7 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       if (rafId) return;
       rafId = requestAnimationFrame(apply);
     }
+    console.log("[scrub] effect mounted, attaching scroll listener");
 
     // Prime + seek as soon as metadata is available so the video element
     // actually renders a frame on first paint — without this, the poster
