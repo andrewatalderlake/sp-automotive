@@ -1,5 +1,5 @@
 import Link from "next/link";
-import RevealWords from "@/components/effects/RevealWords";
+import { TextScramble } from "@/components/effects/TextScramble";
 import Surface from "@/components/ui/Surface";
 
 // Pivot from "you found the right shop" (already covered in hero + AboutStory)
@@ -20,7 +20,7 @@ const STATS = [
 
 export default function AboutStrip() {
   return (
-    <section className="relative bg-paper text-ink px-6 md:px-10 py-20 md:py-28">
+    <section className="relative bg-paper text-ink px-6 md:px-10 py-20 md:py-28 border-t border-ink/15">
       <div className="relative z-10 mx-auto mb-12 max-w-4xl md:mb-16">
         <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
           The signature
@@ -32,7 +32,7 @@ export default function AboutStrip() {
       >
         <p className="eyebrow text-graphite">No subcontractors. No shortcuts.</p>
         <h2 className="mt-4 display-md text-ink">
-          <RevealWords>One shop. One signature. Every weld.</RevealWords>
+          One shop. One signature. Every weld.
         </h2>
         <p className="mt-8 lead text-ink max-w-[65ch]">
           SP Automotive is Serge — start to finish. He documents the intake himself.
@@ -45,7 +45,7 @@ export default function AboutStrip() {
 
         {/* Stats — 4 anchoring numbers. Hairline-bordered. */}
         <dl
-          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-y border-ink/10 py-8 md:grid-cols-4 md:gap-x-8"
+          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-y border-ink/15 py-8 md:grid-cols-4 md:gap-x-8"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {STATS.map((s) => (
@@ -54,7 +54,9 @@ export default function AboutStrip() {
                 className="font-display leading-none tracking-[-0.03em] text-ink text-[clamp(2.25rem,4.5vw,3.5rem)]"
                 style={{ fontVariantNumeric: "tabular-nums" }}
               >
-                {s.value}
+                <TextScramble duration={2} speed={0.05} characterSet="0123456789">
+                  {s.value}
+                </TextScramble>
               </dt>
               <dd className="mt-3 text-graphite text-sm leading-tight max-w-[14ch]">
                 {s.label}

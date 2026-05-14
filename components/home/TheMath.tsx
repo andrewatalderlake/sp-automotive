@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import SplitText from "@/components/effects/SplitText";
+import { TextScramble } from "@/components/effects/TextScramble";
 
 // Chapter 01 — paper-light editorial. Replaces the older corner-cinematic
 // TotalLossPlay for this slot. The section is the first (and only first-half)
@@ -82,8 +83,11 @@ export default function TheMath() {
         }}
       />
 
-      {/* Section label — Anton uppercase, no chapter numeral. */}
-      <div className="relative z-10">
+      {/* Section label — Anton uppercase, no chapter numeral. Wrapped in the
+          same max-w-6xl container as the numerals + closing line below so
+          the label aligns with the section's content grid (not the section's
+          edge padding). */}
+      <div className="relative z-10 mx-auto max-w-6xl">
         <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
           The numbers
         </p>
@@ -195,7 +199,9 @@ function NumeralBlock({
     <div className="the-math__num text-left">
       <p className="eyebrow text-graphite">{eyebrow}</p>
       <div className="mt-3 font-display text-[clamp(4rem,12vw,9rem)] leading-none tracking-[-0.03em] text-ink">
-        {value}
+        <TextScramble duration={2} speed={0.05} characterSet="0123456789">
+          {value}
+        </TextScramble>
       </div>
       <p className="mt-3 text-graphite">{caption}</p>
     </div>

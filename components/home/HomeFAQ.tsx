@@ -59,12 +59,15 @@ export default function HomeFAQ() {
   return (
     <section
       aria-labelledby="home-faq-heading"
-      className="relative w-full bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
+      data-theme="dark"
+      className="relative w-full text-bone px-6 py-20 md:px-10 md:py-28"
     >
-      {/* Section label — Anton uppercase, no chapter numeral. Aligned to
-          the same max-w-3xl grid as the headline and FAQ list below. */}
+      {/* Section label — Anton uppercase, no chapter numeral. Dark register
+          (text-bone). §07 is the back-half dark interlude — breaks the
+          paper run between Selected work and FinalCTA so the bottom of
+          the page doesn't read as one continuous cream slab. */}
       <div className="relative z-10 mx-auto mb-10 max-w-3xl md:mb-14">
-        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+        <p className="font-display uppercase tracking-[0.10em] text-left text-bone text-3xl md:text-5xl leading-none">
           Common questions
         </p>
       </div>
@@ -75,7 +78,7 @@ export default function HomeFAQ() {
         <SplitText
           as="h2"
           id="home-faq-heading"
-          className="font-display leading-[1.05] tracking-[-0.02em] text-ink text-[clamp(2.5rem,8vw,5.5rem)]"
+          className="font-display leading-[1.05] tracking-[-0.02em] text-bone text-[clamp(2.5rem,8vw,5.5rem)]"
           reveal="mount"
           mountDelayMs={300}
           staggerMs={22}
@@ -87,7 +90,7 @@ export default function HomeFAQ() {
       {/* FAQ rows. max-w narrow, hairline dividers, "+" affordance. */}
       <div
         ref={wrapperRef}
-        className="home-faq mx-auto mt-16 max-w-3xl md:mt-20 divide-y divide-ink/10 border-y border-ink/10"
+        className="home-faq mx-auto mt-16 max-w-3xl md:mt-20 divide-y divide-bone/10 border-y border-bone/10"
       >
         {QUESTIONS.map((item, i) => (
           <details
@@ -96,22 +99,22 @@ export default function HomeFAQ() {
             className="home-faq__row group py-6 md:py-8"
           >
             <summary
-              className="home-faq__summary flex cursor-pointer items-start gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-4 focus-visible:ring-offset-paper"
+              className="home-faq__summary flex cursor-pointer items-start gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-4 focus-visible:ring-offset-ink"
             >
-              <span className="font-mono text-graphite text-sm pt-1 shrink-0">
+              <span className="font-mono text-bone/60 text-sm pt-1 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="flex-1 text-ink text-lg md:text-xl leading-snug">
+              <span className="flex-1 text-bone text-lg md:text-xl leading-snug">
                 {item.q}
               </span>
               <span
                 aria-hidden
-                className="home-faq__plus shrink-0 text-ink text-2xl leading-none transition-transform duration-300 ease-out"
+                className="home-faq__plus shrink-0 text-bone text-2xl leading-none transition-transform duration-300 ease-out"
               >
                 +
               </span>
             </summary>
-            <div className="mt-5 pl-12 pr-12 md:pr-16 text-graphite max-w-[60ch]">
+            <div className="mt-5 pl-12 pr-12 md:pr-16 text-bone/80 max-w-[60ch]">
               {item.a}
             </div>
           </details>
@@ -120,8 +123,8 @@ export default function HomeFAQ() {
 
       {/* Closing line + SMS CTA to keep the urgent path one tap away. */}
       <div className="mx-auto mt-12 max-w-3xl flex flex-wrap items-center gap-6">
-        <p className="text-graphite">More questions? Text us a photo —</p>
-        <SmsCTA theme="light" location="home-faq" />
+        <p className="text-bone/80">More questions? Text us a photo —</p>
+        <SmsCTA location="home-faq" />
       </div>
 
       <style jsx>{`

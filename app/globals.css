@@ -255,12 +255,14 @@ body {
   to { --shine-angle: 360deg; }
 }
 
-/* Lead — opening paragraph after a display headline */
+/* Lead — opening paragraph after a display headline.
+   Color is inherited from the parent so paper-flipped sections (text-ink)
+   and dark sections (text-bone via body default) both render correctly
+   without per-call overrides. Mirrors the .display-* convention. */
 .lead {
   font-family: var(--font-editorial);
   font-size: var(--text-lead);
   line-height: var(--leading-editorial);
-  color: var(--color-bone);
 }
 
 /* Spec — monospaced technical numbers (torques, gaps, paint depths, ΔE) */
@@ -272,12 +274,12 @@ body {
   color: var(--color-graphite);
 }
 
-/* Editorial — long-form serif body. Owner letter, claims content, shop story. */
+/* Editorial — long-form serif body. Owner letter, claims content, shop story.
+   Color inherited from parent — same convention as .lead and .display-*. */
 .editorial {
   font-family: var(--font-editorial);
   font-size: 1.125rem;
   line-height: var(--leading-editorial);
-  color: var(--color-bone);
   font-feature-settings: "kern", "liga";
 }
 .editorial p + p {

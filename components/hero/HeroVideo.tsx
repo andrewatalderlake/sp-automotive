@@ -5,6 +5,7 @@ import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import SplitText from "@/components/effects/SplitText";
 import SectionScrubVideo from "@/components/effects/SectionScrubVideo";
+import Surface from "@/components/ui/Surface";
 
 // Atmospheric video is now scoped to the hero region only — rendered via a
 // SectionScrubVideo behind the foreground composition. The legacy PageScrubVideo
@@ -174,16 +175,15 @@ export default function HeroVideo() {
             : "translate3d(0, calc(20px + var(--hero-y-card, 0px)), 0)",
         }}
       >
-        <div
-          className="
-            rounded-2xl border border-white/[0.06] bg-white/[0.015] p-8
-            ring-1 ring-inset ring-white/[0.03]
-            shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]
-            backdrop-blur-sm backdrop-saturate-110
-            transition-[transform,background-color,box-shadow] duration-300 ease-out
-            hover:-translate-y-1 hover:bg-white/[0.035]
-            hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.65)]
-          "
+        {/* Committed-glass lead card. Earlier iteration used a hand-rolled
+            bg-white/[0.015] treatment that read as nearly invisible against
+            the cinematic backdrop — original audit P2-a. Now uses the
+            shared Surface "glass" variant (dark mid-alpha tint + strong
+            backdrop blur + border + ring + shadow) so the card establishes
+            itself as a deliberate floating element on the hero video. */}
+        <Surface
+          variant="glass"
+          className="rounded-2xl p-8 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.7)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           <p className="lead text-bone/90">
             We deal with the insurance. You walk away whole — sometimes ahead.
@@ -210,7 +210,7 @@ export default function HeroVideo() {
               send 3 photos for a callback
             </Link>
           </p>
-        </div>
+        </Surface>
       </div>
     </section>
   );

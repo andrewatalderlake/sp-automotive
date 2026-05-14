@@ -47,12 +47,14 @@ export default function StorageBlock() {
       ref={sectionRef}
       aria-labelledby="storage-heading"
       data-scrub-time={SCRUB_TIME}
-      className="storage-block relative min-h-[110svh] w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28"
+      className="storage-block relative min-h-[110svh] w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 border-t border-ink/15"
     >
-      {/* Section label — Anton uppercase, no chapter numeral. Pinned to
-          the max-w-7xl grid so it aligns with the rest of the homepage. */}
+      {/* Section label — Anton uppercase, no chapter numeral. Centered
+          (deliberate one-off — the spotlight image below is full-bleed and
+          frames better with a centered label); other sections default to
+          text-left per MASTER.md §7. */}
       <div className="relative z-10 mx-auto max-w-7xl">
-        <p className="font-display uppercase tracking-[0.10em] text-left text-ink text-3xl md:text-5xl leading-none">
+        <p className="font-display uppercase tracking-[0.10em] text-center text-ink text-3xl md:text-5xl leading-none">
           Climate-controlled storage
         </p>
       </div>

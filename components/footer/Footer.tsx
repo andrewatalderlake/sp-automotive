@@ -17,6 +17,16 @@ export default function Footer() {
         src="/footer-ambient.mp4"
         poster="/footer-ambient-poster.jpg"
       />
+      {/* Dark scrim over the ambient red footage. Without it, the entire
+          footer reads as a saturated red flood — which competes with the
+          ignite token's "brake-light reserved" rule (primary CTAs, focus
+          rings, selection). At bg-ink/75 the footage reads as warm
+          atmosphere rather than a saturated wash, restoring ignite's
+          single-allocation discipline site-wide. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-ink/75"
+      />
       <Surface variant="glass" className="relative z-10 max-w-7xl mx-auto rounded-2xl py-12 px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
           <Image
