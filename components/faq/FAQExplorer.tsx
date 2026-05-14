@@ -84,7 +84,11 @@ export default function FAQExplorer({ faqs }: Props) {
     if (!hash) return;
     const target = faqs.find((f) => f.id === hash);
     if (!target) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration-safe deep-link seed
+    // Hydration-safe deep-link seed: setting state here is intentional.
+    // This effect runs only on mount (faqs is a stable prop from
+    // PUBLISHED_FAQS, a module-level constant) and reads
+    // window.location, which is not available during SSR.
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only seed from URL hash
     setCluster(target.category);
     setQuery("");
     setOpenIds((prev) => {
@@ -165,6 +169,23 @@ export default function FAQExplorer({ faqs }: Props) {
             on search input + cluster pill group so SR users hear "search
             controls these results". */}
         <div id={resultsId} className="mt-10 md:mt-14">
+          {/* Persistent screen-reader live region. Stays in the DOM at all
+              times — JAWS and older NVDA versions only track content
+              injected INTO an existing aria-live container; conditionally
+              mounting the live region itself can suppress the
+              announcement. aria-atomic="true" reads the new content as a
+              single utterance. */}
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="sr-only"
+          >
+            {filtered.length === 0
+              ? "No questions match your search. Text Serge a photo for a custom answer."
+              : ""}
+          </div>
+
           {filtered.length === 0 ? (
             <EmptyState />
           ) : showClusterHeadings ? (
@@ -362,12 +383,10 @@ function FAQCard({
 }
 
 function EmptyState() {
+  // Visual-only — the SR announcement lives in a persistent aria-live
+  // region rendered by the parent (see comment in FAQExplorer).
   return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="max-w-2xl mx-auto text-center py-16 md:py-24"
-    >
+    <div className="max-w-2xl mx-auto text-center py-16 md:py-24">
       <p className="eyebrow text-graphite">No match</p>
       <h3 className="mt-3 font-display text-2xl md:text-3xl text-bone leading-tight">
         Text Serge a photo. He answers.

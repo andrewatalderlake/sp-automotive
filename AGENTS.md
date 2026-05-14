@@ -21,7 +21,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Eyebrows: `.eyebrow` class — 11px Hanken uppercase, tracking 0.18em. Prefix with `//` for in-content callouts (`// We work with`, `// Supplement ledger`).
 
 **Section conventions** (homepage `app/page.tsx`):
-- Every section opens with a single Anton uppercase label: `font-display uppercase tracking-[0.10em] text-lg md:text-2xl leading-none` (text-ink on paper, text-bone on dark). No chapter numerals — that pattern was retired 2026-05-14. See `InsuranceHandling.tsx`, `TheMath.tsx`, `HomeFAQ.tsx`.
+- Every section opens with a single Anton uppercase label: `font-display uppercase tracking-[0.10em] text-left text-3xl md:text-5xl leading-none` (text-ink on paper, text-bone on dark). No chapter numerals — that pattern was retired 2026-05-14. See `InsuranceHandling.tsx`, `TheMath.tsx`, `HomeFAQ.tsx`.
 - Unnumbered utility sections (TrustStrip, FeaturedBuilds) use a smaller tracked-uppercase label only ("SELECTED WORK", "// WE WORK WITH"). The `//` prefix marks an in-content callout (tech's marginal note); plain uppercase reads as a section badge.
 - Sections meant to fill the viewport use `min-h-[110svh]`. Content-fit sections use `min-h-screen` or `auto`.
 - Reveal animations driven by `IntersectionObserver` flipping `section.dataset.revealed = "1"`, then styled-jsx transitions on child elements keyed off `[data-revealed="1"]`. See `HowItWorks.tsx` for the canonical pattern.
