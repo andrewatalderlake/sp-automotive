@@ -57,19 +57,32 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     let lastTarget = -1;
     let primed = false;
 
-    // Prime: play() then pause() once so subsequent currentTime seeks render
-    // frames. Without this, Safari / WebKit shows the poster forever on a
-    // never-played paused video, even after setting currentTime — which
-    // looks identical to a frozen still image. We try to prime as early as
-    // possible (on loadedmetadata / canplay), and again as a fallback on
-    // the first scroll event.
+    // Prime: play() then pause() once so subsequent currentTime seeks
+    // render frames. Without this, Safari / WebKit shows the poster
+    // forever on a never-played paused video, even after setting
+    // currentTime — which looks identical to a frozen still image. We
+    // try to prime as early as possible (on loadedmetadata / canplay),
+    // and again as a fallback on the first scroll event.
+    //
+    // `primed` flips to true ONLY after play() resolves successfully.
+    // If the browser rejects play() (autoplay throttling, no user
+    // gesture yet, hidden tab, etc.), `primed` stays false and the
+    // next scroll/metadata event retries. Previously this flag was set
+    // unconditionally before the play() result was known, so a single
+    // silent rejection would lock the video on its poster forever.
     function prime() {
       if (primed) return;
-      primed = true;
       const p = video!.play();
       if (p && typeof p.then === "function") {
-        p.then(() => video!.pause()).catch(() => {/* ignore */});
+        p.then(() => {
+          primed = true;
+          video!.pause();
+        }).catch(() => {
+          /* leave primed=false so the next event retries */
+        });
       } else {
+        // Older browsers: play() returned undefined synchronously.
+        primed = true;
         try { video!.pause(); } catch {/* ignore */}
       }
     }
