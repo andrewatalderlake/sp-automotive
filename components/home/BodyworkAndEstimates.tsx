@@ -16,32 +16,6 @@ import SmsCTA from "@/components/ui/SmsCTA";
 
 const SCRUB_TIME = 24;
 
-type Step = {
-  n: string;
-  label: string;
-  body: string;
-  hasDot?: boolean;
-};
-
-const STEPS: Step[] = [
-  {
-    n: "01",
-    label: "Call or text",
-    body: "Photos, location, what happened. Window confirmed inside the hour.",
-  },
-  {
-    n: "02",
-    label: "On-site walkaround",
-    body: "Driveway, garage, storage. OEM-term documentation on the spot.",
-  },
-  {
-    n: "03",
-    label: "Written estimate",
-    body: "Real number, on email within forty-eight hours. Carrier-ready.",
-    hasDot: true,
-  },
-];
-
 export default function BodyworkAndEstimates() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -91,11 +65,13 @@ export default function BodyworkAndEstimates() {
           </SplitText>
         </div>
 
-        {/* Three asymmetric cards. items-stretch keeps all cards equal
-            height — the photo card uses object-cover, the steps list and
-            the CTA flex to fill. */}
+        {/* Two-card composition: ambient video on the left, CTA on the
+            right. The middle "// The path" steps card was dropped — it
+            duplicated §05's 4-step list and competed for attention with
+            no narrative payoff unique to this section. items-stretch
+            keeps both cards equal height. */}
         <div className="mt-12 md:mt-16">
-          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-6">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-6">
 
           {/* Card 1 — ambient video of an inspection lamp passing over a
               carbon-fiber panel + gloved hands hovering over the weave.
@@ -119,55 +95,10 @@ export default function BodyworkAndEstimates() {
             </Surface>
           </div>
 
-          {/* Card 2 — the three-step path, compact stacked list. */}
-          <div
-            className="bodywork-estimates__card"
-            style={{ "--i": 1 } as React.CSSProperties}
-          >
-            <Surface
-              variant="light"
-              className="h-full rounded-2xl p-7 md:p-8 text-left"
-            >
-              <p className="eyebrow text-graphite">{"// The path"}</p>
-              <ol className="mt-5 divide-y divide-ink/10 border-y border-ink/10">
-                {STEPS.map((step) => (
-                  <li
-                    key={step.n}
-                    className="flex items-start gap-4 py-4"
-                  >
-                    <span
-                      aria-hidden
-                      className="spec text-graphite text-sm leading-none pt-1 tabular-nums shrink-0"
-                      style={{ fontVariantNumeric: "tabular-nums" }}
-                    >
-                      {step.n}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-display text-ink text-lg md:text-xl leading-tight">
-                          {step.label}
-                        </h3>
-                        {step.hasDot && (
-                          <span
-                            aria-hidden
-                            className="bodywork-estimates__dot inline-block size-1.5 rounded-full bg-ignite"
-                          />
-                        )}
-                      </div>
-                      <p className="mt-1.5 text-ink/80 text-sm md:text-[0.95rem] leading-snug">
-                        {step.body}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </Surface>
-          </div>
-
-            {/* Card 3 — CTA. Heading + closing line + phone/SMS buttons. */}
+            {/* Card 2 — CTA. Heading + closing line + phone/SMS buttons. */}
             <div
               className="bodywork-estimates__card"
-              style={{ "--i": 2 } as React.CSSProperties}
+              style={{ "--i": 1 } as React.CSSProperties}
             >
               <Surface
                 variant="light"
@@ -209,23 +140,8 @@ export default function BodyworkAndEstimates() {
           opacity: 1;
           transform: translateY(0);
         }
-        :global(.bodywork-estimates__dot) {
-          opacity: 0;
-          transform: scale(0);
-          transition:
-            opacity 360ms cubic-bezier(0.83, 0, 0.17, 1),
-            transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
-          transition-delay: 760ms;
-        }
-        :global(
-            .bodywork-estimates[data-revealed="1"] .bodywork-estimates__dot
-          ) {
-          opacity: 1;
-          transform: scale(1);
-        }
         @media (prefers-reduced-motion: reduce) {
-          :global(.bodywork-estimates__card),
-          :global(.bodywork-estimates__dot) {
+          :global(.bodywork-estimates__card) {
             transition: none;
           }
         }

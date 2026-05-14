@@ -1,12 +1,15 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
+import { CITY, REGION, PHONE, PHONE_HREF, HOURS_LABEL } from "@/lib/site";
 
-// Trust strip — two horizontal rows of wordmarks immediately after the
-// hero. Establishes credibility before the narrative starts: which
-// insurance carriers we work with, and which makes/models we restore.
-// Typography-only (no logos) so we don't have to source brand SVGs or
-// argue with usage rights for v1.
+// Trust strip — three horizontal rows immediately after the hero.
+// First: where + how to reach us (Sarasota, phone, hours). Then the
+// credibility beats: which insurance carriers we work with, and which
+// makes/models we restore. The reach-us row surfaces contact info
+// above the fold without depending on the sticky CTA bar or scrolling
+// to the footer. Typography-only (no logos) so we don't have to source
+// brand SVGs or argue with usage rights for v1.
 
 const CARRIERS = [
   "State Farm",
@@ -73,10 +76,28 @@ export default function TrustStrip() {
   return (
     <section
       ref={sectionRef}
-      aria-label="Carriers and marques we work with"
+      aria-label="How to reach us, carriers we work with, and marques we restore"
       className="trust-strip relative w-full bg-paper border-y border-ink/10 px-6 py-14 md:px-10 md:py-20"
     >
       <div className="trust-strip__row mx-auto max-w-6xl">
+        <p className="eyebrow text-graphite">{"// Reach us"}</p>
+        <p className="mt-4 flex flex-wrap items-baseline gap-x-5 gap-y-3 md:gap-x-8 font-display uppercase tracking-[0.10em] text-ink/85 text-sm md:text-base leading-tight">
+          <span>{CITY}, {REGION}</span>
+          <span aria-hidden className="text-ink/25">·</span>
+          <a
+            href={PHONE_HREF}
+            aria-label={`Call ${PHONE}`}
+            className="link-underline hover:text-ink transition-colors"
+          >
+            {PHONE}
+          </a>
+          <span aria-hidden className="text-ink/25">·</span>
+          <span>By appointment</span>
+          <span aria-hidden className="text-ink/25">·</span>
+          <span>{HOURS_LABEL}</span>
+        </p>
+      </div>
+      <div className="trust-strip__row mx-auto mt-10 max-w-6xl md:mt-14">
         <p className="eyebrow text-graphite">{"// We work with"}</p>
         <div className="mt-4">
           <Wordmarks items={CARRIERS} />
@@ -114,6 +135,12 @@ export default function TrustStrip() {
               .trust-strip__row:nth-child(2)
           ) {
           transition-delay: 260ms;
+        }
+        :global(
+            .trust-strip[data-revealed="1"]
+              .trust-strip__row:nth-child(3)
+          ) {
+          transition-delay: 400ms;
         }
         @media (prefers-reduced-motion: reduce) {
           :global(.trust-strip__row) {

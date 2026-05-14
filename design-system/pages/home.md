@@ -11,7 +11,7 @@ The internal `§01–§08` numbering below is a **document-level reference only*
 | Slot | Component | File | Section label | Surface |
 |---|---|---|---|---|
 | Hero | `HeroVideo` | `components/hero/HeroVideo.tsx` | — (cinematic display-bleed) | Dark, `data-theme="dark"` |
-| Trust strip | `TrustStrip` | `components/home/TrustStrip.tsx` | // We work with / // We restore | Paper |
+| Trust strip | `TrustStrip` | `components/home/TrustStrip.tsx` | // Reach us / // We work with / // We restore | Paper |
 | §01 | `TheMath` | `components/home/TheMath.tsx` | The numbers | Paper |
 | §02 | `InsuranceHandling` | `components/home/InsuranceHandling.tsx` | Carrier-side advocacy | Paper |
 | §03 | `StorageBlock` | `components/home/StorageBlock.tsx` | Climate-controlled storage | Paper |
@@ -64,10 +64,10 @@ Three `Surface variant="light"` phase cards (Document / Supplement / Negotiate).
 - "Inside. Always." headline + three callouts (Climate / Access / Monitored) sit on the scrim
 - `min-h-[110svh]` — viewport-fill
 
-## §04 BodyworkAndEstimates — asymmetric trio
+## §04 BodyworkAndEstimates — video + CTA pair
 
-- Three cards side-by-side: photo card, three-step path card, CTA card. `items-stretch` keeps heights equal
-- The single ignite-red dot on "Step 03" of the path card is **the section's ignite allocation**. Don't add another red anywhere else in §04
+- Two cards side-by-side at `md:grid-cols-2`: an `AmbientVideo` card on the left (inspection lamp + gloved hands on carbon fiber) and a CTA card on the right (`Get on the schedule.` + PhoneCTA + SmsCTA). `items-stretch` keeps both at equal height
+- The middle "// The path" steps card was removed (2026-05-14) — it duplicated §05's 4-step list and didn't carry any §04-specific narrative weight. The ignite-red dot that lived on it went with it; §04 now has no ignite allocation, which is fine — ignite is reclaimed by the global sticky CTA bar and focus rings
 - CTA card houses PhoneCTA + SmsCTA with `theme="light"` — `primary-light` / `ghost-light` variants
 - Display headline below the label: "We come to you."
 
