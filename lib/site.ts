@@ -23,6 +23,17 @@ function resolveSiteUrl(): string {
     );
   }
 
+  // Non-Vercel production environments (Railway, Render, bare Docker,
+  // CI smoke tests, etc.) that omit NEXT_PUBLIC_SITE_URL would otherwise
+  // silently serve localhost URLs in canonicals / OG / sitemap / JSON-LD.
+  // NODE_ENV=production is the portable signal for "this is not a dev
+  // machine" outside Vercel.
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com).",
+    );
+  }
+
   return "http://localhost:3000";
 }
 

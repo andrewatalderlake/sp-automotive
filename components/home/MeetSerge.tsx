@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { existsSync } from "fs";
-import { join } from "path";
 
 // "Meet Serge" — homepage introduction of the founder, placed between
 // §InsuranceHandling and §StorageBlock so the trust triad (who → what →
@@ -20,21 +18,18 @@ import { join } from "path";
 // duplicated here. Replace with real specifics (years at the bench,
 // prior shops, named marques certified on) when content lands.
 
+// Portrait path. The asset lives at /public/about/serge-portrait.webp.
+// A prior version of this file probed the filesystem at request time
+// via existsSync() and rendered a placeholder when missing, but that
+// probe silently returns false on serverless runtimes (where /public
+// is served by the CDN, not present on the function's disk) if any
+// parent layout makes the page dynamic via cookies()/headers(). The
+// asset is committed; if it ever goes missing, a broken <Image> is
+// the right loud signal — better than a silent placeholder that hides
+// the regression.
 const PORTRAIT_PATH = "/about/serge-portrait.webp";
 
-function hasPortrait(): boolean {
-  try {
-    return existsSync(
-      join(process.cwd(), "public", "about", "serge-portrait.webp"),
-    );
-  } catch {
-    return false;
-  }
-}
-
 export default function MeetSerge() {
-  const portrait = hasPortrait();
-
   return (
     <section
       aria-labelledby="meet-serge-heading"
@@ -79,21 +74,13 @@ export default function MeetSerge() {
               both pages. */}
           <div className="order-1 md:order-2 md:col-span-5">
             <div className="relative w-full aspect-[3/4] border border-hairline overflow-hidden">
-              {portrait ? (
-                <Image
-                  src={PORTRAIT_PATH}
-                  alt="Serge, founder of SP Automotive"
-                  fill
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-end justify-center bg-steel">
-                  <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-graphite/80">
-                    Portrait &mdash; pending
-                  </p>
-                </div>
-              )}
+              <Image
+                src={PORTRAIT_PATH}
+                alt="Serge, founder of SP Automotive"
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

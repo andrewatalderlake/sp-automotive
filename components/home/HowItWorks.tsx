@@ -53,16 +53,11 @@ export default function HowItWorks() {
   // `backdrop-filter: blur()` are cheap on the bottom edge of a
   // visible section but wasted when the section is offscreen.
   //
-  // Lazy initializer: SSR + modern clients start at false (blur mounts
-  // only after IO confirms intersection); ancient clients without IO
-  // default to true so the visual effect doesn't silently vanish.
-  // Mismatch is only possible on browsers older than IO support, which
-  // is acceptable.
-  const [blurVisible, setBlurVisible] = useState<boolean>(
-    () =>
-      typeof window !== "undefined" &&
-      typeof IntersectionObserver === "undefined",
-  );
+  // Always initialize false — matches SSR output and avoids the hydration
+  // mismatch a lazy IO-availability check would cause. Browsers without
+  // IntersectionObserver (vanishingly rare) gracefully degrade to never
+  // rendering the blur, which is acceptable.
+  const [blurVisible, setBlurVisible] = useState(false);
   // Mobile compositor can't carry the full 5-layer blur stack without
   // jank on the §HowItWorks → §FeaturedBuilds handoff. Drop to 3 layers
   // on phones; the gradient is shallower but still reads as a soft fade.
@@ -91,8 +86,9 @@ export default function HowItWorks() {
   // on entry and exit) rather than one-shot. Generous rootMargin so
   // the blur is already mounted by the time the bottom edge is on
   // screen, avoiding a flash where the section cuts abruptly to paper.
-  // The IO-unavailable fallback is handled by the useState lazy
-  // initializer above; no need for a synchronous setBlurVisible here.
+  // Bails out if IntersectionObserver is unavailable; that path leaves
+  // `blurVisible` at its initial false (no synchronous setState in the
+  // effect body, no hydration mismatch).
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
     const section = sectionRef.current;
