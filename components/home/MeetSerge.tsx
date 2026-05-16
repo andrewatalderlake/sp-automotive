@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 // "Meet Serge" — homepage introduction of the founder, placed between
-// §InsuranceHandling and §StorageBlock so the trust triad (who → what →
-// why-trust) lands before the technical chapters take over the scroll.
+// §TrustStrip and §InsuranceHandling so the visitor meets the person
+// before the carrier-handling and process chapters take over the scroll.
 // Dark surface (`data-theme="dark"` so StickyContactBar flips correctly)
 // — the surface flip from paper sections above into ink here marks the
 // "meet the human" beat editorially, and the portrait reads more
