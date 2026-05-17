@@ -56,6 +56,10 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     let rafId = 0;
     let lastTarget = -1;
     let primed = false;
+    let scrollCount = 0;
+    let applyCount = 0;
+    let writeCount = 0;
+    console.log("[scrub] mount: section=", section, "video=", video, "video.readyState=", video.readyState);
 
     // Prime: play() then pause() once so subsequent currentTime seeks
     // render frames. Without this, Safari / WebKit shows the poster
@@ -72,25 +76,31 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     // silent rejection would lock the video on its poster forever.
     function prime() {
       if (primed) return;
+      console.log("[scrub] prime: calling play()");
       const p = video!.play();
       if (p && typeof p.then === "function") {
         p.then(() => {
           primed = true;
           video!.pause();
-        }).catch(() => {
-          /* leave primed=false so the next event retries */
+          console.log("[scrub] prime: RESOLVED, primed=true, video.paused=", video!.paused, "currentTime=", video!.currentTime);
+        }).catch((err) => {
+          console.log("[scrub] prime: REJECTED", err?.name, err?.message);
         });
       } else {
-        // Older browsers: play() returned undefined synchronously.
         primed = true;
         try { video!.pause(); } catch {/* ignore */}
+        console.log("[scrub] prime: sync path, primed=true");
       }
     }
 
     function apply() {
       rafId = 0;
+      applyCount++;
       const dur = video!.duration;
-      if (!dur || Number.isNaN(dur)) return;
+      if (!dur || Number.isNaN(dur)) {
+        if (applyCount <= 3) console.log("[scrub] apply#", applyCount, ": NO duration yet, readyState=", video!.readyState);
+        return;
+      }
 
       // Map the parent section's scroll-through range to [0, 1]:
       //   p = 0 -> section's TOP has just reached the viewport's TOP
@@ -118,12 +128,23 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       // out-of-range seeks.
       const target = Math.min(dur - 0.05, p * dur);
 
-      if (Math.abs(target - lastTarget) < 1 / 120) return;
+      const delta = Math.abs(target - lastTarget);
+      if (delta < 1 / 120) return;
       lastTarget = target;
-      try { video!.currentTime = target; } catch {/* pre-metadata, ignore */}
+      try {
+        video!.currentTime = target;
+        writeCount++;
+        if (writeCount <= 5 || writeCount % 20 === 0) {
+          console.log("[scrub] write#", writeCount, "rect.top=", rect.top.toFixed(0), "target=", target.toFixed(3), "→ video.currentTime=", video!.currentTime.toFixed(3), "paused=", video!.paused, "primed=", primed);
+        }
+      } catch (e) {
+        console.log("[scrub] write FAILED", e);
+      }
     }
 
     function onScroll() {
+      scrollCount++;
+      if (scrollCount <= 3 || scrollCount % 30 === 0) console.log("[scrub] scroll#", scrollCount, "window.scrollY=", window.scrollY);
       prime();
       if (rafId) return;
       rafId = requestAnimationFrame(apply);
