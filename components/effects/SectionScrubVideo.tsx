@@ -56,31 +56,50 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     let rafId = 0;
     let lastTarget = -1;
     let primed = false;
-    let nudgeScheduled = false;
+    let lastNudgeMs = 0;
+    let trailingTimeout: number | undefined;
 
     // Safari/WebKit quirk: setting currentTime on a paused video updates
     // the property but doesn't repaint the displayed frame. Fix is to
     // fire play()→pause() after each seek so play() forces a paint.
-    // Calling this 60+ times/sec (every Lenis rAF tick) creates enough
-    // promise+microtask churn to lag the page. Coalesce via a single
-    // per-frame rAF-scheduled nudge instead: many seek writes within
-    // one frame trigger only one play+pause cycle, which paints the
-    // LATEST currentTime. User can't see intermediate frames in <16ms
-    // anyway.
+    //
+    // But calling this on every seek lags Safari hard — each cycle is
+    // a state transition + Promise + microtasks. Lenis fires scroll
+    // events ~60×/sec; one nudge per seek = 60 nudges/sec ≈ 120 video
+    // state transitions/sec. The decoder backs up, the page judders.
+    //
+    // Solution: leading-edge throttle at NUDGE_INTERVAL_MS + a trailing
+    // call so the final frame paints when scrolling stops. ~20 Hz is
+    // smooth-perceived for cinematic atmospheric content but ~3× less
+    // load than per-seek nudges.
+    const NUDGE_INTERVAL_MS = 50;
+
+    function nudgeNow() {
+      if (!primed) return;
+      lastNudgeMs = performance.now();
+      const p = video!.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => video!.pause()).catch(() => {/* ignore */});
+      } else {
+        try { video!.pause(); } catch {/* ignore */}
+      }
+    }
+
     function scheduleNudge() {
-      if (nudgeScheduled || !primed) return;
-      nudgeScheduled = true;
-      requestAnimationFrame(() => {
-        nudgeScheduled = false;
-        const p = video!.play();
-        if (p && typeof p.then === "function") {
-          p.then(() => video!.pause()).catch(() => {
-            /* ignore — next seek schedules another nudge */
-          });
-        } else {
-          try { video!.pause(); } catch {/* ignore */}
-        }
-      });
+      if (!primed) return;
+      const elapsed = performance.now() - lastNudgeMs;
+      if (elapsed >= NUDGE_INTERVAL_MS) {
+        nudgeNow();
+        return;
+      }
+      // Within throttle window: schedule a trailing nudge so the LAST
+      // seek's frame paints when scroll comes to rest. Reset on each
+      // call — only one trailing nudge per burst.
+      if (trailingTimeout) clearTimeout(trailingTimeout);
+      trailingTimeout = window.setTimeout(() => {
+        trailingTimeout = undefined;
+        nudgeNow();
+      }, NUDGE_INTERVAL_MS - elapsed);
     }
 
     // Prime: play() then pause() once so subsequent currentTime seeks
@@ -189,6 +208,7 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       video.removeEventListener("loadedmetadata", onMeta);
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
+      if (trailingTimeout) clearTimeout(trailingTimeout);
     };
   }, [reduced]);
 
