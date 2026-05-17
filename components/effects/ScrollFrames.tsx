@@ -49,6 +49,13 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
     if (!section) return;
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
+    // Better than the default "low"/"medium" — canvas downsample from
+    // the source image to the canvas backing store uses a higher-quality
+    // resampler, eliminating the grainy/aliased look on Retina canvases
+    // where the source is scaled. Free perf-wise; modern browsers do
+    // this in the GPU compositor.
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
 
     let rafId = 0;
     let lastIndex = -1;
