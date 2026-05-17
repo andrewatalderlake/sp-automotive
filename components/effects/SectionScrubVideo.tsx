@@ -56,10 +56,32 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     let rafId = 0;
     let lastTarget = -1;
     let primed = false;
-    let scrollCount = 0;
-    let applyCount = 0;
-    let writeCount = 0;
-    console.log("[scrub] mount: section=", section, "video=", video, "video.readyState=", video.readyState);
+    let nudgeScheduled = false;
+
+    // Safari/WebKit quirk: setting currentTime on a paused video updates
+    // the property but doesn't repaint the displayed frame. Fix is to
+    // fire play()→pause() after each seek so play() forces a paint.
+    // Calling this 60+ times/sec (every Lenis rAF tick) creates enough
+    // promise+microtask churn to lag the page. Coalesce via a single
+    // per-frame rAF-scheduled nudge instead: many seek writes within
+    // one frame trigger only one play+pause cycle, which paints the
+    // LATEST currentTime. User can't see intermediate frames in <16ms
+    // anyway.
+    function scheduleNudge() {
+      if (nudgeScheduled || !primed) return;
+      nudgeScheduled = true;
+      requestAnimationFrame(() => {
+        nudgeScheduled = false;
+        const p = video!.play();
+        if (p && typeof p.then === "function") {
+          p.then(() => video!.pause()).catch(() => {
+            /* ignore — next seek schedules another nudge */
+          });
+        } else {
+          try { video!.pause(); } catch {/* ignore */}
+        }
+      });
+    }
 
     // Prime: play() then pause() once so subsequent currentTime seeks
     // render frames. Without this, Safari / WebKit shows the poster
@@ -76,31 +98,24 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     // silent rejection would lock the video on its poster forever.
     function prime() {
       if (primed) return;
-      console.log("[scrub] prime: calling play()");
       const p = video!.play();
       if (p && typeof p.then === "function") {
         p.then(() => {
           primed = true;
           video!.pause();
-          console.log("[scrub] prime: RESOLVED, primed=true, video.paused=", video!.paused, "currentTime=", video!.currentTime);
-        }).catch((err) => {
-          console.log("[scrub] prime: REJECTED", err?.name, err?.message);
+        }).catch(() => {
+          /* leave primed=false so the next event retries */
         });
       } else {
         primed = true;
         try { video!.pause(); } catch {/* ignore */}
-        console.log("[scrub] prime: sync path, primed=true");
       }
     }
 
     function apply() {
       rafId = 0;
-      applyCount++;
       const dur = video!.duration;
-      if (!dur || Number.isNaN(dur)) {
-        if (applyCount <= 3) console.log("[scrub] apply#", applyCount, ": NO duration yet, readyState=", video!.readyState);
-        return;
-      }
+      if (!dur || Number.isNaN(dur)) return;
 
       // Map the parent section's scroll-through range to [0, 1]:
       //   p = 0 -> section's TOP has just reached the viewport's TOP
@@ -133,39 +148,15 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       lastTarget = target;
       try {
         video!.currentTime = target;
-        writeCount++;
-        if (writeCount <= 5 || writeCount % 20 === 0) {
-          console.log("[scrub] write#", writeCount, "rect.top=", rect.top.toFixed(0), "target=", target.toFixed(3), "→ video.currentTime=", video!.currentTime.toFixed(3), "paused=", video!.paused, "primed=", primed);
-        }
-        // Safari/WebKit quirk: setting currentTime on a paused video
-        // silently updates the property but does NOT repaint the
-        // displayed frame. The canonical fix is to nudge play() then
-        // pause() after each seek — play() forces a frame paint,
-        // pause() stops it before any subsequent frame plays. This
-        // pattern is what the popular scroll-scrub libraries
-        // (react-scroll-video etc.) all converge on for cross-browser
-        // scrub support.
-        //
-        // Guarded by `primed` — before the first play() resolves, the
-        // initial autoplay is already painting frames; piling more
-        // play() calls on top creates aborted-promise noise. After
-        // prime resolves, paused=true and seeks need the nudge.
-        if (primed) {
-          const p = video!.play();
-          if (p && typeof p.then === "function") {
-            p.then(() => video!.pause()).catch(() => {/* ignore — next seek will retry */});
-          } else {
-            try { video!.pause(); } catch {/* ignore */}
-          }
-        }
-      } catch (e) {
-        console.log("[scrub] write FAILED", e);
+      } catch {
+        /* pre-metadata, ignore */
       }
+      // Schedule a single play→pause nudge for this frame's tick. If
+      // apply() runs many times in a 16ms window, only one nudge fires.
+      scheduleNudge();
     }
 
     function onScroll() {
-      scrollCount++;
-      if (scrollCount <= 3 || scrollCount % 30 === 0) console.log("[scrub] scroll#", scrollCount, "window.scrollY=", window.scrollY);
       prime();
       if (rafId) return;
       rafId = requestAnimationFrame(apply);
