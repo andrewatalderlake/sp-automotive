@@ -89,7 +89,7 @@ export default function HeroVideo() {
           per second under Lenis. Image sequence avoids decode entirely:
           pre-extracted JPGs swap via <img src> on cached images. */}
       <ScrollFrames
-        frameCount={60}
+        frameCount={120}
         framePattern="/hero-clips/frames/frame-{n}.jpg"
         fallbackPoster="/hero-clips/cinematic-poster.jpg"
       />
