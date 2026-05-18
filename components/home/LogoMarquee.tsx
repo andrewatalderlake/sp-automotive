@@ -69,7 +69,7 @@ export default function LogoMarquee({ items, ariaLabel }: Props) {
           <li
             key={`${item.name}-${i}`}
             aria-hidden={i >= items.length || undefined}
-            className="shrink-0 h-8 md:h-12 flex items-center pr-12 md:pr-16"
+            className="shrink-0 h-6 md:h-8 flex items-center pr-12 md:pr-16"
           >
             {item.logo ? (
               <Image
