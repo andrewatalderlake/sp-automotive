@@ -50,6 +50,14 @@ export default function HeroVideo() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
+    // Skip parallax on touch devices. The mobile layout wraps the entire
+    // CTA block (PhoneCTA, SmsCTA, "send 3 photos" link) in the parallax
+    // transform, so any scroll-driven drift moves the targets users are
+    // trying to tap. `(pointer: coarse)` is the right signal — it catches
+    // phones, tablets, and touchscreen laptops without depending on
+    // viewport width.
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (coarse) return;
 
     let rafId = 0;
     const apply = () => {
@@ -136,7 +144,7 @@ export default function HeroVideo() {
           Paid in Full.
         </SplitText>
         <p
-          className={`lead text-bone/85 max-w-md mt-4 transition-[opacity,transform] duration-[420ms] ease-out ${
+          className={`lead text-bone/95 max-w-md mt-4 transition-[opacity,transform] duration-[420ms] ease-out ${
             cardReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
           }`}
         >
@@ -212,7 +220,7 @@ export default function HeroVideo() {
           variant="glass"
           className="rounded-3xl p-8 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.7)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
-          <p className="lead text-bone/90">{HERO_LEAD}</p>
+          <p className="lead text-bone/95">{HERO_LEAD}</p>
           <div
             className={`mt-6 flex flex-wrap gap-3 transition-opacity duration-300 ease-out ${
               ctasReady ? "opacity-100" : "opacity-0"

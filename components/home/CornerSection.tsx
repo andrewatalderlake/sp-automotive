@@ -2,6 +2,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { useReducedMotion } from "framer-motion";
 import { DWELL_LEAD_VH, DWELL_TRAIL_VH } from "@/lib/scrub-config";
+import { useViewportHeight } from "@/lib/hooks/useViewportHeight";
 import SplitText from "@/components/effects/SplitText";
 import Surface from "@/components/ui/Surface";
 import SectionScrubVideo from "@/components/effects/SectionScrubVideo";
@@ -189,6 +190,11 @@ export default function CornerSection({
 }: Props) {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
+  // Stable viewport-height accessor — see lib/hooks/useViewportHeight.ts.
+  // Reading window.innerHeight inside compute() directly would drift on
+  // iOS Safari as the address bar collapses mid-scroll; the hook caches
+  // the value and only updates on actual resize / orientation events.
+  const getVh = useViewportHeight();
 
   // One text ref per group. The compute loop drives both via resolveAnim()
   // for the chosen animation preset.
@@ -241,7 +247,7 @@ export default function CornerSection({
 
     function compute() {
       rafId = 0;
-      const vh = window.innerHeight;
+      const vh = getVh();
       // Section center → scrollY at which this section's center aligns with
       // viewport center. For 100svh sections that's section.offsetTop, but
       // the formula stays correct if a chapter grows taller than the viewport.
@@ -322,7 +328,7 @@ export default function CornerSection({
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [reduced, scrubTrailVh, animation]);
+  }, [reduced, scrubTrailVh, animation, getVh]);
 
   return (
     <section
@@ -330,7 +336,7 @@ export default function CornerSection({
       aria-labelledby={headingId}
       data-scrub-time={scrubTime}
       data-scrub-trail={scrubTrailVh}
-      className="relative min-h-[100svh] w-full overflow-hidden px-6 py-28 md:px-10 md:py-36"
+      className="relative min-h-[100svh] w-full overflow-hidden px-6 py-20 md:px-10 md:py-36"
     >
       {/* Optional per-section atmospheric video. Sits behind chapter content
           in the section's stacking context (no z-index needed — document

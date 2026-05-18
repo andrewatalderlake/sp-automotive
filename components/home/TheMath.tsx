@@ -50,7 +50,7 @@ export default function TheMath() {
           if (e.isIntersecting) section.dataset.revealed = "1";
         }
       },
-      { rootMargin: "-15% 0px -15% 0px", threshold: 0 },
+      { rootMargin: "-100px 0px -100px 0px", threshold: 0 },
     );
     io.observe(section);
 
@@ -62,7 +62,7 @@ export default function TheMath() {
       ref={sectionRef}
       aria-labelledby="the-math-heading"
       data-scrub-time={SCRUB_TIME}
-      className="the-math relative min-h-screen w-full overflow-hidden px-6 py-28 md:px-10 md:py-36"
+      className="the-math relative md:min-h-screen w-full overflow-hidden px-6 py-20 md:px-10 md:py-36"
       style={{
         // Paper-light editorial ground. The two adjacent dark sections
         // (hero above, ch02 below) make this a high-contrast rhythm break.
@@ -187,7 +187,7 @@ function NumeralBlock({
   return (
     <div className="the-math__num text-left">
       <p className="eyebrow text-graphite">{eyebrow}</p>
-      <div className="mt-3 font-display text-[clamp(4rem,12vw,9rem)] leading-none tracking-[-0.03em] text-ink">
+      <div className="mt-3 font-display text-[clamp(3.25rem,16vw,9rem)] leading-none tracking-[-0.03em] text-ink">
         <TextScramble duration={2} speed={0.05} characterSet="0123456789">
           {value}
         </TextScramble>

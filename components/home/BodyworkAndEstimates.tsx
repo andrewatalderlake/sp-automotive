@@ -33,7 +33,7 @@ export default function BodyworkAndEstimates() {
           if (e.isIntersecting) section.dataset.revealed = "1";
         }
       },
-      { rootMargin: "-15% 0px -15% 0px", threshold: 0 },
+      { rootMargin: "-100px 0px -100px 0px", threshold: 0 },
     );
     io.observe(section);
     return () => io.disconnect();

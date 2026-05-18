@@ -209,7 +209,22 @@ export default function Navigation() {
       </nav>
 
       {open && (
-        <div ref={dialogRef} className="fixed inset-0 z-50 bg-ink flex flex-col" role="dialog" aria-modal="true" aria-label="Menu">
+        // The dialog must explicitly opt back into pointer events because
+        // its ancestor <header> has `pointer-events-none` (so the nav
+        // doesn't intercept hero clicks). Without `pointer-events-auto`
+        // here, the close button taps fall through on iOS Safari — the
+        // spec says children with default `auto` should still receive
+        // events under a `none` ancestor, but Safari's hit-testing has
+        // been inconsistent on this for years.
+        // z-[60] is one tier above the header's z-50 so paint and hit
+        // order both put the dialog unambiguously on top.
+        <div
+          ref={dialogRef}
+          className="pointer-events-auto fixed inset-0 z-[60] bg-ink flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
           <div className="flex justify-end p-3">
             <button
               type="button"

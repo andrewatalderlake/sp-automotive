@@ -1,5 +1,5 @@
 import { Anton, Hanken_Grotesk } from "next/font/google";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import Navigation from "@/components/nav/Navigation";
 import Footer from "@/components/footer/Footer";
 import Analytics from "@/components/analytics/Analytics";
@@ -43,6 +43,20 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: `${SITE_NAME} — ${TAGLINE}`, description: `${TAGLINE} Factory-correct collision repair for exotic cars.` },
   robots: { index: true, follow: true },
+};
+
+// Viewport meta tag — REQUIRED for mobile rendering. Without it, Next.js
+// 16+ does NOT auto-inject `<meta name="viewport">`, so mobile browsers
+// fall back to a legacy layout viewport (~980px) and the page renders at
+// whatever the document's natural scroll-width happens to be, scaling
+// content into a thin column on the left. `viewport-fit=cover` lets the
+// hero video and dark surfaces extend behind iOS notch / home indicator
+// regions; safe-area-inset padding handles the actual content offset
+// where needed.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

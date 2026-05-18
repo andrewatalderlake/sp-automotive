@@ -134,8 +134,14 @@ export default function LogoMarquee({ items, ariaLabel, size = "small" }: Props)
           animation: logo-marquee-scroll 40s linear infinite;
           will-change: transform;
         }
-        .logo-marquee:hover .logo-marquee__track {
-          animation-play-state: paused;
+        /* Pause-on-hover — only on hover-capable pointers. On touch
+           devices a tap-and-hold triggers :hover and STICKS until the
+           user taps elsewhere, which would freeze the marquee
+           indefinitely after any incidental long-press during scroll. */
+        @media (hover: hover) {
+          .logo-marquee:hover .logo-marquee__track {
+            animation-play-state: paused;
+          }
         }
         @keyframes logo-marquee-scroll {
           0% {
