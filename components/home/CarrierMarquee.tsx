@@ -38,6 +38,7 @@ export default function CarrierMarquee() {
     <LogoMarquee
       items={CARRIERS}
       ariaLabel="Insurance carriers we work with"
+      size="small"
     />
   );
 }

@@ -35,6 +35,7 @@ export default function MarqueMarquee() {
     <LogoMarquee
       items={MAKES}
       ariaLabel="Marques we restore"
+      size="large"
     />
   );
 }

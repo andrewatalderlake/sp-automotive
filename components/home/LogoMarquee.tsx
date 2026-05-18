@@ -44,13 +44,25 @@ export type LogoMarqueeItem = {
   scale?: number;
 };
 
+// Row-height presets. Carriers ("small") sit quietly as supporting
+// credibility — their logos are wordmarks designed to read at small
+// sizes. Marques ("large") are the brand-promise beat (the cars we
+// restore) and visually carry more weight; the car-brand emblems
+// also have more detail that benefits from a taller render.
+const ROW_HEIGHT = {
+  small: "h-6 md:h-8",
+  large: "h-10 md:h-14",
+} as const;
+
 type Props = {
   items: readonly LogoMarqueeItem[];
   /** Read out to screen readers as the list's accessible name. */
   ariaLabel: string;
+  /** "small" for the carrier strip, "large" for the marque strip. */
+  size?: keyof typeof ROW_HEIGHT;
 };
 
-export default function LogoMarquee({ items, ariaLabel }: Props) {
+export default function LogoMarquee({ items, ariaLabel, size = "small" }: Props) {
   const reduced = useReducedMotion();
   // Render the list four times in a single flat <ul>. Items past the
   // first copy are aria-hidden so screen readers don't enumerate them
@@ -69,7 +81,7 @@ export default function LogoMarquee({ items, ariaLabel }: Props) {
           <li
             key={`${item.name}-${i}`}
             aria-hidden={i >= items.length || undefined}
-            className="shrink-0 h-6 md:h-8 flex items-center pr-12 md:pr-16"
+            className={`shrink-0 ${ROW_HEIGHT[size]} flex items-center pr-12 md:pr-16`}
           >
             {item.logo ? (
               <Image
