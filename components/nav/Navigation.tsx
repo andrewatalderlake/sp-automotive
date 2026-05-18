@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 
-// /#work scrolls to the BeforeAfterGallery (id="work") on the homepage.
+// /#work scrolls to FeaturedBuilds (id="work") on the homepage.
 const links = [
   { href: "/", label: "Home" },
   { href: "/#work", label: "Work" },
@@ -111,16 +111,22 @@ export default function Navigation() {
     };
   }, [open]);
 
-  // Anchor links: native scrollIntoView (smooth via CSS scroll-behavior).
+  // Anchor links: drive smooth-scroll through Lenis so the move lands
+  // deterministically. Native scrollIntoView fights Lenis's rAF lerp
+  // (Lenis is continuously setting window.scrollY toward its own
+  // target, so a native scroll gets clipped back) — same reason
+  // FAQAccordionList.tsx drives it explicitly. Fallback to
+  // scrollIntoView for clients without Lenis (e.g. SSR-only).
+  //
   // Off-home anchor: navigate to /#id; Next.js handles the hash scroll.
   //
-  // Important: when the dialog is open, <body> is `position: fixed` for
-  // the iOS-safe scroll lock. `scrollIntoView` is a no-op against a fixed
+  // Important: when the dialog is open, <body> is `position: fixed`
+  // for the iOS-safe scroll lock. scrollTo is a no-op against a fixed
   // body, and the dialog-close effect cleanup will then run
-  // `window.scrollTo({ top: scrollY })` and bounce the user back to the
-  // pre-open offset. Defer the scroll/route call to a macrotask so it
-  // runs *after* React commits `open: false` and the cleanup restores
-  // body flow + scroll position.
+  // `window.scrollTo({ top: scrollY })` and bounce the user back to
+  // the pre-open offset. Defer the scroll/route call to a macrotask
+  // so it runs *after* React commits `open: false` and the cleanup
+  // restores body flow + scroll position.
   function handleClick(href: string) {
     return (e: MouseEvent) => {
       const isAnchor = href.includes("#");
@@ -131,8 +137,18 @@ export default function Navigation() {
 
       if (isAnchor && onHome) {
         const id = href.split("#")[1];
+        if (!id) return;
         setTimeout(() => {
-          const target = id ? document.getElementById(id) : null;
+          // offset: 0 lands the target's top at the viewport top —
+          // section's internal padding clears the floating nav pill
+          // visually, no bleed from the previous section above.
+          const lenis =
+            typeof window !== "undefined" ? window.__lenis : undefined;
+          if (lenis) {
+            lenis.scrollTo(`#${id}`, { offset: 0 });
+            return;
+          }
+          const target = document.getElementById(id);
           target?.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 0);
       } else if (isAnchor && !onHome) {

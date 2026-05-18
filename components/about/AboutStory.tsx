@@ -27,12 +27,12 @@ export default function AboutStory() {
                 same reason you ended up here.
               </p>
               <p>
-                I&apos;ve spent the last decade restoring exotics for private collectors across
-                Florida. Cars came to me after the bigger shops gave up — Aventadors with
-                misaligned clamshells, McLarens with carbon-tub damage the dealer wouldn&apos;t touch,
-                R8 V10s that needed paint matched in a booth that didn&apos;t exist within a
-                three-hour drive. I learned what factory-correct actually means by being told
-                &ldquo;close enough&rdquo; and refusing it.
+                I&apos;ve spent the last 4 years restoring exotics for private collectors in
+                the Sarasota area. Cars come to me after the bigger shops give up — Aventadors
+                with misaligned clamshells, McLarens with carbon-tub damage the dealer
+                wouldn&apos;t touch, R8 V10s that needed paint matched in a booth that
+                didn&apos;t exist within a three-hour drive. I learned what factory-correct
+                actually means by being told &ldquo;close enough&rdquo; and refusing it.
               </p>
               <p>
                 SP Automotive exists because every Lamborghini, every McLaren, every R8, every BMW M
@@ -78,8 +78,8 @@ export default function AboutStory() {
           <EditorialItem start={6} span={7} className="self-center">
             <div className="editorial space-y-7 max-w-[55ch]">
               <p>
-                When your car comes in we walk through it together — every panel, every gap,
-                photographed and measured. Then we strip it down so we can see what the estimate
+                When your car comes in I walk through it with you — every panel, every gap,
+                photographed and measured. Then I strip it down so I can see what the estimate
                 missed: frame stress, hidden fractures, misalignment.
               </p>
               <p>

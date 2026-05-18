@@ -28,7 +28,7 @@ const QUESTIONS: { q: string; a: string }[] = [
   },
   {
     q: "Do you work outside the Sarasota area?",
-    a: "We service all of Florida and select out-of-state cases. The mobile estimate model means we come to you wherever the car is.",
+    a: "Sarasota and within an hour's drive. The mobile estimate model means we come to you — but only inside that radius. Outside it, we can take a look from photos and coordinate transport into the shop.",
   },
   {
     q: "What does 'paid in full' actually mean for my settlement?",
@@ -59,14 +59,17 @@ export default function HomeFAQ() {
   return (
     <section
       aria-labelledby="home-faq-heading"
-      className="relative w-full px-6 py-32 md:px-10 md:py-40"
+      data-theme="dark"
+      className="relative w-full text-bone px-6 py-20 md:px-10 md:py-28"
     >
-      {/* Chapter mark — same corner convention as the other chapters. */}
-      <div className="relative z-10 mb-12 md:mb-16">
-        <div className="font-display leading-none tracking-[-0.02em] text-3xl md:text-5xl text-bone">
-          08
-        </div>
-        <p className="eyebrow mt-2 text-graphite">/ Common questions</p>
+      {/* Section label — Anton uppercase, no chapter numeral. Dark register
+          (text-bone). §07 is the back-half dark interlude — breaks the
+          paper run between Selected work and FinalCTA so the bottom of
+          the page doesn't read as one continuous cream slab. */}
+      <div className="relative z-10 mx-auto mb-10 max-w-3xl md:mb-14">
+        <p className="font-display uppercase tracking-[0.10em] text-left text-bone text-3xl md:text-5xl leading-none">
+          Common questions
+        </p>
       </div>
 
       {/* Display headline — quieter than other chapters (8–10vw), since this
@@ -98,7 +101,7 @@ export default function HomeFAQ() {
             <summary
               className="home-faq__summary flex cursor-pointer items-start gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-4 focus-visible:ring-offset-ink"
             >
-              <span className="font-mono text-graphite text-sm pt-1 shrink-0">
+              <span className="font-mono text-bone/60 text-sm pt-1 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="flex-1 text-bone text-lg md:text-xl leading-snug">
@@ -111,7 +114,7 @@ export default function HomeFAQ() {
                 +
               </span>
             </summary>
-            <div className="mt-5 pl-12 pr-12 md:pr-16 text-graphite max-w-[60ch]">
+            <div className="mt-5 pl-12 pr-12 md:pr-16 text-bone/80 max-w-[60ch]">
               {item.a}
             </div>
           </details>
@@ -120,7 +123,7 @@ export default function HomeFAQ() {
 
       {/* Closing line + SMS CTA to keep the urgent path one tap away. */}
       <div className="mx-auto mt-12 max-w-3xl flex flex-wrap items-center gap-6">
-        <p className="text-graphite">More questions? Text us a photo —</p>
+        <p className="text-bone/80">More questions? Text us a photo —</p>
         <SmsCTA location="home-faq" />
       </div>
 

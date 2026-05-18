@@ -17,7 +17,7 @@ export default function TotalLossPlay() {
             full. And on cars that have appreciated since you bought them,
             often $10–20k above what you paid.
           </p>
-          <p className="mt-6 text-graphite">
+          <p className="mt-6 text-bone/85">
             We document the damage. We make the case. The carrier writes the
             check.
           </p>

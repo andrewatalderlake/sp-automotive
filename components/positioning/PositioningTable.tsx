@@ -78,7 +78,7 @@ export default function PositioningTable() {
           </table>
         </div>
 
-        <p className="mt-10 text-sm text-graphite max-w-2xl">
+        <p className="mt-10 text-sm text-bone/85 max-w-2xl">
           &ldquo;Network shop&rdquo; means an insurance-direct-repair facility. &ldquo;Dealer body shop&rdquo; means
           a manufacturer-affiliated collision center. Both can do good work. We take a different approach.
         </p>

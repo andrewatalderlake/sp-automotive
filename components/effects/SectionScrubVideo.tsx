@@ -16,12 +16,14 @@ import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 //
 // Pattern notes match PageScrubVideo:
 // - Mute + playsInline + no autoplay; manual seek per frame.
-// - Source clips are encoded at 120fps with dense keyframes (gop=30 = 0.25s
-//   at 120fps) so seeks land on a real frame at any scroll position.
+// - Source clips are encoded at 120fps with dense keyframes (gop=12 = 0.1s
+//   at 120fps) so seeks land on a real frame at any scroll position and
+//   reverse-scroll only decodes ~12 frames of lookback per seek.
 //   faststart puts moov at the head so seeks work mid-load.
-// - rAF-throttled scroll handler with a 0.016s seek-threshold gate (~one
-//   120fps frame) so we don't write currentTime more often than the decoder
-//   can render.
+// - rAF-throttled scroll handler with a `1/120` seek-threshold gate (one
+//   120fps frame) so we write currentTime at the source frame rate. Was
+//   0.03s previously, which gated out small seeks and read as choppy on
+//   slow scroll.
 // - iOS Safari quirk: setting currentTime on a paused video doesn't render
 //   new frames until play() then pause() once -- we prime on first scroll.
 // - ResizeObserver on the section keeps the cached bounds current when
@@ -54,20 +56,72 @@ export default function SectionScrubVideo({ src, poster }: Props) {
     let rafId = 0;
     let lastTarget = -1;
     let primed = false;
+    let playingForScroll = false;
+    let idlePauseTimeout: number | undefined;
 
-    // Prime: play() then pause() once so subsequent currentTime seeks render
-    // frames. Without this, Safari / WebKit shows the poster forever on a
-    // never-played paused video, even after setting currentTime — which
-    // looks identical to a frozen still image. We try to prime as early as
-    // possible (on loadedmetadata / canplay), and again as a fallback on
-    // the first scroll event.
-    function prime() {
-      if (primed) return;
-      primed = true;
+    // Safari/WebKit quirk: setting currentTime on a paused video updates
+    // the property but doesn't repaint the displayed frame. The
+    // canonical workaround is play()+pause() after each seek — but that
+    // creates 60+ Promise+microtask cycles/sec under Lenis, which lags
+    // hard. Throttling to ~20Hz helped but still felt sluggish.
+    //
+    // Better approach: keep the video in "playing" state during scroll
+    // bursts. Safari paints frames naturally for playing videos, so
+    // every currentTime write is rendered without per-seek nudges.
+    //
+    // Between seeks (~16ms at 60Hz scroll) the video plays forward
+    // naturally by ~1 frame, then the next seek overrides — imperceptible
+    // drift on cinematic content.
+    //
+    // When the user stops scrolling, a 150ms idle timer fires pause()
+    // once so the video doesn't run to its end. Net per-seek overhead:
+    // a single ensurePlaying() check, NO Promise chain.
+    function ensurePlaying() {
+      if (!primed || playingForScroll) return;
+      playingForScroll = true;
       const p = video!.play();
       if (p && typeof p.then === "function") {
-        p.then(() => video!.pause()).catch(() => {/* ignore */});
+        p.catch(() => {
+          // Autoplay rejected — reset so a later scroll can retry.
+          playingForScroll = false;
+        });
+      }
+    }
+
+    function scheduleIdlePause() {
+      if (idlePauseTimeout) clearTimeout(idlePauseTimeout);
+      idlePauseTimeout = window.setTimeout(() => {
+        idlePauseTimeout = undefined;
+        try { video!.pause(); } catch {/* ignore */}
+        playingForScroll = false;
+      }, 150);
+    }
+
+    // Prime: play() then pause() once so subsequent currentTime seeks
+    // render frames. Without this, Safari / WebKit shows the poster
+    // forever on a never-played paused video, even after setting
+    // currentTime — which looks identical to a frozen still image. We
+    // try to prime as early as possible (on loadedmetadata / canplay),
+    // and again as a fallback on the first scroll event.
+    //
+    // `primed` flips to true ONLY after play() resolves successfully.
+    // If the browser rejects play() (autoplay throttling, no user
+    // gesture yet, hidden tab, etc.), `primed` stays false and the
+    // next scroll/metadata event retries. Previously this flag was set
+    // unconditionally before the play() result was known, so a single
+    // silent rejection would lock the video on its poster forever.
+    function prime() {
+      if (primed) return;
+      const p = video!.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => {
+          primed = true;
+          video!.pause();
+        }).catch(() => {
+          /* leave primed=false so the next event retries */
+        });
       } else {
+        primed = true;
         try { video!.pause(); } catch {/* ignore */}
       }
     }
@@ -103,9 +157,18 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       // out-of-range seeks.
       const target = Math.min(dur - 0.05, p * dur);
 
-      if (Math.abs(target - lastTarget) < 0.03) return;
+      const delta = Math.abs(target - lastTarget);
+      if (delta < 1 / 120) return;
       lastTarget = target;
-      try { video!.currentTime = target; } catch {/* pre-metadata, ignore */}
+      try {
+        video!.currentTime = target;
+      } catch {
+        /* pre-metadata, ignore */
+      }
+      // Keep video in "playing" state so Safari paints each seek.
+      // Schedule a single pause for 150ms after the user stops scrolling.
+      ensurePlaying();
+      scheduleIdlePause();
     }
 
     function onScroll() {
@@ -114,15 +177,26 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       rafId = requestAnimationFrame(apply);
     }
 
-    function onMeta() { apply(); }
+    // Prime + seek as soon as metadata is available so the video element
+    // actually renders a frame on first paint — without this, the poster
+    // sits there forever if the user never scrolls (the hero case, before
+    // any scroll input has happened).
+    function onMeta() {
+      prime();
+      apply();
+    }
 
     const ro = new ResizeObserver(apply);
     ro.observe(section);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", apply);
-    if (video.readyState >= 1) apply();
-    else video.addEventListener("loadedmetadata", onMeta, { once: true });
+    if (video.readyState >= 1) {
+      prime();
+      apply();
+    } else {
+      video.addEventListener("loadedmetadata", onMeta, { once: true });
+    }
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -130,6 +204,7 @@ export default function SectionScrubVideo({ src, poster }: Props) {
       video.removeEventListener("loadedmetadata", onMeta);
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
+      if (idlePauseTimeout) clearTimeout(idlePauseTimeout);
     };
   }, [reduced]);
 

@@ -141,7 +141,7 @@ export default function ContactForm() {
     return (
       <div className="mt-16 border border-bone p-8" role="status" aria-live="polite">
         <p className="font-display text-2xl text-ignite">We got it.</p>
-        <p className="mt-3 text-graphite">Serge will be in touch within 24 hours.</p>
+        <p className="mt-3 text-bone/85">Serge will be in touch — usually inside the hour, always within 24.</p>
       </div>
     );
   }
@@ -159,7 +159,7 @@ export default function ContactForm() {
 
   return (
     <form className="mt-16 space-y-6" onSubmit={handleSubmit} noValidate>
-      <p className="text-xs text-graphite">
+      <p className="text-xs text-bone/85">
         <span aria-hidden className="text-ignite">*</span> Required.
       </p>
 
@@ -258,7 +258,7 @@ export default function ContactForm() {
           <p id="files-error" className="mt-2 text-xs text-ignite">{fieldErrors.files}</p>
         )}
         {!fieldErrors.files && files.length > 0 && (
-          <p className="mt-2 text-xs text-graphite">
+          <p className="mt-2 text-xs text-bone/85">
             {files.length} file{files.length === 1 ? "" : "s"} selected
           </p>
         )}
@@ -268,12 +268,12 @@ export default function ContactForm() {
         <p className="text-sm text-ignite" role="alert">{status.message}</p>
       )}
       {status.kind === "uploading" && (
-        <p className="text-sm text-graphite" aria-live="polite">
+        <p className="text-sm text-bone/85" aria-live="polite">
           Uploading photo {status.uploaded} of {status.total}…
         </p>
       )}
       {status.kind === "submitting" && (
-        <p className="text-sm text-graphite" aria-live="polite">Sending to Serge…</p>
+        <p className="text-sm text-bone/85" aria-live="polite">Sending to Serge…</p>
       )}
 
       <Button variant="primary" type="submit" disabled={inFlight}>

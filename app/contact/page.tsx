@@ -40,20 +40,20 @@ export default function ContactPage() {
               <p className="mt-3 text-bone leading-relaxed">
                 {CITY}, {REGION}
               </p>
-              <p className="mt-1 text-graphite text-sm">
+              <p className="mt-1 text-bone/85 text-sm">
                 Exotic collision &amp; restoration
               </p>
 
               <p className="eyebrow mt-8">Hours</p>
               <p className="mt-3 text-bone">{HOURS_LABEL}</p>
-              <p className="mt-1 text-graphite text-xs">
+              <p className="mt-1 text-bone/85 text-xs">
                 {HOURS_DAYS[0]}&ndash;{HOURS_DAYS[HOURS_DAYS.length - 1]}
                 {BY_APPOINTMENT ? " · By appointment only" : ""}
               </p>
 
               <p className="eyebrow mt-8">What to expect</p>
               <ul className="mt-3 space-y-2 text-sm text-bone/85">
-                <li>Callback within one business day.</li>
+                <li>Callback usually inside the hour, always within 24.</li>
                 <li>Photos by text get a faster read.</li>
                 <li>Insurance handling on our side.</li>
               </ul>

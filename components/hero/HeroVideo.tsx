@@ -4,7 +4,8 @@ import Link from "next/link";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import SplitText from "@/components/effects/SplitText";
-import SectionScrubVideo from "@/components/effects/SectionScrubVideo";
+import ScrollFrames from "@/components/effects/ScrollFrames";
+import Surface from "@/components/ui/Surface";
 
 // Atmospheric video is now scoped to the hero region only — rendered via a
 // SectionScrubVideo behind the foreground composition. The legacy PageScrubVideo
@@ -25,6 +26,12 @@ import SectionScrubVideo from "@/components/effects/SectionScrubVideo";
 // Parallax: text drifts at 0.22x scroll, card at 0.16x. CSS variables on
 // the section element propagate to mobile + desktop subtrees so a single
 // rAF writer drives both breakpoints without a ref-collision bug.
+
+// Lead card copy. Single source of truth — rendered identically in the
+// mobile stacked layout and the desktop glass card, so a copy edit lands
+// in one place rather than two.
+const HERO_LEAD =
+  "We deal with the insurance. You walk away whole — sometimes ahead.";
 
 export default function HeroVideo() {
   const [cardReady, setCardReady] = useState(false);
@@ -69,19 +76,41 @@ export default function HeroVideo() {
   return (
     <section
       ref={heroRef}
+      data-theme="dark"
       className="relative min-h-[100svh] w-full overflow-hidden"
       aria-label="Exotic collision — totaled, paid in full."
     >
       {/* Hero-scoped atmospheric video. As you scroll through the hero, the
           clip scrubs from frame 0 toward the end and rests there as ch01
           takes over. Replaces the prior page-wide PageScrubVideo. */}
-      <SectionScrubVideo
-        src="/hero-clips/cinematic.mp4"
-        poster="/hero-clips/cinematic-poster.jpg"
+      {/* Image-sequence scroll-scrub. SectionScrubVideo was too laggy
+          on Chrome AND Safari at 1080p/30fps — the bottleneck was the
+          browser's video decoder running ~60 seek+decode+paint cycles
+          per second under Lenis. Image sequence avoids decode entirely:
+          pre-extracted JPGs swap via <img src> on cached images. */}
+      <ScrollFrames
+        frameCount={120}
+        framePattern="/hero-clips/frames/frame-{n}.jpg"
+        fallbackPoster="/hero-clips/cinematic-poster.jpg"
       />
       <h1 className="sr-only">
         Totaled. Paid in Full. — SP Automotive exotic collision repair in Sarasota, FL.
       </h1>
+
+      {/* Bottom-up fade — softens the cut from dark hero video into the
+          paper-surface TrustStrip section below. Absolute-positioned
+          gradient panel, ascends from solid paper at the bottom edge to
+          fully transparent ~160px up. z-[3] sits above the video layer
+          but below the display-bleed text (z-[5]) and the glass lead
+          card (z-20), so the fade only touches dead video area. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-32 md:h-40"
+        style={{
+          backgroundImage:
+            "linear-gradient(to top, var(--color-paper) 0%, transparent 100%)",
+        }}
+      />
 
       {/* Mobile: vertical flow, no edge bleed */}
       <div
@@ -111,7 +140,7 @@ export default function HeroVideo() {
             cardReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
           }`}
         >
-          We deal with the insurance. You walk away whole — sometimes ahead.
+          {HERO_LEAD}
         </p>
         <div
           className={`flex flex-wrap gap-4 justify-center transition-opacity duration-300 ease-out ${
@@ -173,20 +202,17 @@ export default function HeroVideo() {
             : "translate3d(0, calc(20px + var(--hero-y-card, 0px)), 0)",
         }}
       >
-        <div
-          className="
-            rounded-2xl border border-white/[0.06] bg-white/[0.015] p-8
-            ring-1 ring-inset ring-white/[0.03]
-            shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]
-            backdrop-blur-sm backdrop-saturate-110
-            transition-[transform,background-color,box-shadow] duration-300 ease-out
-            hover:-translate-y-1 hover:bg-white/[0.035]
-            hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.65)]
-          "
+        {/* Committed-glass lead card. Earlier iteration used a hand-rolled
+            bg-white/[0.015] treatment that read as nearly invisible against
+            the cinematic backdrop — original audit P2-a. Now uses the
+            shared Surface "glass" variant (dark mid-alpha tint + strong
+            backdrop blur + border + ring + shadow) so the card establishes
+            itself as a deliberate floating element on the hero video. */}
+        <Surface
+          variant="glass"
+          className="rounded-3xl p-8 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.7)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
-          <p className="lead text-bone/90">
-            We deal with the insurance. You walk away whole — sometimes ahead.
-          </p>
+          <p className="lead text-bone/90">{HERO_LEAD}</p>
           <div
             className={`mt-6 flex flex-wrap gap-3 transition-opacity duration-300 ease-out ${
               ctasReady ? "opacity-100" : "opacity-0"
@@ -209,7 +235,7 @@ export default function HeroVideo() {
               send 3 photos for a callback
             </Link>
           </p>
-        </div>
+        </Surface>
       </div>
     </section>
   );

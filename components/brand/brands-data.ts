@@ -35,10 +35,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "Lamborghini Collision Repair — Sarasota, FL",
     metaDescription:
       "Factory-correct collision repair for Aventador, Huracán, Urus, Revuelto, and SVJ. Tri-coat paint match, carbon-fiber repair, ADAS recalibration. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "Lamborghini collision repair, factory-correct.",
     intro:
-      "An Aventador isn't a body-shop car. The tri-coat paint takes three booth runs to match under Sarasota sun. The carbon panels need primer thickness controlled to the micron. The frame won't tolerate eyeballed alignment. We've spent the last decade making cars like yours come home looking like the day they left Sant'Agata. If your car's been hit, this is the shop the dealer should have sent you to.",
+      "An Aventador isn't a body-shop car. The tri-coat paint takes three booth runs to match under Sarasota sun. The carbon panels need primer thickness controlled to the micron. The frame won't tolerate eyeballed alignment. I've spent the last 4 years making cars like yours come home looking like the day they left Sant'Agata. If your car's been hit, this is the shop the dealer should have sent you to.",
     models: [
       "Aventador",
       "Aventador SVJ",
@@ -85,10 +85,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "McLaren Collision Repair — Sarasota, FL",
     metaDescription:
       "MonoCage carbon-tub-correct repair for 720S, 765LT, Artura, GT, and 750S. Hydraulic suspension, dihedral door alignment, factory paint. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "McLaren collision repair, MonoCage-correct.",
     intro:
-      "McLaren built the 720S around a carbon tub the dealer's body shop is not equipped to repair. The dihedral doors don't tolerate misaligned hinges. The hydraulic suspension lines run through panels the average tech won't track. The paint code is famously hard to match. We've worked on enough McLarens to know where the damage hides, and we have the equipment, the patience, and the procedure to bring yours back to factory spec.",
+      "McLaren built the 720S around a carbon tub the dealer's body shop is not equipped to repair. The dihedral doors don't tolerate misaligned hinges. The hydraulic suspension lines run through panels the average tech won't track. The paint code is famously hard to match. I've worked on enough McLarens to know where the damage hides, and I have the equipment, the patience, and the procedure to bring yours back to factory spec.",
     models: [
       "570S",
       "570GT",
@@ -137,10 +137,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "Audi R8 Collision Repair — Sarasota, FL",
     metaDescription:
       "Aluminum spaceframe-correct repair for R8 V10, V10 Plus, GT, and Performance. Quattro alignment, magnetic ride suspension, factory paint. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "Audi R8 collision repair, spaceframe-correct.",
     intro:
-      "The R8 is built on the same Audi Space Frame as the Lamborghini Huracán — aluminum, mid-engine, unforgiving of bent body mounts. Quattro AWD adds alignment complexity most shops don't budget for. Factory paints like Ara Blue Crystal and Suzuka Grey have a known ΔE drift problem if you don't mix to spec. We treat the R8 like the engineered exotic it is — not the &ldquo;practical Audi&rdquo; the dealer&apos;s body shop sees.",
+      "The R8 is built on the same Audi Space Frame as the Lamborghini Huracán — aluminum, mid-engine, unforgiving of bent body mounts. Quattro AWD adds alignment complexity most shops don't budget for. Factory paints like Ara Blue Crystal and Suzuka Grey have a known ΔE drift problem if you don't mix to spec. I treat the R8 like the engineered exotic it is — not the &ldquo;practical Audi&rdquo; the dealer&apos;s body shop sees.",
     models: [
       "R8 V10",
       "R8 V10 Plus",
@@ -183,10 +183,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "BMW M Collision Repair — Sarasota, FL",
     metaDescription:
       "Factory-correct collision repair for M3, M4, M5, M8, X5M, X6M, and M2. Carbon roof repair, xDrive alignment, S58/S63 cooling, ADAS recalibration. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "BMW M collision repair, factory-correct.",
     intro:
-      "An M car isn't a regular 3-Series with a body kit. The carbon roof on an M4 CSL is structural. The S58 in an M3 Competition runs at thermal limits the dealer body shop won't pressure-test. xDrive on an M5 Competition has its own alignment spec the network shops don't bother looking up. Frozen-series paints fade unevenly when matched against generic BMW codes. We treat M cars like the track-grade machines they are — every panel torque-checked, every damper verified, every sensor recalibrated to OEM procedure.",
+      "An M car isn't a regular 3-Series with a body kit. The carbon roof on an M4 CSL is structural. The S58 in an M3 Competition runs at thermal limits the dealer body shop won't pressure-test. xDrive on an M5 Competition has its own alignment spec the network shops don't bother looking up. Frozen-series paints fade unevenly when matched against generic BMW codes. I treat M cars like the track-grade machines they are — every panel torque-checked, every damper verified, every sensor recalibrated to OEM procedure.",
     models: [
       "M2",
       "M3",
@@ -239,10 +239,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "Ferrari Collision Repair — Sarasota, FL",
     metaDescription:
       "Factory-correct collision repair for 488, F8, 296, SF90, Roma, 812, Portofino, and Purosangue. Aluminum-chassis welding, tri-coat Rosso match, hybrid HV systems. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "Ferrari collision repair, factory-correct.",
     intro:
-      "A Ferrari isn't a body-shop car. The aluminum chassis is TIG-welded by procedure; one wrong heat cycle and you've compromised it. The Rosso family of paints — Rosso Corsa, Rosso Mugello, Rosso Maranello — drift visibly if mixed from generic codes. The SF90 and 296 carry high-voltage hybrid systems that need their own safety procedure before a panel comes off. We've spent years working on Maranello's cars — every rivet replaced to spec, every damper measured, every Manettino sensor recalibrated to OEM. If yours has been hit, we're the shop the dealer should have sent you to.",
+      "A Ferrari isn't a body-shop car. The aluminum chassis is TIG-welded by procedure; one wrong heat cycle and you've compromised it. The Rosso family of paints — Rosso Corsa, Rosso Mugello, Rosso Maranello — drift visibly if mixed from generic codes. The SF90 and 296 carry high-voltage hybrid systems that need their own safety procedure before a panel comes off. I've spent the last 4 years working on Maranello's cars — every rivet replaced to spec, every damper measured, every Manettino sensor recalibrated to OEM. If yours has been hit, bring it here before anyone else opens a panel.",
     models: [
       "488 GTB",
       "488 Pista",
@@ -295,10 +295,10 @@ export const BRANDS: Brand[] = [
     metaTitle: "Porsche Collision Repair — Sarasota, FL",
     metaDescription:
       "Factory-correct collision repair for 911, GT3, GT3 RS, Taycan, Cayenne, Panamera, and 718. PASM dampers, carbon-ceramic, EV high-voltage, factory paint. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · Authorized-grade body work",
+    eyebrow: "Sarasota, FL · OEM-procedure body work",
     headline: "Porsche collision repair, factory-correct.",
     intro:
-      "Porsche's lineup runs from a base 718 to a 911 GT3 RS to a tri-motor Taycan Turbo S — and the body-shop discipline scales with it. PASM dampers don't tolerate bent control arms. Carbon-ceramic brakes can't be contaminated. The Taycan's 800V architecture needs an HV de-energization procedure before a clip comes out. PTS (Paint to Sample) colors require the original build sheet to match. We treat every Porsche like an engineered exotic — torque to spec, gap to factory, sensors recalibrated to OEM. The way it left Stuttgart.",
+      "Porsche's lineup runs from a base 718 to a 911 GT3 RS to a tri-motor Taycan Turbo S — and the body-shop discipline scales with it. PASM dampers don't tolerate bent control arms. Carbon-ceramic brakes can't be contaminated. The Taycan's 800V architecture needs an HV de-energization procedure before a clip comes out. PTS (Paint to Sample) colors require the original build sheet to match. I treat every Porsche like an engineered exotic — torque to spec, gap to factory, sensors recalibrated to OEM. The way it left Stuttgart.",
     models: [
       "911 Carrera",
       "911 Carrera S / 4S",
