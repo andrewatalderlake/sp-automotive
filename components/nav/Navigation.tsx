@@ -219,13 +219,15 @@ export default function Navigation() {
         //
         // z-index note: <header> is `position: fixed` with `z-50`, so it
         // creates its own stacking context. The dialog's `z-[60]` is
-        // SCOPED to that context — globally, the dialog paints as part
-        // of the z-50 group, not at z-60. The z-[60] only buys local
-        // ordering above the sibling <nav> (z-auto) within the header
-        // context. The dialog wins globally because the header context
-        // itself sits above StickyContactBar's z-40 elsewhere in the
-        // tree — bumping z-[60] to anything higher would NOT promote
-        // the dialog past a hypothetical sibling at z-70.
+        // SCOPED to that context — for comparison with elements OUTSIDE
+        // the header, the dialog paints as part of the z-50 group. The
+        // z-[60] only orders the dialog above its sibling <nav>
+        // (z-auto) within the header context. The dialog wins over
+        // StickyContactBar (z-40) because the header context itself
+        // sits above it. Raising z-[60] would only affect ordering vs.
+        // other children of <header>; it would NOT promote the dialog
+        // past an outside-the-header sibling at z-70 — only the
+        // header's own z-50 controls that comparison.
         <div
           ref={dialogRef}
           className="pointer-events-auto fixed inset-0 z-[60] bg-ink flex flex-col"
