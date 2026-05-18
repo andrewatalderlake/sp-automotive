@@ -60,19 +60,42 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
     let rafId = 0;
     let lastIndex = -1;
     const images: HTMLImageElement[] = [];
-    let loadedCount = 0;
+    const idleHandles: Array<number | ReturnType<typeof setTimeout>> = [];
 
-    // Decode all frames once. Each Image holds its decoded buffer; we
-    // paint from those buffers on every scroll tick — no re-decode.
+    // Decode the first EAGER_COUNT frames immediately so the first scroll
+    // is smooth, then enqueue the rest at idle priority so they don't
+    // race with above-the-fold resources (hero CTAs, fonts, scrub
+    // canvas paint). Without this gating, 120 parallel image requests
+    // fire on mount and the decoded pixel buffers stay resident for
+    // the component's lifetime — costly on mobile and unnecessary
+    // until the user actually scrolls.
+    const EAGER_COUNT = 10;
+
+    function scheduleAtIdle(fn: () => void) {
+      const w = window as typeof window & {
+        requestIdleCallback?: (cb: () => void) => number;
+      };
+      if (typeof w.requestIdleCallback === "function") {
+        idleHandles.push(w.requestIdleCallback(fn));
+      } else {
+        idleHandles.push(setTimeout(fn, 0));
+      }
+    }
+
     for (let i = 1; i <= frameCount; i++) {
       const im = new window.Image();
-      im.src = framePath(framePattern, i);
       im.decoding = "async";
+      const idx = i;
       im.onload = () => {
-        loadedCount++;
-        // Once frame 1 is loaded, paint it as the initial frame.
-        if (i === 1) draw(0);
+        if (idx === 1) draw(0);
       };
+      if (i <= EAGER_COUNT) {
+        im.src = framePath(framePattern, i);
+      } else {
+        scheduleAtIdle(() => {
+          im.src = framePath(framePattern, idx);
+        });
+      }
       images.push(im);
     }
 
@@ -143,9 +166,21 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
       window.removeEventListener("scroll", onScroll);
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
+      // Cancel any pending idle-scheduled image loads so they don't
+      // fire after unmount (would still hit the network needlessly).
+      const w = window as typeof window & {
+        cancelIdleCallback?: (id: number) => void;
+      };
+      for (const handle of idleHandles) {
+        if (typeof handle === "number" && typeof w.cancelIdleCallback === "function") {
+          w.cancelIdleCallback(handle);
+        } else if (typeof handle === "object") {
+          clearTimeout(handle);
+        }
+      }
+      idleHandles.length = 0;
       // Release references; browser GC can free decoded buffers.
       images.length = 0;
-      void loadedCount;
     };
   }, [reduced, frameCount, framePattern]);
 
