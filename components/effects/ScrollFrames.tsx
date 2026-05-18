@@ -60,7 +60,13 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
     let rafId = 0;
     let lastIndex = -1;
     const images: HTMLImageElement[] = [];
-    const idleHandles: Array<number | ReturnType<typeof setTimeout>> = [];
+    // Tag each handle so cleanup can dispatch to the right canceller.
+    // `setTimeout` returns a number in browsers (same as
+    // `requestIdleCallback`), so `typeof` can't discriminate them.
+    type PendingHandle =
+      | { kind: "idle"; id: number }
+      | { kind: "timeout"; id: ReturnType<typeof setTimeout> };
+    const idleHandles: PendingHandle[] = [];
 
     // Decode the first EAGER_COUNT frames immediately so the first scroll
     // is smooth, then enqueue the rest at idle priority so they don't
@@ -76,9 +82,9 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
         requestIdleCallback?: (cb: () => void) => number;
       };
       if (typeof w.requestIdleCallback === "function") {
-        idleHandles.push(w.requestIdleCallback(fn));
+        idleHandles.push({ kind: "idle", id: w.requestIdleCallback(fn) });
       } else {
-        idleHandles.push(setTimeout(fn, 0));
+        idleHandles.push({ kind: "timeout", id: setTimeout(fn, 0) });
       }
     }
 
@@ -172,10 +178,10 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
         cancelIdleCallback?: (id: number) => void;
       };
       for (const handle of idleHandles) {
-        if (typeof handle === "number" && typeof w.cancelIdleCallback === "function") {
-          w.cancelIdleCallback(handle);
-        } else if (typeof handle === "object") {
-          clearTimeout(handle);
+        if (handle.kind === "idle") {
+          w.cancelIdleCallback?.(handle.id);
+        } else {
+          clearTimeout(handle.id);
         }
       }
       idleHandles.length = 0;
