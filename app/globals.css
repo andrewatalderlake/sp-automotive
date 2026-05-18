@@ -70,6 +70,13 @@
   --motion-manual:    420ms cubic-bezier(0.83, 0, 0.17, 1);    /* precise — leader lines, annotations */
   --motion-quick:     200ms cubic-bezier(0.4, 0, 0.2, 1);      /* micro — hover, focus */
 
+  /* ShineBorder — rotates --shine-angle 0→360deg. Duration is per-instance
+     via inline --duration. The conic-gradient on the ::before reads
+     --shine-angle, so the bright sector orbits the card's border ring.
+     See @keyframes shine-rotate + @property --shine-angle below; consumed
+     by components/ui/shine-border.tsx. */
+  --animate-shine-rotate: shine-rotate var(--duration, 6s) infinite linear;
+
   /* ─── Atmosphere ─────────────────────────────────────────────────── */
   --grain-opacity: 0.04;
 
@@ -152,7 +159,9 @@ body {
 .display-md,
 .display-sm {
   font-family: var(--font-display);
-  color: var(--color-bone);
+  /* Color is inherited from the parent so paper-flipped sections (text-ink)
+     and dark sections (text-bone via body default) both render correctly
+     without per-call overrides. Set color on a parent element. */
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   font-weight: 400;
@@ -229,12 +238,31 @@ body {
   }
 }
 
-/* Lead — opening paragraph after a display headline */
+/* ShineBorder — bright sector of a conic gradient orbits the card border.
+   --shine-angle is registered as <angle> via @property so CSS can
+   interpolate it across the keyframe (without @property it would snap
+   instantly at 100%). mask-composite: exclude on the ::before keeps only
+   the border-ring portion of the rotating gradient visible. Consumed by
+   components/ui/shine-border.tsx; used on the cars carousel in
+   components/gallery/CardStack.tsx. */
+@property --shine-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes shine-rotate {
+  to { --shine-angle: 360deg; }
+}
+
+/* Lead — opening paragraph after a display headline.
+   Color is inherited from the parent so paper-flipped sections (text-ink)
+   and dark sections (text-bone via body default) both render correctly
+   without per-call overrides. Mirrors the .display-* convention. */
 .lead {
   font-family: var(--font-editorial);
   font-size: var(--text-lead);
   line-height: var(--leading-editorial);
-  color: var(--color-bone);
 }
 
 /* Spec — monospaced technical numbers (torques, gaps, paint depths, ΔE) */
@@ -246,12 +274,12 @@ body {
   color: var(--color-graphite);
 }
 
-/* Editorial — long-form serif body. Owner letter, claims content, shop story. */
+/* Editorial — long-form serif body. Owner letter, claims content, shop story.
+   Color inherited from parent — same convention as .lead and .display-*. */
 .editorial {
   font-family: var(--font-editorial);
   font-size: 1.125rem;
   line-height: var(--leading-editorial);
-  color: var(--color-bone);
   font-feature-settings: "kern", "liga";
 }
 .editorial p + p {

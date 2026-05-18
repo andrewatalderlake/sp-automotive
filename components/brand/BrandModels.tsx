@@ -21,7 +21,7 @@ export default function BrandModels({ brand }: { brand: Brand }) {
           ))}
         </ul>
 
-        <p className="mt-8 text-sm text-graphite max-w-md">
+        <p className="mt-8 text-sm text-bone/85 max-w-md">
           Don&apos;t see your model? Call. We&apos;ve worked on cars older than this list.
         </p>
       </div>

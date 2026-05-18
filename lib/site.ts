@@ -4,8 +4,43 @@ export const PHONE_HREF = "tel:+19415994025";
 // on `sms:` URIs; the encoded prefix keeps the text composer ready for the
 // owner to attach photos.
 export const SMS_HREF = `sms:+19415994025?body=${encodeURIComponent("Photos of damage:")}`;
-// TODO: replace with real domain once Serge approves v1 and DNS is set
-export const SITE_URL = "https://sp-automotive.vercel.app";
+// Resolved at build time. Set NEXT_PUBLIC_SITE_URL=https://<apex-domain>
+// (e.g. https://sp-automotive.com) in Vercel production env settings.
+// Preview deploys auto-fall-back to VERCEL_URL. Local dev → localhost.
+// Production without an explicit URL throws — refusing to ship preview
+// hostnames into canonicals, sitemap, JSON-LD, and OG metadata.
+function resolveSiteUrl(): string {
+  const override = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (override) return override;
+
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  if (process.env.VERCEL_ENV === "production") {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com) in Vercel project settings.",
+    );
+  }
+
+  // Non-Vercel production deploys (Railway, Render, bare Docker, etc.)
+  // that omit NEXT_PUBLIC_SITE_URL would otherwise silently serve
+  // localhost URLs in canonicals / OG / sitemap / JSON-LD.
+  // NODE_ENV=production is the portable signal for "this is not a dev
+  // machine" outside Vercel. The CI=true exception is for verification
+  // builds (GitHub Actions, GitLab, CircleCI all set CI=true; Vercel
+  // does not) — those builds just need to compile, not produce a
+  // shippable artifact, and shouldn't be blocked by missing prod env.
+  if (process.env.NODE_ENV === "production" && !process.env.CI) {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com).",
+    );
+  }
+
+  return "http://localhost:3000";
+}
+
+export const SITE_URL = resolveSiteUrl();
 export const SITE_NAME = "SP Automotive Collision & Repair";
 export const CITY = "Sarasota";
 export const REGION = "FL";

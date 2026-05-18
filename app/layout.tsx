@@ -4,8 +4,8 @@ import Navigation from "@/components/nav/Navigation";
 import Footer from "@/components/footer/Footer";
 import Analytics from "@/components/analytics/Analytics";
 import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
-import CustomCursor from "@/components/effects/CustomCursor";
 import SmoothScroll from "@/components/effects/SmoothScroll";
+import StickyContactBar from "@/components/cta/StickyContactBar";
 import { SITE_NAME, SITE_URL, TAGLINE } from "@/lib/site";
 import "./globals.css";
 
@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navigation />
         <main id="main">{children}</main>
         <Footer />
-        <CustomCursor />
+        <StickyContactBar />
         <Analytics />
       </body>
     </html>

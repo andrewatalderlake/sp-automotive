@@ -8,7 +8,7 @@ export default function ProcessNarrativeMobile({ as: Heading = "h1" }: { as?: "h
     <section id="process" className="bg-ink">
       <div className="px-6 pt-28 pb-0 text-center">
         <Heading className="display-md uppercase">The Process</Heading>
-        <p className="mt-2 lead text-graphite">Six steps. One signature.</p>
+        <p className="mt-2 lead text-bone/85">Six steps. One signature.</p>
       </div>
       {BEATS.map((b) => (
         <BeatBlock key={b.id} beat={b} />

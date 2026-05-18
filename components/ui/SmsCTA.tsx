@@ -4,7 +4,13 @@ import Button from "./Button";
 import { SMS_HREF } from "@/lib/site";
 import { track } from "@/lib/analytics";
 
-type Props = { size?: "default" | "lg"; className?: string; location?: string };
+type Props = {
+  size?: "default" | "lg";
+  /** "dark" (default) for dark sections; "light" for paper/cream sections. */
+  theme?: "dark" | "light";
+  className?: string;
+  location?: string;
+};
 
 // Secondary CTA paired with PhoneCTA. Lower-friction path on mobile (one tap
 // opens the SMS composer pre-filled with "Photos of damage:"). On desktop,
@@ -12,11 +18,17 @@ type Props = { size?: "default" | "lg"; className?: string; location?: string };
 // browser dialog. Ghost variant so it reads as a quieter sibling next to the
 // phone button, never a competitor.
 
-export default function SmsCTA({ size = "default", className = "", location }: Props) {
+export default function SmsCTA({
+  size = "default",
+  theme = "dark",
+  className = "",
+  location,
+}: Props) {
   const sizing = size === "lg" ? "px-10 py-5 text-base" : "";
+  const variant = theme === "light" ? "ghost-light" : "ghost";
   return (
     <Button
-      variant="ghost"
+      variant={variant}
       href={SMS_HREF}
       ariaLabel="Text photos of the damage"
       onClick={() => {

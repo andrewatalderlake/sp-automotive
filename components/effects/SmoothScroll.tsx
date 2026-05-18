@@ -16,6 +16,29 @@ import { useReducedMotion } from "framer-motion";
 // change. When the dialog closes and `position: fixed` is removed, Lenis
 // resumes from the restored scroll position.
 
+// Minimal subset of Lenis's public API we expose for cross-component
+// programmatic scrolling (FAQ jump-nav, future "back to top", etc.).
+// Native scrollIntoView fights Lenis's rAF lerp; this handle lets callers
+// route through Lenis itself so the scroll lands deterministically.
+type LenisHandle = {
+  scrollTo: (
+    target: string | HTMLElement | number,
+    options?: {
+      offset?: number;
+      immediate?: boolean;
+      duration?: number;
+      lock?: boolean;
+      force?: boolean;
+    },
+  ) => void;
+};
+
+declare global {
+  interface Window {
+    __lenis?: LenisHandle;
+  }
+}
+
 export default function SmoothScroll() {
   const reduced = useReducedMotion();
 
@@ -24,8 +47,9 @@ export default function SmoothScroll() {
 
     let cancelled = false;
     let rafId = 0;
-    let lenis: { raf: (time: number) => void; destroy: () => void } | null =
-      null;
+    let lenis:
+      | (LenisHandle & { raf: (time: number) => void; destroy: () => void })
+      | null = null;
 
     // Lazy-import so Lenis stays out of the SSR bundle path.
     void (async () => {
@@ -44,6 +68,12 @@ export default function SmoothScroll() {
         wheelMultiplier: 1,
       });
 
+      // Publish the instance so other components can call lenis.scrollTo
+      // instead of fighting it via native scrollIntoView. Kept on window
+      // (not React Context) because the consumers — anchor handlers, jump
+      // nav — fire from event callbacks, not render.
+      window.__lenis = lenis;
+
       const loop = (time: number) => {
         lenis?.raf(time);
         rafId = window.requestAnimationFrame(loop);
@@ -56,6 +86,7 @@ export default function SmoothScroll() {
       if (rafId) window.cancelAnimationFrame(rafId);
       lenis?.destroy();
       lenis = null;
+      delete window.__lenis;
     };
   }, [reduced]);
 
