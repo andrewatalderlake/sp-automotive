@@ -209,7 +209,32 @@ export default function Navigation() {
       </nav>
 
       {open && (
-        <div ref={dialogRef} className="fixed inset-0 z-50 bg-ink flex flex-col" role="dialog" aria-modal="true" aria-label="Menu">
+        // The dialog must explicitly opt back into pointer events because
+        // its ancestor <header> has `pointer-events-none` (so the nav
+        // doesn't intercept hero clicks). Without `pointer-events-auto`
+        // here, the close button taps fall through on iOS Safari — the
+        // spec says children with default `auto` should still receive
+        // events under a `none` ancestor, but Safari's hit-testing has
+        // been inconsistent on this for years.
+        //
+        // z-index note: <header> is `position: fixed` with `z-50`, so it
+        // creates its own stacking context. The dialog's `z-[60]` is
+        // SCOPED to that context — for comparison with elements OUTSIDE
+        // the header, the dialog paints as part of the z-50 group. The
+        // z-[60] only orders the dialog above its sibling <nav>
+        // (z-auto) within the header context. The dialog wins over
+        // StickyContactBar (z-40) because the header context itself
+        // sits above it. Raising z-[60] would only affect ordering vs.
+        // other children of <header>; it would NOT promote the dialog
+        // past an outside-the-header sibling at z-70 — only the
+        // header's own z-50 controls that comparison.
+        <div
+          ref={dialogRef}
+          className="pointer-events-auto fixed inset-0 z-[60] bg-ink flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
           <div className="flex justify-end p-3">
             <button
               type="button"

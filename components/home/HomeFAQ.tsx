@@ -99,7 +99,7 @@ export default function HomeFAQ() {
             className="home-faq__row group py-6 md:py-8"
           >
             <summary
-              className="home-faq__summary flex cursor-pointer items-start gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-4 focus-visible:ring-offset-ink"
+              className="home-faq__summary flex cursor-pointer items-start gap-4 md:gap-6 list-none outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-4 focus-visible:ring-offset-ink"
             >
               <span className="font-mono text-bone/60 text-sm pt-1 shrink-0">
                 {String(i + 1).padStart(2, "0")}
@@ -114,7 +114,7 @@ export default function HomeFAQ() {
                 +
               </span>
             </summary>
-            <div className="mt-5 pl-12 pr-12 md:pr-16 text-bone/80 max-w-[60ch]">
+            <div className="mt-5 pl-10 pr-2 md:pl-12 md:pr-16 text-bone/80 max-w-[60ch]">
               {item.a}
             </div>
           </details>

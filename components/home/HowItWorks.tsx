@@ -76,7 +76,7 @@ export default function HowItWorks() {
           if (e.isIntersecting) section.dataset.revealed = "1";
         }
       },
-      { rootMargin: "-15% 0px -15% 0px", threshold: 0 },
+      { rootMargin: "-100px 0px -100px 0px", threshold: 0 },
     );
     io.observe(section);
     return () => io.disconnect();
@@ -109,7 +109,7 @@ export default function HowItWorks() {
       aria-labelledby="how-it-works-heading"
       data-scrub-time={SCRUB_TIME}
       data-theme="dark"
-      className="how-it-works relative min-h-[110svh] w-full overflow-hidden px-6 py-20 md:px-10 md:py-28"
+      className="how-it-works relative min-h-[100svh] md:min-h-[110svh] w-full overflow-hidden px-6 py-20 md:px-10 md:py-28"
     >
       {/* Workshop OOF backdrop — autoplay loop, no scroll scrub. The clip
           is intentionally out-of-focus so a continuous loop reads as
@@ -198,13 +198,14 @@ export default function HowItWorks() {
           5 → 3 on mobile to stay under iOS Safari's blur budget.
           blurIntensity={3} gives a max blur of ~12px at the bottom-most
           layer (0.25 default was invisible — only ~1px max). Taller
-          runway (h-40 / h-56) so the ramp is visible, not abrupt. */}
+          runway (h-20 / h-56) — mobile stays short so it doesn't overlap
+          card 04 in landscape. */}
       {blurVisible && (
         <ProgressiveBlur
           direction="bottom"
           blurLayers={isMobile ? 3 : 5}
           blurIntensity={3}
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 md:h-56 z-20"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 md:h-56 z-20"
         />
       )}
 

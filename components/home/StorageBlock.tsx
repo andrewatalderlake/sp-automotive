@@ -36,7 +36,7 @@ export default function StorageBlock() {
           if (e.isIntersecting) section.dataset.revealed = "1";
         }
       },
-      { rootMargin: "-15% 0px -15% 0px", threshold: 0 },
+      { rootMargin: "-100px 0px -100px 0px", threshold: 0 },
     );
     io.observe(section);
     return () => io.disconnect();
@@ -47,7 +47,7 @@ export default function StorageBlock() {
       ref={sectionRef}
       aria-labelledby="storage-heading"
       data-scrub-time={SCRUB_TIME}
-      className="storage-block relative min-h-[110svh] w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 border-t border-ink/15"
+      className="storage-block relative md:min-h-[110svh] w-full overflow-hidden bg-paper text-ink px-6 py-20 md:px-10 md:py-28 border-t border-ink/15"
     >
       {/* Section label — Anton uppercase, no chapter numeral. Centered
           (deliberate one-off — the spotlight image below is full-bleed and
