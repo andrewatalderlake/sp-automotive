@@ -205,7 +205,7 @@ export default function HowItWorks() {
           direction="bottom"
           blurLayers={isMobile ? 3 : 5}
           blurIntensity={3}
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 md:h-56 z-20"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 md:h-56 z-0"
         />
       )}
 
