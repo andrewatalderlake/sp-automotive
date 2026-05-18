@@ -64,24 +64,31 @@ type Props = {
 
 export default function LogoMarquee({ items, ariaLabel, size = "small" }: Props) {
   const reduced = useReducedMotion();
-  // Render the list four times in a single flat <ul>. Items past the
-  // first copy are aria-hidden so screen readers don't enumerate them
-  // four times.
-  const track = [...items, ...items, ...items, ...items];
+  // Animated mode: render four copies of the list in a single flat <ul>
+  // so the translate3d(-25%) keyframe lines up seamlessly (see header).
+  // Reduced-motion mode: render one copy and let it wrap onto multiple
+  // lines — the "final state with no animation" required by AGENTS.md
+  // for a marquee means every logo must be visible, not a fragment
+  // clipped by the parent's overflow-hidden.
+  const list = reduced ? items : [...items, ...items, ...items, ...items];
 
   return (
     <div className="logo-marquee relative overflow-hidden">
       <ul
         aria-label={ariaLabel}
-        className={`flex w-max items-center list-none m-0 p-0 ${
-          reduced ? "" : "logo-marquee__track"
-        }`}
+        className={
+          reduced
+            ? "flex flex-wrap items-center justify-center gap-x-12 md:gap-x-16 gap-y-4 list-none m-0 p-0"
+            : "flex w-max items-center list-none m-0 p-0 logo-marquee__track"
+        }
       >
-        {track.map((item, i) => (
+        {list.map((item, i) => (
           <li
             key={`${item.name}-${i}`}
-            aria-hidden={i >= items.length || undefined}
-            className={`shrink-0 ${ROW_HEIGHT[size]} flex items-center pr-12 md:pr-16`}
+            // Only the first copy is announced; duplicates are decorative.
+            // In reduced mode `list === items` so nothing gets hidden.
+            aria-hidden={!reduced && i >= items.length ? true : undefined}
+            className={`shrink-0 ${ROW_HEIGHT[size]} flex items-center ${reduced ? "" : "pr-12 md:pr-16"}`}
           >
             {item.logo ? (
               <Image
@@ -134,8 +141,14 @@ export default function LogoMarquee({ items, ariaLabel, size = "small" }: Props)
           animation: logo-marquee-scroll 40s linear infinite;
           will-change: transform;
         }
-        .logo-marquee:hover .logo-marquee__track {
-          animation-play-state: paused;
+        /* Pause-on-hover — only on hover-capable pointers. On touch
+           devices a tap-and-hold triggers :hover and STICKS until the
+           user taps elsewhere, which would freeze the marquee
+           indefinitely after any incidental long-press during scroll. */
+        @media (hover: hover) {
+          .logo-marquee:hover .logo-marquee__track {
+            animation-play-state: paused;
+          }
         }
         @keyframes logo-marquee-scroll {
           0% {

@@ -17,24 +17,34 @@ function resolveSiteUrl(): string {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  if (process.env.VERCEL_ENV === "production") {
-    throw new Error(
-      "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com) in Vercel project settings.",
-    );
-  }
-
-  // Non-Vercel production deploys (Railway, Render, bare Docker, etc.)
-  // that omit NEXT_PUBLIC_SITE_URL would otherwise silently serve
-  // localhost URLs in canonicals / OG / sitemap / JSON-LD.
-  // NODE_ENV=production is the portable signal for "this is not a dev
-  // machine" outside Vercel. The CI=true exception is for verification
-  // builds (GitHub Actions, GitLab, CircleCI all set CI=true; Vercel
-  // does not) — those builds just need to compile, not produce a
-  // shippable artifact, and shouldn't be blocked by missing prod env.
-  if (process.env.NODE_ENV === "production" && !process.env.CI) {
-    throw new Error(
-      "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com).",
-    );
+  // Validation is server-only. Next.js's DefinePlugin only inlines
+  // NEXT_PUBLIC_* env vars into the client bundle; VERCEL_ENV and CI
+  // are both `undefined` in the browser. If we ran these checks on the
+  // client in a production build with NEXT_PUBLIC_SITE_URL unset, the
+  // !undefined CI guard would always be true and the throw would
+  // crash every page that imports lib/site.ts via a "use client"
+  // component (e.g. TrustStrip). The server-side build is the right
+  // place to fail — whatever value the server saw at build time has
+  // already been inlined into the override branch of the client bundle.
+  if (typeof window === "undefined") {
+    if (process.env.VERCEL_ENV === "production") {
+      throw new Error(
+        "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com) in Vercel project settings.",
+      );
+    }
+    // Non-Vercel production deploys (Railway, Render, bare Docker, etc.)
+    // that omit NEXT_PUBLIC_SITE_URL would otherwise silently serve
+    // localhost URLs in canonicals / OG / sitemap / JSON-LD.
+    // NODE_ENV=production is the portable signal for "this is not a dev
+    // machine" outside Vercel. The CI=true exception is for verification
+    // builds (GitHub Actions, GitLab, CircleCI all set CI=true; Vercel
+    // does not) — those builds just need to compile, not produce a
+    // shippable artifact, and shouldn't be blocked by missing prod env.
+    if (process.env.NODE_ENV === "production" && !process.env.CI) {
+      throw new Error(
+        "NEXT_PUBLIC_SITE_URL is required in production. Set it to the apex domain (e.g. https://sp-automotive.com).",
+      );
+    }
   }
 
   return "http://localhost:3000";

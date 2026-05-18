@@ -44,7 +44,7 @@
   --text-eyebrow:  0.6875rem;     /* 11px — small-caps annotations, leader-line labels */
   --text-caption:  0.8125rem;     /* 13px */
   --text-body:     1.0625rem;     /* 17px — slightly above the 16px floor for premium feel */
-  --text-lead:     1.25rem;       /* 20px — owner-letter intro paragraphs */
+  --text-lead:     clamp(1.0625rem, 2.5vw, 1.25rem); /* 17→20px fluid — floors at body size on phones so leads don't dwarf surrounding copy */
 
   /* Display ramp — Fraunces has an opsz axis we exploit at the larger sizes. */
   --text-display-sm: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
@@ -54,7 +54,7 @@
   /* Bleed — for hero compositions where the word physically exceeds the
      viewport. Sized larger than display-xl with no upper rem cap below
      ultra-wide screens. */
-  --text-display-bleed: clamp(3.5rem, 14vw, 14rem);
+  --text-display-bleed: clamp(5rem, 20vw, 14rem); /* 80px floor on phones (was 56px) — hero "Totaled." / "Paid in Full." landed underweight against the cinematic backdrop; steeper 20vw slope hits ~78px at iPhone SE 390px before relaxing into the 14rem cap on tablets+ */
 
   /* ─── Tracking + Leading ─────────────────────────────────────────── */
   --tracking-eyebrow: 0.18em;      /* tight enough to feel like an editorial label */

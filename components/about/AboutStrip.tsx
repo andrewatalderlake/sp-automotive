@@ -51,7 +51,7 @@ export default function AboutStrip() {
           {STATS.map((s) => (
             <div key={s.label}>
               <dt
-                className="font-display leading-none tracking-[-0.03em] text-ink text-[clamp(2.25rem,4.5vw,3.5rem)]"
+                className="font-display leading-none tracking-[-0.03em] text-ink text-[clamp(2.75rem,9vw,3.5rem)]"
                 style={{ fontVariantNumeric: "tabular-nums" }}
               >
                 <TextScramble duration={2} speed={0.05} characterSet="0123456789">

@@ -51,27 +51,31 @@ export default function AmbientVideo({ src, poster, className }: Props) {
     const video = videoRef.current;
     if (!wrapper || !video) return;
 
-    // If IntersectionObserver is unavailable, fall back to always-on
-    // playback — matches the pre-gating behavior, no regression.
-    if (typeof IntersectionObserver === "undefined") {
-      video.play().catch(() => {});
-      return;
-    }
+    // Only gate via IO; do NOT call .play() ourselves on first intersect.
+    // iOS Safari only trusts gesture-less muted/playsInline playback when
+    // the `autoplay` HTML attribute is present on mount — a programmatic
+    // .play() from an IO callback is NOT a user-activation context, so
+    // it would be rejected on first load before the user has tapped
+    // anything. With the attribute set (see <video autoPlay/> below),
+    // the video starts playing on mount; our IO then has authority to
+    // pause it when offscreen and resume when it re-enters view — those
+    // calls ARE permitted on a video that has already played.
+    if (typeof IntersectionObserver === "undefined") return;
 
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            // play() can reject when the browser's autoplay policy
-            // blocks (rare for muted+playsInline, but guard anyway).
-            video.play().catch(() => {});
+            video.play().catch(() => {
+              /* may reject before initial autoplay-start; safe to ignore */
+            });
           } else {
             video.pause();
           }
         }
       },
       {
-        // Start playback slightly before the section is fully on-screen
+        // Resume playback slightly before the section is fully on-screen
         // so the user doesn't see a frozen poster as they scroll into it.
         rootMargin: "200px 0px",
         threshold: 0,
@@ -101,10 +105,13 @@ export default function AmbientVideo({ src, poster, className }: Props) {
         ref={videoRef}
         src={src}
         poster={poster}
-        // No `autoPlay` — the IO effect above starts playback once the
-        // wrapper enters the viewport. Mounting an autoplay video that's
-        // immediately offscreen would waste a decode burst before the IO
-        // had a chance to pause it.
+        // `autoPlay` IS required for iOS Safari to trust the playback
+        // context — see effect comment above. Yes, this means a section
+        // that mounts offscreen (e.g. the footer) gets a brief decode
+        // burst before the IO callback fires the first pause(). That's
+        // the cost of cross-browser reliability; without autoplay,
+        // iOS users see a frozen poster on first paint.
+        autoPlay
         loop
         muted
         playsInline

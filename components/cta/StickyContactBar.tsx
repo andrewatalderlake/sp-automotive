@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Phone, MessageSquare } from "lucide-react";
 import { PHONE, PHONE_HREF, SMS_HREF } from "@/lib/site";
 import { track } from "@/lib/analytics";
+import { useViewportHeight } from "@/lib/hooks/useViewportHeight";
 
 // Sticky bottom contact bar. Slides up after the user scrolls past one
 // viewport (i.e. past the hero) and stays anchored at the bottom for the
@@ -34,6 +35,12 @@ export default function StickyContactBar() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [theme, setTheme] = useState<BarTheme>("light");
+  // Stable vh accessor — see lib/hooks/useViewportHeight.ts. Reading raw
+  // window.innerHeight inside the visibility check would drift the
+  // threshold each time iOS Safari's address bar collapses or expands,
+  // flickering the bar on/off in the narrow [oldThreshold, newThreshold]
+  // band. The hook only updates on actual resize / orientationchange.
+  const getVh = useViewportHeight();
 
   const hidden = Boolean(
     pathname && HIDDEN_PATHS.some((p) => pathname.startsWith(p)),
@@ -45,7 +52,7 @@ export default function StickyContactBar() {
     let raf = 0;
     const check = () => {
       raf = 0;
-      setVisible(window.scrollY > window.innerHeight * 0.9);
+      setVisible(window.scrollY > getVh() * 0.9);
     };
     const onScroll = () => {
       if (raf) return;
@@ -59,7 +66,7 @@ export default function StickyContactBar() {
       window.removeEventListener("resize", check);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [hidden]);
+  }, [hidden, getVh]);
 
   // Theme — watch dark sections and flip when any of them overlap the
   // bottom strip of the viewport (where the sticky bar sits). The strip

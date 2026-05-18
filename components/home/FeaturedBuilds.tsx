@@ -40,7 +40,7 @@ export default function FeaturedBuilds() {
           if (e.isIntersecting) section.dataset.revealed = "1";
         }
       },
-      { rootMargin: "-15% 0px -15% 0px", threshold: 0 },
+      { rootMargin: "-100px 0px -100px 0px", threshold: 0 },
     );
     io.observe(section);
     return () => io.disconnect();
@@ -119,7 +119,7 @@ export default function FeaturedBuilds() {
               />
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-transparent"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/55 to-transparent md:from-ink/90 md:via-ink/45"
               />
               <div
                 aria-hidden
@@ -127,7 +127,7 @@ export default function FeaturedBuilds() {
               />
               <div className="absolute inset-x-6 bottom-6 md:inset-x-12 md:bottom-12 max-w-3xl">
                 <p className="eyebrow text-bone/70">{hero.eyebrow}</p>
-                <h3 className="mt-3 font-display text-bone text-3xl md:text-5xl leading-tight tracking-[-0.01em]">
+                <h3 className="mt-3 font-display text-bone text-2xl md:text-5xl leading-tight tracking-[-0.01em]">
                   {hero.title}
                 </h3>
                 <p className="mt-4 max-w-prose text-bone/85 text-sm md:text-base leading-snug line-clamp-3">

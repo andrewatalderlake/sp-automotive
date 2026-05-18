@@ -45,37 +45,51 @@ export default function PositioningTable() {
           what each one actually does.
         </p>
 
-        <div className="mt-12 overflow-x-auto -mx-6 md:mx-0 px-6 md:px-0">
-          <table className="w-full min-w-[640px] border-collapse">
-            <thead>
-              <tr>
-                <th className="text-left py-5 border-b border-bone w-[40%]">
-                  <span className="eyebrow">Capability</span>
-                </th>
-                <th className="text-center py-5 border-b border-bone w-[20%]">
-                  <span className="eyebrow text-bone">SP Automotive</span>
-                </th>
-                <th className="text-center py-5 border-b border-divider w-[20%]">
-                  <span className="eyebrow">Network shop</span>
-                </th>
-                <th className="text-center py-5 border-b border-divider w-[20%]">
-                  <span className="eyebrow">Dealer body shop</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {ROWS.map((row) => (
-                <tr key={row.label}>
-                  <td className="editorial py-5 pr-4 border-b border-divider align-middle">
-                    {row.label}
-                  </td>
-                  <Cell value={row.sp} />
-                  <Cell value={row.network} />
-                  <Cell value={row.dealer} />
+        {/* Mobile-only scroll affordance — phones under 640px can't fit the
+            full comparison without a swipe, so the eyebrow + right-edge
+            fade signal "there's more here" rather than leaving the cut-off
+            column reading as a layout bug. Both hidden on md+ since the
+            table fits the container at that breakpoint. */}
+        <p className="md:hidden eyebrow text-graphite mt-12 mb-3">
+          scroll for full comparison →
+        </p>
+        <div className="relative mt-3 md:mt-12 -mx-6 md:mx-0">
+          <div className="overflow-x-auto px-6 md:px-0">
+            <table className="w-full min-w-[640px] border-collapse">
+              <thead>
+                <tr>
+                  <th className="text-left py-5 border-b border-bone w-[40%]">
+                    <span className="eyebrow">Capability</span>
+                  </th>
+                  <th className="text-center py-5 border-b border-bone w-[20%]">
+                    <span className="eyebrow text-bone">SP Automotive</span>
+                  </th>
+                  <th className="text-center py-5 border-b border-divider w-[20%]">
+                    <span className="eyebrow">Network shop</span>
+                  </th>
+                  <th className="text-center py-5 border-b border-divider w-[20%]">
+                    <span className="eyebrow">Dealer body shop</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {ROWS.map((row) => (
+                  <tr key={row.label}>
+                    <td className="editorial py-5 pr-4 border-b border-divider align-middle">
+                      {row.label}
+                    </td>
+                    <Cell value={row.sp} />
+                    <Cell value={row.network} />
+                    <Cell value={row.dealer} />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div
+            aria-hidden
+            className="md:hidden pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-ink to-transparent"
+          />
         </div>
 
         <p className="mt-10 text-sm text-bone/85 max-w-2xl">

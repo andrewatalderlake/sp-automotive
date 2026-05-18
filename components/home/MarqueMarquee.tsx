@@ -21,7 +21,7 @@ import LogoMarquee, {
 const MAKES: readonly LogoMarqueeItem[] = [
   // Ferrari and Lamborghini are tall heraldic shields — at full container
   // height they read visually larger than the wider wordmarks (BMW M,
-  // McLaren speedmark). Scaling them to 0.75 brings the row into balance.
+  // McLaren speedmark). Scaling them to 0.5 brings the row into balance.
   { name: "Ferrari", logo: "/logos/marques/ferrari.png", scale: 0.5 },
   { name: "Lamborghini", logo: "/logos/marques/lamborghini.png", scale: 0.5 },
   { name: "McLaren", logo: "/logos/marques/mclaren.png" },

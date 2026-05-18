@@ -60,19 +60,52 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
     let rafId = 0;
     let lastIndex = -1;
     const images: HTMLImageElement[] = [];
-    let loadedCount = 0;
+    // Tag each handle so cleanup can dispatch to the right canceller.
+    // `setTimeout` returns a number in browsers (same as
+    // `requestIdleCallback`), so `typeof` can't discriminate them.
+    type PendingHandle =
+      | { kind: "idle"; id: number }
+      | { kind: "timeout"; id: ReturnType<typeof setTimeout> };
+    const idleHandles: PendingHandle[] = [];
 
-    // Decode all frames once. Each Image holds its decoded buffer; we
-    // paint from those buffers on every scroll tick — no re-decode.
+    // Decode the first EAGER_COUNT frames immediately so the first scroll
+    // is smooth, then enqueue the rest at idle priority so they don't
+    // race with above-the-fold resources (hero CTAs, fonts, scrub
+    // canvas paint). Without this gating, 120 parallel image requests
+    // fire on mount and the decoded pixel buffers stay resident for
+    // the component's lifetime — costly on mobile and unnecessary
+    // until the user actually scrolls.
+    const EAGER_COUNT = 10;
+
+    function scheduleAtIdle(fn: () => void) {
+      const w = window as typeof window & {
+        requestIdleCallback?: (cb: () => void) => number;
+      };
+      if (typeof w.requestIdleCallback === "function") {
+        idleHandles.push({ kind: "idle", id: w.requestIdleCallback(fn) });
+      } else {
+        idleHandles.push({ kind: "timeout", id: setTimeout(fn, 0) });
+      }
+    }
+
     for (let i = 1; i <= frameCount; i++) {
       const im = new window.Image();
-      im.src = framePath(framePattern, i);
       im.decoding = "async";
+      const idx = i;
       im.onload = () => {
-        loadedCount++;
-        // Once frame 1 is loaded, paint it as the initial frame.
-        if (i === 1) draw(0);
+        if (idx === 1) draw(0);
+        // Idle-loaded frames may decode after the user already scrolled
+        // past them; apply() bailed without advancing lastIndex, so
+        // re-run it via onScroll's rAF coalescing.
+        else onScroll();
       };
+      if (i <= EAGER_COUNT) {
+        im.src = framePath(framePattern, i);
+      } else {
+        scheduleAtIdle(() => {
+          im.src = framePath(framePattern, idx);
+        });
+      }
       images.push(im);
     }
 
@@ -143,16 +176,33 @@ export default function ScrollFrames({ frameCount, framePattern, fallbackPoster 
       window.removeEventListener("scroll", onScroll);
       ro.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
+      // Cancel any pending idle-scheduled image loads so they don't
+      // fire after unmount (would still hit the network needlessly).
+      const w = window as typeof window & {
+        cancelIdleCallback?: (id: number) => void;
+      };
+      for (const handle of idleHandles) {
+        if (handle.kind === "idle") {
+          w.cancelIdleCallback?.(handle.id);
+        } else {
+          clearTimeout(handle.id);
+        }
+      }
+      idleHandles.length = 0;
       // Release references; browser GC can free decoded buffers.
       images.length = 0;
-      void loadedCount;
     };
   }, [reduced, frameCount, framePattern]);
 
   if (reduced) {
     return (
       <div ref={wrapperRef} aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <Image src={fallbackPoster} alt="" fill sizes="100vw" className="object-cover" />
+        {/* `priority`: the poster IS the hero in reduced-motion mode and
+            therefore the LCP candidate. Without it Next.js won't emit a
+            preload link and the browser only discovers the image when it
+            parses the body — a full RTT added to the LCP on the critical
+            path for ~15–20% of visitors. */}
+        <Image src={fallbackPoster} alt="" fill sizes="100vw" priority className="object-cover" />
       </div>
     );
   }

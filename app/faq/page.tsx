@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 import SmsCTA from "@/components/ui/SmsCTA";
 import FinalCTA from "@/components/cta/FinalCTA";
+import BackgroundPaths from "@/components/effects/BackgroundPaths";
 import FAQExplorer from "@/components/faq/FAQExplorer";
 import { PUBLISHED_FAQS } from "@/lib/faq-data";
 import { SITE_URL } from "@/lib/site";
@@ -39,26 +40,30 @@ export default function FAQPage() {
     // Same gating as testimonials — if every entry is unpublished, the page
     // still exists for routing but reads as a stub.
     return (
-      <section className="bg-ink px-6 md:px-10 py-32 pt-40 min-h-[60vh]">
-        <div className="max-w-3xl mx-auto">
-          <p className="eyebrow">Questions</p>
-          <h1 className="mt-4 display-lg">In review.</h1>
-          <p className="editorial mt-8 max-w-2xl">
-            Common questions are being finalized. In the meantime, talk to Serge directly.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <PhoneCTA size="lg" location="faq-stub" />
-            <SmsCTA location="faq-stub" />
+      <>
+        <BackgroundPaths />
+        <section className="px-6 md:px-10 py-32 pt-40 min-h-[60vh]">
+          <div className="max-w-3xl mx-auto">
+            <p className="eyebrow">Questions</p>
+            <h1 className="mt-4 display-lg">In review.</h1>
+            <p className="editorial mt-8 max-w-2xl">
+              Common questions are being finalized. In the meantime, talk to Serge directly.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <PhoneCTA size="lg" location="faq-stub" />
+              <SmsCTA location="faq-stub" />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </>
     );
   }
 
   return (
     <>
       <FAQJsonLd />
-      <section className="bg-ink px-6 md:px-10 pt-40 pb-24 border-b border-divider">
+      <BackgroundPaths />
+      <section className="px-6 md:px-10 pt-40 pb-24">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow">Questions owners ask</p>
           <h1 className="mt-4 display-lg">Straight answers.</h1>
