@@ -11,6 +11,16 @@ import { useViewportHeight } from "@/lib/hooks/useViewportHeight";
 // remainder of the page. Hidden on routes where the actions are already
 // the focus (`/estimate`, `/contact`).
 //
+// Visibility anchor: a page can opt into precise control by marking a
+// section with `data-sticky-bar-anchor`. When present, the bar is
+// visible while that section (or anything below it) overlaps the
+// bottom-12% strip — the same geometry the theme observer uses below,
+// so the bar enters in whatever theme the anchor declares without a
+// mid-flight color swap. The homepage uses this on `InsuranceHandling`
+// so the bar doesn't pop in dark over `MeetSerge` and then flip light
+// the moment the next section arrives. Routes without an anchor fall
+// back to the legacy "scrolled past one viewport" threshold.
+//
 // Section-aware theme: the bar reads whichever section currently sits
 // under it (via IntersectionObserver targeting `[data-theme="dark"]`
 // elements within a bottom-of-viewport strip). When a dark section is
@@ -46,9 +56,29 @@ export default function StickyContactBar() {
     pathname && HIDDEN_PATHS.some((p) => pathname.startsWith(p)),
   );
 
-  // Visibility — show after the user has scrolled past ~1 viewport.
+  // Visibility — anchor-driven if the page declares one, otherwise
+  // legacy "scrolled past ~1 viewport". The anchor path uses the same
+  // bottom-strip geometry as the theme observer below so the bar
+  // enters already in the right theme.
   useEffect(() => {
     if (hidden) return;
+    const anchor = document.querySelector<HTMLElement>(
+      "[data-sticky-bar-anchor]",
+    );
+    if (anchor) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            // top < 0 keeps the bar visible after the anchor has
+            // scrolled fully above the viewport.
+            setVisible(e.isIntersecting || e.boundingClientRect.top < 0);
+          }
+        },
+        { rootMargin: "-88% 0px 0px 0px", threshold: 0 },
+      );
+      io.observe(anchor);
+      return () => io.disconnect();
+    }
     let raf = 0;
     const check = () => {
       raf = 0;
@@ -66,7 +96,7 @@ export default function StickyContactBar() {
       window.removeEventListener("resize", check);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [hidden, getVh]);
+  }, [hidden, getVh, pathname]);
 
   // Theme — watch dark sections and flip when any of them overlap the
   // bottom strip of the viewport (where the sticky bar sits). The strip
