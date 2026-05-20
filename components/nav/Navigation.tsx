@@ -7,9 +7,13 @@ import { Menu, X } from "lucide-react";
 import PhoneCTA from "@/components/ui/PhoneCTA";
 
 // /#work scrolls to FeaturedBuilds (id="work") on the homepage.
+// /#insurance scrolls to InsuranceHandling (id="insurance") on the homepage.
 const links = [
   { href: "/", label: "Home" },
   { href: "/#work", label: "Work" },
+  { href: "/body-kits", label: "Body Kits" },
+  { href: "/#insurance", label: "Insurance" },
+  { href: "/paint-work", label: "Paint Work" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
@@ -175,10 +179,14 @@ export default function Navigation() {
           />
         </Link>
 
-        {/* Desktop floating pill — nav links + phone CTA, top-right */}
-        <div className="pointer-events-auto hidden md:flex items-center gap-5 rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-6 py-2.5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
+        {/* Desktop floating pill — nav links + phone CTA, top-right.
+            Home is dropped here because the logo (top-left) already links to /.
+            The mobile overlay keeps Home for users who expect it as the first
+            drawer item. Breakpoint is lg (not md): 8 items into 768-1023 wrap,
+            and the hamburger drawer is a better fit for that range. */}
+        <div className="pointer-events-auto hidden lg:flex items-center gap-5 rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-6 py-2.5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
           <ul className="flex items-center gap-5">
-            {links.map((l) => (
+            {links.filter((l) => l.href !== "/").map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
@@ -199,7 +207,7 @@ export default function Navigation() {
         <button
           ref={openButtonRef}
           type="button"
-          className="pointer-events-auto md:hidden inline-flex items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-bone p-3"
+          className="pointer-events-auto lg:hidden inline-flex items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-bone p-3"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           aria-expanded={open}

@@ -51,7 +51,7 @@ export default function AdasExplainerPage() {
         <div className="max-w-3xl mx-auto">
           <div className="editorial max-w-[65ch] space-y-7">
             <p>
-              Every Lamborghini, McLaren, Audi R8, and BMW M built in the last decade carries a
+              Every Lamborghini, McLaren, and Audi R8 built in the last decade carries a
               suite of Advanced Driver Assistance Systems — ADAS — that depend on a handful of
               precisely-aimed cameras, radar units, and ultrasonic sensors. Adaptive cruise watches
               the car ahead. Automatic emergency braking decides when to intervene. Lane-keep
@@ -87,7 +87,7 @@ export default function AdasExplainerPage() {
               Aventador requires <span className="spec">Lamborghini Diagnostic Tester</span>{" "}
               software, an air-suspension load procedure to set ride height, and a target sequence
               that runs differently than the same brand&rsquo;s urus. The McLaren equivalent
-              uses MDS, the BMW uses ISTA, the Audi uses ODIS — and every one of them gets
+              uses MDS, the Audi uses ODIS — and every one of them gets
               software updates that change the procedure mid-model-year.
             </p>
             <p>

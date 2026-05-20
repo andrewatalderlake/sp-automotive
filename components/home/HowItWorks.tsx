@@ -25,7 +25,7 @@ const STEPS = [
   {
     n: "01",
     label: "Send photos",
-    body: "Text us the damage. We come back with a number, fast. Usually inside the hour.",
+    body: "Text us the damage. We come back with a number, fast. Usually within the week.",
   },
   {
     n: "02",

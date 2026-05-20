@@ -53,7 +53,7 @@ export default function OG() {
             maxWidth: 920,
           }}
         >
-          Factory-correct collision repair for Lamborghini, McLaren, Audi R8, BMW M.
+          Factory-correct collision repair for Lamborghini, McLaren, Audi R8.
         </div>
         <div
           style={{

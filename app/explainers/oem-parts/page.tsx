@@ -112,7 +112,7 @@ export default function OemPartsExplainerPage() {
             </h2>
             <p>
               OEM only, end of policy. We order through the manufacturer&rsquo;s parts depot —
-              direct from Lamborghini, McLaren, Audi, BMW, or the appropriate authorized supplier.
+              direct from Lamborghini, McLaren, Audi, or the appropriate authorized supplier.
               Lead times are quoted to you up front so you know whether a part is in stock in the
               United States or coming from Italy. If a part is genuinely unavailable — which is
               rare on cars under fifteen years old — we tell you the options before we order

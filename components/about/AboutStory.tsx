@@ -35,7 +35,7 @@ export default function AboutStory() {
                 actually means by being told &ldquo;close enough&rdquo; and refusing it.
               </p>
               <p>
-                SP Automotive exists because every Lamborghini, every McLaren, every R8, every BMW M
+                SP Automotive exists because every Lamborghini, every McLaren, every R8
                 deserves to come back exactly the way it left the factory. Most shops can&apos;t
                 deliver that. Some don&apos;t even try.
               </p>

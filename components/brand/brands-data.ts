@@ -177,62 +177,6 @@ export const BRANDS: Brand[] = [
     ],
   },
   {
-    slug: "bmw-m-collision-repair-sarasota",
-    name: "BMW M",
-    brandKey: "bmw-m",
-    metaTitle: "BMW M Collision Repair — Sarasota, FL",
-    metaDescription:
-      "Factory-correct collision repair for M3, M4, M5, M8, X5M, X6M, and M2. Carbon roof repair, xDrive alignment, S58/S63 cooling, ADAS recalibration. Sarasota, FL.",
-    eyebrow: "Sarasota, FL · OEM-procedure body work",
-    headline: "BMW M collision repair, factory-correct.",
-    intro:
-      "An M car isn't a regular 3-Series with a body kit. The carbon roof on an M4 CSL is structural. The S58 in an M3 Competition runs at thermal limits the dealer body shop won't pressure-test. xDrive on an M5 Competition has its own alignment spec the network shops don't bother looking up. Frozen-series paints fade unevenly when matched against generic BMW codes. I treat M cars like the track-grade machines they are — every panel torque-checked, every damper verified, every sensor recalibrated to OEM procedure.",
-    models: [
-      "M2",
-      "M3",
-      "M3 Competition",
-      "M3 CS",
-      "M4",
-      "M4 Competition",
-      "M4 CSL",
-      "M5",
-      "M5 Competition",
-      "M5 CS",
-      "M8",
-      "M8 Competition",
-      "X3 M",
-      "X4 M",
-      "X5 M",
-      "X6 M",
-    ],
-    specialties: [
-      {
-        title: "Carbon roof + CFRP panel repair",
-        copy: "The M3, M4, M4 CSL and the X5/X6 M Competition carry CFRP roof panels that are weight-engineered. Damage doesn't get filler — it gets relayered, weave-matched, and clear-coated to factory gloss. We see the carbon weave; you don't see the repair.",
-      },
-      {
-        title: "xDrive AWD alignment",
-        copy: "M5 Competition, X5 M, and X6 M alignment specs are tighter than the standard xDrive lineup. We align on a Hunter machine to M-specific factory tolerances — not generic 5-Series numbers — and re-calibrate the variable-front-bias actuator.",
-      },
-      {
-        title: "S58 / S63 / S65 cooling integrity",
-        copy: "BMW M turbo motors run at high thermal load. A wrecked clamshell often hides cracked aux radiators, bent intercoolers, and stressed coolant lines. We pressure-test every line, replace anything outside spec, and re-fill with the right LL-04 coolant.",
-      },
-      {
-        title: "Adaptive M Suspension calibration",
-        copy: "Adaptive M dampers don't tolerate bent control arms or compromised mounts. We inspect every link, replace what's out of spec, and re-zero the ride-height calibration via ISTA so the active damping reads true.",
-      },
-      {
-        title: "Frozen + Individual paint match",
-        copy: "Frozen Brilliant White, Frozen Dark Silver, and the BMW Individual range have known matching variability if you mix from generic BMW codes. We mix to M-specific build sheet codes, layer to factory depth, and verify under matched booth lighting.",
-      },
-      {
-        title: "ADAS recalibration",
-        copy: "M cars carry forward radar, lane-keep, parking, and surround cameras that all throw calibration after collision. We recalibrate via ISTA with the original target boards — to OEM procedure.",
-      },
-    ],
-  },
-  {
     slug: "ferrari-collision-repair-sarasota",
     name: "Ferrari",
     brandKey: "ferrari",

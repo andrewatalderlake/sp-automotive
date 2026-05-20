@@ -13,11 +13,11 @@ import { SITE_NAME } from "@/lib/site";
 export const metadata: Metadata = {
   title: "All Builds",
   description:
-    "Every body-kit transformation completed at SP Automotive — Lamborghini, McLaren, Porsche, Audi R8, BMW M, and more. Custom widebody installs, factory paint matching, no compromises.",
+    "Every body-kit transformation completed at SP Automotive — Lamborghini, McLaren, Porsche, Audi R8, and more. Custom widebody installs, factory paint matching, no compromises.",
   openGraph: {
     title: `All Builds — ${SITE_NAME}`,
     description:
-      "Every body-kit transformation completed at SP Automotive — Lamborghini, McLaren, Porsche, Audi R8, BMW M, and more.",
+      "Every body-kit transformation completed at SP Automotive — Lamborghini, McLaren, Porsche, Audi R8, and more.",
     images: ["/builds/urus-1016/kit.webp"],
   },
 };

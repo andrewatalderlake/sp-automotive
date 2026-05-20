@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       priority: 0.85,
     })),
+    { url: `${SITE_URL}/body-kits`, lastModified, priority: 0.85 },
+    { url: `${SITE_URL}/paint-work`, lastModified, priority: 0.85 },
     { url: `${SITE_URL}/about`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/contact`, lastModified, priority: 0.8 },
     { url: `${SITE_URL}/estimate`, lastModified, priority: 0.8 },
