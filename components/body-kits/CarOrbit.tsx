@@ -38,7 +38,11 @@ export default function CarOrbit({ src, poster, alt, className = "" }: Props) {
     const root = rootRef.current;
     if (!root) return;
     if (typeof IntersectionObserver === "undefined") {
-      setMounted(true);
+      // Legacy fallback: browsers without IO (vanishingly rare) skip
+      // lazy-mount and just render the video. Defer to a microtask so
+      // the setState lands after the current render — keeps the
+      // react-hooks/set-state-in-effect lint rule happy.
+      queueMicrotask(() => setMounted(true));
       return;
     }
     const io = new IntersectionObserver(

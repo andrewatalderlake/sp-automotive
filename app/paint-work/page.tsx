@@ -104,7 +104,7 @@ export default function PaintWorkPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-12 lg:gap-16 items-end">
             {/* Left column — eyebrow, headline, copy, spec row. */}
             <div>
-              <p className="eyebrow reveal-up">// Refinish work</p>
+              <p className="eyebrow reveal-up">{"// Refinish work"}</p>
               <SplitText
                 as="h1"
                 className="mt-4 display-lg text-bone"
@@ -148,7 +148,7 @@ export default function PaintWorkPage() {
                 aria-label="Featured pearl swatch — McLaren Papaya Spark"
               >
                 <div className="pointer-events-none absolute top-4 right-4 spec text-[10px] uppercase tracking-[0.18em] text-bone/90 bg-ink/65 backdrop-blur-sm px-2.5 py-1 rounded">
-                  // Featured · pearl
+                  {"// Featured · pearl"}
                 </div>
                 <div className="pointer-events-none absolute bottom-5 left-5 flex flex-col gap-1">
                   <p className="spec text-bone/85 tabular-nums">
@@ -177,7 +177,7 @@ export default function PaintWorkPage() {
         <div className="mx-auto max-w-6xl">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="eyebrow text-graphite reveal-up">// What we paint</p>
+              <p className="eyebrow text-graphite reveal-up">{"// What we paint"}</p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-bone leading-none text-3xl md:text-5xl reveal-up">
                 Color families we handle.
               </h2>
@@ -213,7 +213,7 @@ export default function PaintWorkPage() {
                 duplicating the body copy elsewhere on the page. */}
             <aside className="reveal-up-stagger space-y-8 lg:pt-2">
               <div style={{ "--i": 0 } as React.CSSProperties}>
-                <p className="eyebrow text-graphite">// Gauge</p>
+                <p className="eyebrow text-graphite">{"// Gauge"}</p>
                 <p className="mt-3 text-sm text-bone/75 leading-relaxed">
                   Dry-film thickness measured between every coat. Each layer
                   verified within{" "}
@@ -222,7 +222,7 @@ export default function PaintWorkPage() {
                 </p>
               </div>
               <div style={{ "--i": 1 } as React.CSSProperties}>
-                <p className="eyebrow text-graphite">// Variant card</p>
+                <p className="eyebrow text-graphite">{"// Variant card"}</p>
                 <p className="mt-3 text-sm text-bone/75 leading-relaxed">
                   Test-spray on a hidden panel from the car itself &mdash; door
                   jamb, hood underside, or under-trunk lip. Never on a paint
@@ -230,7 +230,7 @@ export default function PaintWorkPage() {
                 </p>
               </div>
               <div style={{ "--i": 2 } as React.CSSProperties}>
-                <p className="eyebrow text-graphite">// Record</p>
+                <p className="eyebrow text-graphite">{"// Record"}</p>
                 <p className="mt-3 text-sm text-bone/75 leading-relaxed">
                   Booth conditions, mix ratio, layer thickness, gloss reading.
                   Every job logged. The next painter sees exactly what we did.
@@ -254,7 +254,7 @@ export default function PaintWorkPage() {
         <div className="mx-auto max-w-5xl">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="eyebrow text-graphite reveal-up">// The library</p>
+              <p className="eyebrow text-graphite reveal-up">{"// The library"}</p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-bone leading-none text-3xl md:text-5xl reveal-up">
                 Pick a color.
               </h2>
@@ -289,7 +289,7 @@ export default function PaintWorkPage() {
           <div className="flex items-end justify-between gap-6">
             <div>
               <p className="eyebrow text-ink/55 reveal-up">
-                // How it&rsquo;s documented
+                {"// How it’s documented"}
               </p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-ink leading-none text-3xl md:text-5xl reveal-up">
                 Every coat measured.

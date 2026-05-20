@@ -80,7 +80,7 @@ export default function ColorSwatchLibrary({
     <div>
       {/* Filter pills */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="spec text-graphite mr-2">// Filter</span>
+        <span className="spec text-graphite mr-2">{"// Filter"}</span>
         {FILTERS.map((f) => {
           const isActive = filter === f.key;
           return (
@@ -173,7 +173,7 @@ export default function ColorSwatchLibrary({
             unused — fill that space with a value statement instead. */}
         {filter === "matte" && (
           <div className="mt-10 border-t border-hairline pt-8">
-            <p className="eyebrow text-graphite">// On matte</p>
+            <p className="eyebrow text-graphite">{"// On matte"}</p>
             <p className="mt-3 max-w-lg text-bone/80 text-sm leading-relaxed">
               Matte programs available on request. Same documentation
               discipline as gloss work &mdash; variant tested, film-thickness

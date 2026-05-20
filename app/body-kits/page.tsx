@@ -134,7 +134,7 @@ export default function BodyKitsPage() {
         />
 
         <div className="relative z-10 mx-auto max-w-4xl">
-          <p className="eyebrow reveal-up">// Aftermarket aero</p>
+          <p className="eyebrow reveal-up">{"// Aftermarket aero"}</p>
           <SplitText
             as="h1"
             className="mt-4 display-lg text-bone"
@@ -176,7 +176,7 @@ export default function BodyKitsPage() {
         <div className="mx-auto max-w-4xl">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="eyebrow text-graphite reveal-up">// What we install</p>
+              <p className="eyebrow text-graphite reveal-up">{"// What we install"}</p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-bone leading-none text-3xl md:text-5xl reveal-up">
                 Kit makers we&rsquo;ve installed.
               </h2>
@@ -222,7 +222,7 @@ export default function BodyKitsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="eyebrow text-graphite reveal-up">// 05 marques</p>
+              <p className="eyebrow text-graphite reveal-up">{"// 05 marques"}</p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-bone leading-none text-3xl md:text-5xl reveal-up">
                 Drag to spin.
               </h2>
@@ -251,7 +251,7 @@ export default function BodyKitsPage() {
                         card. Same .spec mono treatment as the rest of the
                         site's technical callouts. */}
                     <div className="pointer-events-none absolute top-3 left-3 z-10 spec text-[10px] uppercase tracking-[0.18em] text-bone/90 bg-ink/70 backdrop-blur-sm px-2.5 py-1 rounded">
-                      // {m.programs}
+                      {`// ${m.programs}`}
                     </div>
                   </div>
                   <div className="flex items-baseline justify-between gap-3 px-1">
