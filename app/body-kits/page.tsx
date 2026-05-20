@@ -152,7 +152,10 @@ export default function BodyKitsPage() {
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 spec text-bone/55 reveal-up">
             <span>
-              <span className="text-bone/80 tabular-nums">05</span> · marques
+              <span className="text-bone/80 tabular-nums">
+                {String(MARQUES.length).padStart(2, "0")}
+              </span>{" "}
+              · marques
             </span>
             <span aria-hidden className="h-3 w-px bg-bone/15" />
             <span>
@@ -222,7 +225,9 @@ export default function BodyKitsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="eyebrow text-graphite reveal-up">{"// 05 marques"}</p>
+              <p className="eyebrow text-graphite reveal-up">
+                {`// ${String(MARQUES.length).padStart(2, "0")} marques`}
+              </p>
               <h2 className="mt-4 font-display uppercase tracking-[0.10em] text-bone leading-none text-3xl md:text-5xl reveal-up">
                 Drag to spin.
               </h2>

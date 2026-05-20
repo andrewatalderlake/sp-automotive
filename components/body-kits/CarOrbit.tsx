@@ -27,7 +27,14 @@ export default function CarOrbit({ src, poster, alt, className = "" }: Props) {
 
   const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
+  const [errored, setErrored] = useState(false);
   const [hinted, setHinted] = useState(false);
+
+  // Interactive only once the video has actually loaded a frame.
+  // Marques without an orbit video file yet (404 → error event,
+  // loadeddata never fires) stay non-interactive — no grab cursor,
+  // no "Drag to spin" hint, no failed pointer handlers.
+  const interactive = ready && !errored;
 
   // Lazy-mount the <video> element until the card is near the viewport. Five
   // cards × preload=metadata otherwise fires five network requests on first
@@ -118,7 +125,9 @@ export default function CarOrbit({ src, poster, alt, className = "" }: Props) {
   return (
     <div
       ref={rootRef}
-      className={`relative aspect-video overflow-hidden rounded-2xl bg-steel select-none touch-none cursor-grab active:cursor-grabbing ${className}`}
+      className={`relative aspect-video overflow-hidden rounded-2xl bg-steel select-none touch-none ${className} ${
+        interactive ? "cursor-grab active:cursor-grabbing" : ""
+      }`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
@@ -131,25 +140,26 @@ export default function CarOrbit({ src, poster, alt, className = "" }: Props) {
         className="object-cover pointer-events-none"
         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
       />
-      {mounted && (
+      {mounted && !errored && (
         <video
           ref={videoRef}
           src={src}
           poster={poster}
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-label={alt}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
             ready ? "opacity-100" : "opacity-0"
           }`}
           onLoadedData={() => setReady(true)}
+          onError={() => setErrored(true)}
         />
       )}
       <div
         aria-hidden="true"
         className={`absolute bottom-3 right-3 z-10 spec text-[10px] uppercase tracking-[0.18em] text-bone/85 bg-ink/60 backdrop-blur-sm px-2 py-1 rounded transition-opacity duration-300 ${
-          hinted || !ready ? "opacity-0" : "opacity-100"
+          hinted || !interactive ? "opacity-0" : "opacity-100"
         }`}
       >
         Drag to spin &rarr;
