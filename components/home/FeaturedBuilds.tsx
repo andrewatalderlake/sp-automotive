@@ -234,21 +234,22 @@ export default function FeaturedBuilds() {
         /* Built-where-it-broke reveal. The factory (stock) image sits on top
            of the finished build. Base (touch / no-hover) hides it, so the
            finished build is what mobile and reduced-motion users see. Cascade
-           order matters: base → hover → reduced-motion (last wins). */
-        :global(.fb-stock) {
+           order matters: base → hover → reduced-motion (last wins). Scoped
+           under .featured-builds so these class names can't leak globally. */
+        :global(.featured-builds .fb-stock) {
           opacity: 0;
         }
         @media (hover: hover) {
-          :global(.fb-stock) {
+          :global(.featured-builds .fb-stock) {
             opacity: 1;
             transition: opacity 700ms ease-out;
           }
-          :global(.fb-card:hover .fb-stock) {
+          :global(.featured-builds .fb-card:hover .fb-stock) {
             opacity: 0;
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          :global(.fb-stock) {
+          :global(.featured-builds .fb-stock) {
             opacity: 0;
             transition: none;
           }
