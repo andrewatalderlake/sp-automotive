@@ -60,6 +60,7 @@ export default function InsuranceHandling() {
 
   return (
     <section
+      id="insurance"
       ref={sectionRef}
       aria-labelledby="insurance-handling-heading"
       data-scrub-time={SCRUB_TIME}

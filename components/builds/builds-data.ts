@@ -48,7 +48,7 @@ export const BUILDS: Build[] = [
     car: "Lamborghini Urus",
     kit: "1016 Industries",
     eyebrow: "Featured build · Lamborghini Urus",
-    title: "Urus, widened. 1016 Industries.",
+    title: "Urus, Widebody. 1016 Industries.",
     description:
       "Forged-carbon widebody from 1016 Industries — the Miami shop that built its name turning the Urus into something the showroom never offered. Hand-laid panels, factory paint match, no clearance compromises.",
     specs: [
@@ -226,29 +226,6 @@ export const BUILDS: Build[] = [
     metaDescription:
       "Ferrari 488 Novitec N-Largo widebody conversion. Carbon panels, paint match, optional tune. SP Automotive Sarasota, FL.",
     accentColor: ["#D40000", "#FFFFFF"],
-  },
-  {
-    slug: "m4-3d-design",
-    car: "BMW M4",
-    kit: "3D Design",
-    eyebrow: "Featured build · BMW M4",
-    title: "M4, 3D Design carbon.",
-    description:
-      "3D Design — the Tokyo carbon house BMW M tuners revere — adds the most precisely-fit carbon aero in the game: front splitter, side skirts, rear diffuser, ducktail spoiler. Tasteful, OEM-finish carbon for the G82 chassis.",
-    specs: [
-      { label: "Kit", value: "3D Design carbon aero (G82)" },
-      { label: "Material", value: "Pre-preg autoclave carbon fiber" },
-      { label: "Components", value: "Front splitter, canards, side skirts, rear diffuser, ducktail spoiler, mirror caps" },
-      { label: "Install time", value: "~2 weeks" },
-      { label: "Finish", value: "Glossy clear-coat exposed weave" },
-      { label: "Donor", value: "BMW M4 Competition (G82) or M3 Competition" },
-    ],
-    stockImage: "/builds/m4-3d-design/stock.webp",
-    kitImage: "/builds/m4-3d-design/kit.webp",
-    metaTitle: "BMW M4 3D Design Carbon Build — SP Automotive",
-    metaDescription:
-      "BMW M4 Competition with 3D Design pre-preg carbon aero. Splitter, diffuser, ducktail. SP Automotive Sarasota, FL.",
-    accentColor: ["#1C69D4", "#FFFFFF"],
   },
   {
     slug: "720s-1016",

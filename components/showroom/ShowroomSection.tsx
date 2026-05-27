@@ -4,7 +4,6 @@ const BRANDS = [
   "Lamborghini",
   "McLaren",
   "Audi R8",
-  "BMW M",
   "Ferrari",
   "Porsche",
   "Mercedes-AMG",

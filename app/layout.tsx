@@ -33,7 +33,7 @@ const hanken = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: `${SITE_NAME} — ${TAGLINE}`, template: `%s — ${SITE_NAME}` },
-  description: `${TAGLINE} Factory-correct collision repair for Lamborghini, McLaren, Audi R8, and BMW M. Sarasota, FL.`,
+  description: `${TAGLINE} Factory-correct collision repair for Lamborghini, McLaren, and Audi R8. Sarasota, FL.`,
   openGraph: {
     title: `${SITE_NAME} — ${TAGLINE}`,
     description: `${TAGLINE} Factory-correct collision repair for exotic cars. Sarasota, FL.`,

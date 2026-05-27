@@ -125,7 +125,7 @@ export const FAQS: FAQ[] = [
     id: "models",
     question: "What models do you work on?",
     answer:
-      "Lamborghini, McLaren, Audi R8, BMW M, Ferrari, Porsche. Aluminum, carbon fiber, and steel construction. If your car is not on that list, call — we have worked on cars older and rarer than the list suggests, and we will tell you honestly whether we are the right shop for it.",
+      "Lamborghini, McLaren, Audi R8, Ferrari, Porsche. Aluminum, carbon fiber, and steel construction. If your car is not on that list, call — we have worked on cars older and rarer than the list suggests, and we will tell you honestly whether we are the right shop for it.",
     category: "repair",
     published: true,
   },

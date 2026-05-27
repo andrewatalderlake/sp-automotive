@@ -36,13 +36,6 @@ export const TESTIMONIALS: Testimonial[] = [
     brand: "audi",
     published: false,
   },
-  {
-    quote: "Forensic. That's the only word for how he works. He found damage three other shops missed.",
-    author: "PLACEHOLDER — Mike S.",
-    car: "'23 M4 Competition",
-    brand: "bmw",
-    published: false,
-  },
 ];
 
 export const PUBLISHED_TESTIMONIALS: Testimonial[] = TESTIMONIALS.filter(
