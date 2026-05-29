@@ -83,17 +83,18 @@ export default function FeaturedBuilds() {
       </div>
 
       {/* Hero featured build card. Edge-bleed image with overlay copy.
-          Hover: kit image (default) crossfades to reveal the stock image
-          underneath, plus a subtle card lift. Tells the brand promise
-          ("here's what we made of it / here's what we started with") inside
-          the card itself. Reduced-motion users get the kit image only. */}
+          Hover: the factory (stock) image crossfades away to reveal the
+          finished build underneath, plus a subtle card lift. Tells the brand
+          promise ("here's what we started with → here's what we made of it")
+          inside the card itself. Touch + reduced-motion users get the
+          finished build only. */}
       <div
         className="featured-builds__card relative z-10 mx-auto mt-12 max-w-7xl md:mt-16"
         style={{ "--i": 0 } as React.CSSProperties}
       >
         <Surface
           variant="light"
-          className="group relative overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+          className="fb-card group relative overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_80px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           <Link
             href={`/builds/${hero.slug}`}
@@ -101,21 +102,25 @@ export default function FeaturedBuilds() {
             className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
           >
             <div className="relative aspect-[16/10] w-full bg-ink md:aspect-[21/9]">
-              {/* Stock — bottom layer, revealed when the kit fades. */}
-              <Image
-                src={hero.stockImage}
-                alt={hero.car}
-                fill
-                sizes="(min-width: 1024px) 80rem, 100vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
-              />
-              {/* Kit — top layer, fades out on hover. */}
+              {/* Kit — bottom layer, the finished build. Shown by default
+                  everywhere (incl. touch + reduced-motion); zooms slightly on
+                  hover as the factory layer fades off it. */}
               <Image
                 src={hero.kitImage}
                 alt={`${hero.car} with ${hero.kit} kit`}
                 fill
                 sizes="(min-width: 1024px) 80rem, 100vw"
-                className="object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] group-hover:opacity-0 motion-reduce:transition-none motion-reduce:group-hover:opacity-100"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+              />
+              {/* Stock — top layer, the factory car. Covers the build on
+                  hover-capable devices and fades out on hover to reveal it.
+                  Opacity is driven by the .fb-stock rules below. */}
+              <Image
+                src={hero.stockImage}
+                alt={hero.car}
+                fill
+                sizes="(min-width: 1024px) 80rem, 100vw"
+                className="fb-stock object-cover"
               />
               <div
                 aria-hidden
@@ -152,7 +157,7 @@ export default function FeaturedBuilds() {
           >
             <Surface
               variant="light"
-              className="group relative h-full overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_60px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="fb-card group relative h-full overflow-hidden rounded-2xl p-0 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_36px_60px_-30px_rgba(14,15,17,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
               <Link
                 href={`/builds/${build.slug}`}
@@ -160,21 +165,21 @@ export default function FeaturedBuilds() {
                 className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
               >
                 <div className="relative aspect-[16/10] w-full bg-ink">
-                  {/* Stock — bottom layer, revealed when the kit fades. */}
-                  <Image
-                    src={build.stockImage}
-                    alt={build.car}
-                    fill
-                    sizes="(min-width: 1024px) 25rem, 100vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
-                  />
-                  {/* Kit — top layer, fades out on hover. */}
+                  {/* Kit — bottom layer, the finished build (always-on default). */}
                   <Image
                     src={build.kitImage}
                     alt={`${build.car} with ${build.kit} kit`}
                     fill
                     sizes="(min-width: 1024px) 25rem, 100vw"
-                    className="object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-0 motion-reduce:transition-none motion-reduce:group-hover:opacity-100"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+                  />
+                  {/* Stock — top layer, fades out on hover to reveal the build. */}
+                  <Image
+                    src={build.stockImage}
+                    alt={build.car}
+                    fill
+                    sizes="(min-width: 1024px) 25rem, 100vw"
+                    className="fb-stock object-cover"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6 md:p-7">
@@ -194,9 +199,33 @@ export default function FeaturedBuilds() {
 
       {/* Marque marquee — relocated from TrustStrip. Lives below the
           build cards so the wider marque list reads as a coda to the
-          selected work above. */}
+          selected work above. The header row pairs the marque eyebrow
+          with two service-page deeplinks (kits + paint), so "what
+          marques" and "what services" share a single line of bone-dry
+          tracked uppercase. */}
       <div className="relative z-10 mx-auto mt-16 max-w-7xl pt-10 md:mt-20 md:pt-14 border-t border-ink/10">
-        <p className="eyebrow text-graphite">{"// We restore"}</p>
+        <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between md:gap-10">
+          <p className="eyebrow text-graphite">{"// We restore"}</p>
+          <nav
+            aria-label="Service pages"
+            className="flex flex-wrap items-center gap-x-6 gap-y-2"
+          >
+            <Link
+              href="/body-kits"
+              data-cursor="View"
+              className="link-underline text-ink uppercase tracking-[0.18em] text-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              Body kits →
+            </Link>
+            <Link
+              href="/paint-work"
+              data-cursor="View"
+              className="link-underline text-ink uppercase tracking-[0.18em] text-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              Paint work →
+            </Link>
+          </nav>
+        </div>
         <div className="mt-6 -mx-6 md:-mx-10">
           {/* Negative margin pulls the marquee edge-to-edge of the
               section padding so the mask gradient fades against the
@@ -222,6 +251,30 @@ export default function FeaturedBuilds() {
         }
         @media (prefers-reduced-motion: reduce) {
           :global(.featured-builds__card) {
+            transition: none;
+          }
+        }
+
+        /* Built-where-it-broke reveal. The factory (stock) image sits on top
+           of the finished build. Base (touch / no-hover) hides it, so the
+           finished build is what mobile and reduced-motion users see. Cascade
+           order matters: base → hover → reduced-motion (last wins). Scoped
+           under .featured-builds so these class names can't leak globally. */
+        :global(.featured-builds .fb-stock) {
+          opacity: 0;
+        }
+        @media (hover: hover) {
+          :global(.featured-builds .fb-stock) {
+            opacity: 1;
+            transition: opacity 700ms ease-out;
+          }
+          :global(.featured-builds .fb-card:hover .fb-stock) {
+            opacity: 0;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          :global(.featured-builds .fb-stock) {
+            opacity: 0;
             transition: none;
           }
         }
