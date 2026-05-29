@@ -199,9 +199,33 @@ export default function FeaturedBuilds() {
 
       {/* Marque marquee — relocated from TrustStrip. Lives below the
           build cards so the wider marque list reads as a coda to the
-          selected work above. */}
+          selected work above. The header row pairs the marque eyebrow
+          with two service-page deeplinks (kits + paint), so "what
+          marques" and "what services" share a single line of bone-dry
+          tracked uppercase. */}
       <div className="relative z-10 mx-auto mt-16 max-w-7xl pt-10 md:mt-20 md:pt-14 border-t border-ink/10">
-        <p className="eyebrow text-graphite">{"// We restore"}</p>
+        <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between md:gap-10">
+          <p className="eyebrow text-graphite">{"// We restore"}</p>
+          <nav
+            aria-label="Service pages"
+            className="flex flex-wrap items-center gap-x-6 gap-y-2"
+          >
+            <Link
+              href="/body-kits"
+              data-cursor="View"
+              className="link-underline text-ink uppercase tracking-[0.18em] text-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              Body kits →
+            </Link>
+            <Link
+              href="/paint-work"
+              data-cursor="View"
+              className="link-underline text-ink uppercase tracking-[0.18em] text-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+            >
+              Paint work →
+            </Link>
+          </nav>
+        </div>
         <div className="mt-6 -mx-6 md:-mx-10">
           {/* Negative margin pulls the marquee edge-to-edge of the
               section padding so the mask gradient fades against the
