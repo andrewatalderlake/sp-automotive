@@ -571,3 +571,33 @@ section[data-scrub-time]:focus-within > div {
 .chip--matte {
   background-color: color-mix(in srgb, var(--chip-color) 92%, black);
 }
+
+/* ───────────────────────────────────────────────────────────────────
+   /builds index — factory→finished hover reveal
+   ────────────────────────────────────────────────────────────────────
+   Mirrors the homepage FeaturedBuilds gesture so the same brand
+   mechanic plays anywhere the site shows a build card. The factory
+   (stock) image sits on top of the finished build. Base state (touch /
+   no-hover) hides it, so the finished build is what mobile and
+   reduced-motion users see. Cascade order matters: base → hover →
+   reduced-motion (last wins). Scoped under .builds-index so the
+   class names can't leak globally. Server-component-friendly
+   counterpart of the styled-jsx block in FeaturedBuilds.tsx. */
+.builds-index .bi-stock {
+  opacity: 0;
+}
+@media (hover: hover) {
+  .builds-index .bi-stock {
+    opacity: 1;
+    transition: opacity 700ms ease-out;
+  }
+  .builds-index .bi-card:hover .bi-stock {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .builds-index .bi-stock {
+    opacity: 0;
+    transition: none;
+  }
+}
