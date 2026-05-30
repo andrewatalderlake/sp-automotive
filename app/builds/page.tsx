@@ -8,7 +8,12 @@ import { SITE_NAME } from "@/lib/site";
 
 // Builds index — grid of every entry in BUILDS. Card pattern mirrors the
 // FeaturedBuilds thumbnails on the homepage so this page reads as the
-// expanded version of that block.
+// expanded version of that block, including the factory→finished hover
+// reveal: stock car shown by default on hover-capable devices, fades on
+// hover to expose the finished build underneath. Touch + reduced-motion
+// users see the finished build only. CSS lives in app/globals.css under
+// .builds-index — kept off styled-jsx so this page can stay a server
+// component.
 
 export const metadata: Metadata = {
   title: "All Builds",
@@ -42,13 +47,13 @@ export default function BuildsIndexPage() {
         </div>
       </section>
 
-      <section className="relative w-full px-6 pb-32 md:px-10 md:pb-40">
+      <section className="builds-index relative w-full px-6 pb-32 md:px-10 md:pb-40">
         <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {BUILDS.map((build) => (
             <li key={build.slug}>
               <Surface
                 variant="glass"
-                className="group relative h-full overflow-hidden rounded-2xl p-0"
+                className="bi-card group relative h-full overflow-hidden rounded-2xl p-0"
               >
                 <Link
                   href={`/builds/${build.slug}`}
@@ -56,12 +61,25 @@ export default function BuildsIndexPage() {
                   className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-bone focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
                 >
                   <div className="relative aspect-[16/10] w-full bg-ink">
+                    {/* Kit — bottom layer, finished build. Shown by default
+                        on touch + reduced-motion; zooms slightly on hover
+                        as the factory layer fades off above it. */}
                     <Image
                       src={build.kitImage}
                       alt={`${build.car} with ${build.kit} kit`}
                       fill
                       sizes="(min-width: 1024px) 25rem, (min-width: 768px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+                    />
+                    {/* Stock — top layer, factory car. Hidden by default;
+                        .builds-index CSS in globals.css shows it on
+                        hover-capable devices and fades it on :hover. */}
+                    <Image
+                      src={build.stockImage}
+                      alt={build.car}
+                      fill
+                      sizes="(min-width: 1024px) 25rem, (min-width: 768px) 50vw, 100vw"
+                      className="bi-stock object-cover"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-6 md:p-7">
