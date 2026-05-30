@@ -4,7 +4,7 @@ import Link from "next/link";
 import Surface from "@/components/ui/Surface";
 import FinalCTA from "@/components/cta/FinalCTA";
 import { BUILDS } from "@/components/builds/builds-data";
-import { SITE_NAME } from "@/lib/site";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 // Builds index — grid of every entry in BUILDS. Card pattern mirrors the
 // FeaturedBuilds thumbnails on the homepage so this page reads as the
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   title: "All Builds",
   description:
     "Every body-kit transformation completed at SP Automotive — Lamborghini, McLaren, Porsche, Audi R8, and more. Custom widebody installs, factory paint matching, no compromises.",
+  alternates: { canonical: `${SITE_URL}/builds` },
   openGraph: {
     title: `All Builds — ${SITE_NAME}`,
     description:

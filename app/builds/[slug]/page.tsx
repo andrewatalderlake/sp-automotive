@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BuildPage from "@/components/builds/BuildPage";
 import { BUILDS, getBuild } from "@/components/builds/builds-data";
+import { SITE_URL } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -20,6 +21,7 @@ export async function generateMetadata({
   return {
     title: build.metaTitle,
     description: build.metaDescription,
+    alternates: { canonical: `${SITE_URL}/builds/${slug}` },
     openGraph: {
       title: build.metaTitle,
       description: build.metaDescription,
