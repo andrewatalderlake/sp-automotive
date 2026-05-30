@@ -21,16 +21,19 @@ async function loadGoogleFont(
     const css = await fetch(
       `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:wght@${weight}`,
       {
-        // Google serves woff2 URLs only when the client looks like a modern
-        // browser. A bare server-side fetch gets a .ttf fallback Satori
-        // can't parse; this UA string is the standard nudge.
+        // A modern-browser UA nudges Google to serve woff2; without it we
+        // get a TTF fallback. Satori parses both, so either is fine — but
+        // the regex below matches whichever format comes back so we
+        // don't silently lose the font and ship an OG with no text.
         headers: {
           "User-Agent":
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         },
       },
     ).then((r) => r.text());
-    const m = css.match(/src: url\((.+?)\) format\('woff2'\)/);
+    // Match any url(...) regardless of format() — Satori handles
+    // woff2 and TTF, and Google has shipped both in different responses.
+    const m = css.match(/src:\s*url\((https?:\/\/[^)]+)\)/);
     if (!m) return null;
     return await fetch(m[1]).then((r) => r.arrayBuffer());
   } catch {
