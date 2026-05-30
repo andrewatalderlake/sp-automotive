@@ -8,12 +8,14 @@ import {
   HOURS_LABEL,
   HOURS_DAYS,
   BY_APPOINTMENT,
+  SITE_URL,
 } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
     "Talk to Serge directly. Send photos of the damage and get a callback within 24 hours.",
+  alternates: { canonical: `${SITE_URL}/contact` },
 };
 
 export default function ContactPage() {

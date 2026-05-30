@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import HeroVideo from "@/components/hero/HeroVideo";
 import TrustStrip from "@/components/home/TrustStrip";
 import MeetSerge from "@/components/home/MeetSerge";
@@ -36,6 +38,16 @@ import FinalCTA from "@/components/cta/FinalCTA";
 // Atmosphere is per-section. The html canvas (atmospheric ink gradient,
 // `globals.css`) carries the background for sections without their own
 // surface treatment.
+
+// Page-level metadata is partial — title/description/OG all come from the
+// root layout. We only need to assert the canonical URL here so search
+// engines see an explicit <link rel="canonical"> on the homepage. Trailing
+// slash matches the sitemap.xml <loc> form so crawlers don't see two
+// distinct canonical signatures.
+export const metadata: Metadata = {
+  alternates: { canonical: `${SITE_URL}/` },
+};
+
 export default function Home() {
   return (
     <>
